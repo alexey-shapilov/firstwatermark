@@ -1,7 +1,10 @@
 var
     $ = require('gulp-load-plugins')({
         pattern: '*',
-        lazy: false
+        lazy: false,
+        rename: {
+            'browser-sync' : 'bsync'
+        }
     }),
     productionPath = './app/';
 
@@ -9,7 +12,7 @@ $.gulp.task('build', function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
-        if (er) throw er
+        if (er) throw er;
     });
     $.gulp.src(['./_dev/_server/.htaccess', './_dev/_server/**/*.php'])
         .pipe($.wiredep.stream({
@@ -45,12 +48,12 @@ $.gulp.task('build', function () {
         }, {cwd: productionPath})).on('error', log);
 });
 
-//$.gulp.task('css_img', function () {
-//    $.gulp.src(['./_dev/_sass/img/*'])
-//        .pipe($.gulp.dest(function (file) {
-//            return file.base.substr((file.cwd + '/_dev').length + 1);
-//        }, {cwd: productionPath})).on('error', log);
-//});
+$.gulp.task('css_img', function () {
+   $.gulp.src(['./_dev/_sass/img/*'])
+       .pipe($.gulp.dest(function (file) {
+           return file.base.substr((file.cwd + '/_dev').length + 1);
+       }, {cwd: productionPath})).on('error', log);
+});
 
 $.gulp.task('sass', function () {
     $.gulp.src(['./_dev/_sass/*.scss'])
@@ -62,18 +65,32 @@ $.gulp.task('sass', function () {
 });
 
 
-gulp.task('browser-sync', function () {
-  browserSync({
-    server: {
-      baseDir: "public_html/"
-    }
+$.gulp.task('jade', function () {
+  return $.gulp.src('./_dev/_jade/**/*.jade')
+    .pipe($.jade({
+      pretty: true
+    })).on('error', log)
+    .pipe($.gulp.dest(productionPath));
+});
+
+
+$.gulp.task('browser-sync', ['watch'], function () {
+  $.bsync({
+    // server: {
+    //   baseDir: productionPath
+    // },
+    proxy: "localhost:8000"
   });
 });
 
 
-//$.gulp.task('watch', function () {
-//    $.gulp.watch('./_dev/**/*', ['build','css_img','sass']);
-//});
+$.gulp.task('watch', ['build'], function () {
+    $.gulp.watch('./_jade/**/*.jade', ['jade']);
+    $.gulp.watch('./_server/**/*.php', ['build']);
+    $.gulp.watch(productionPath + '/**/*', $.bsync.reload);
+    // $.gulp.watch('./_dev/**/*', ['jade', 'sass', 'css_img', 'build']);
+});
+
 
 function log(error) {
     console.log([
