@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "watermark creater",
   "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexey-shapilov/firstwatermark.git"
+  },
   "dependencies": {
     "gulp": "^3.8.10"
   },
