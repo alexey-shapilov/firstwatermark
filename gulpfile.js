@@ -62,6 +62,15 @@ $.gulp.task('sass', function () {
 });
 
 
+gulp.task('browser-sync', function () {
+  browserSync({
+    server: {
+      baseDir: "public_html/"
+    }
+  });
+});
+
+
 //$.gulp.task('watch', function () {
 //    $.gulp.watch('./_dev/**/*', ['build','css_img','sass']);
 //});
