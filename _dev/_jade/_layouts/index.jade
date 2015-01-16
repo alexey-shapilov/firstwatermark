@@ -5,6 +5,11 @@ html
 
     // build:css css/vendor.css
     // bower:css
+    link(rel='stylesheet', href='../../_bower/jquery-file-upload/css/jquery.fileupload.css')
+    link(rel='stylesheet', href='../../_bower/jquery-file-upload/css/jquery.fileupload-ui.css')
+    link(rel='stylesheet', href='../../_bower/jquery-file-upload/css/jquery.fileupload-noscript.css')
+    link(rel='stylesheet', href='../../_bower/jquery-file-upload/css/jquery.fileupload-ui-noscript.css')
+    link(rel='stylesheet', href='../../_bower/normalize.css/normalize.css')
     // endbower
     // endbuild
   
@@ -70,6 +75,34 @@ html
             li.foot__tw 
               a.foot__vk-link(href='#') vkontakte
 
+    // build:js js/vendor.js
+    // bower:js
+    script(src='../../_bower/jquery/dist/jquery.js')
+    script(src='../../_bower/modernizr/modernizr.js')
+    script(src='../../_bower/blueimp-tmpl/js/tmpl.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image-ios.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image-orientation.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image-meta.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image-exif.js')
+    script(src='../../_bower/blueimp-load-image/js/load-image-exif-map.js')
+    script(src='../../_bower/blueimp-canvas-to-blob/js/canvas-to-blob.js')
+    script(src='../../_bower/jquery-file-upload/js/cors/jquery.postmessage-transport.js')
+    script(src='../../_bower/jquery-file-upload/js/cors/jquery.xdr-transport.js')
+    script(src='../../_bower/jquery-file-upload/js/vendor/jquery.ui.widget.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-process.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-validate.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-image.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-audio.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-video.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-ui.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-jquery-ui.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.fileupload-angular.js')
+    script(src='../../_bower/jquery-file-upload/js/jquery.iframe-transport.js')
+    // endbower
+    // endbuild
+
     // build:js js/combined.js
-    script(src='/js/uploader.js')
+    script(src='../_dev/_js/uploader.js')
     // endbuild
