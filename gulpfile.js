@@ -6,31 +6,16 @@ var
             'browser-sync' : 'bsync'
         }
     }),
-    productionPath = './app/';
+    productionPath = './build/app/';
+    tmpPath = '.tmp/';
 
-$.gulp.task('build', function () {
+$.gulp.task('build', ['jade'], function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
         if (er) throw er;
     });
-    $.gulp.src(['./_dev/_server/.htaccess', './_dev/_server/**/*.php'])
-        .pipe($.wiredep.stream({
-            directory: '_dev/_bower',
-            fileTypes: {
-                php: {
-                    block: /(([ \t]*)<!--\s*bower:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbower\s*-->)/gi,
-                    detect: {
-                        js: /<script.*src=['"]([^'"]+)/gi,
-                        css: /<link.*href=['"]([^'"]+)/gi
-                    },
-                    replace: {
-                        js: '<script src="{{filePath}}"></script>',
-                        css: '<link rel="stylesheet" href="{{filePath}}" />'
-                    }
-                }
-            }
-        })).on('error', log)
+    $.gulp.src(['./_dev/_server/.htaccess', './.tmp/index.html'])
         .pipe(assets).on('error', log)
         .pipe($.if('*.js', $.uglify())).on('error', log)
         .pipe($.if('*.css', $.minifyCss())).on('error', log)
@@ -38,12 +23,13 @@ $.gulp.task('build', function () {
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(function (file) {
             var path;
-            if (file.base.indexOf('_server') !== -1) {
-                path = file.base.substr((file.cwd + '/_dev/_server').length + 1);
+            if (file.base.indexOf('/_jade/_layouts') !== -1) {
+                path = file.base.substr((file.cwd + '/_dev/_jade/_layouts').length + 1);
             }
             else {
                 path = file.base.substr((file.cwd + '/_dev').length + 1);
             }
+            console.log(path);
             return path;
         }, {cwd: productionPath})).on('error', log);
 });
@@ -65,12 +51,12 @@ $.gulp.task('sass', function () {
 });
 
 
-$.gulp.task('jade', function () {
-  return $.gulp.src('./_dev/_jade/**/*.jade')
+$.gulp.task('jade', ['wiredep'], function () {
+  return $.gulp.src('./_dev/_jade/_layouts/index.jade')
     .pipe($.jade({
       pretty: true
     })).on('error', log)
-    .pipe($.gulp.dest(productionPath));
+    .pipe($.gulp.dest('./build/app/'));
 });
 
 
@@ -85,9 +71,16 @@ $.gulp.task('browser-sync', ['watch'], function () {
 
 
 $.gulp.task('watch', ['build'], function () {
-    $.gulp.watch('./_jade/**/*.jade', ['jade']);
-    $.gulp.watch('./_server/**/*.php', ['build']);
+
+    $.gulp.watch('./_dev/_jade/**/*.jade', ['jade']   );
+    $.gulp.watch('bower.json',             ['wiredep']);
+    // $.gulp.watch('./_server/**/*.php', ['build']);
+
+    // Перезагрузка браузера на любое изменение в конечной директории
+    // Немного избыточно, т.к. перезагружает браузер на каждый чих в productionPath
+    // Зато работает
     $.gulp.watch(productionPath + '/**/*', $.bsync.reload);
+
     // $.gulp.watch('./_dev/**/*', ['jade', 'sass', 'css_img', 'build']);
 });
 
@@ -103,3 +96,10 @@ function log(error) {
     ].join('\n'));
     this.end();
 }
+
+$.gulp.task('wiredep', function() {
+    $.wiredep.stream({
+        directory: '_dev/_bower',
+    })
+    .pipe($.gulp.dest('_dev/_jade/'));
+});

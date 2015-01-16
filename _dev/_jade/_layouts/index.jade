@@ -2,46 +2,60 @@ html
   head
     meta(charset="UTF-8")
     title FirstWaterMark Layout Beta
+
+    // build:css css/vendor.css
+    // bower:css
+    // endbower
+    // endbuild
+  
+    // build:css css/combined.css
+    link(rel='stylesheet', href='css/fonts.css')
+    link(rel='stylesheet', href='css/style.css')
+    // endbuild
+
   body
-    div.container
+    .container
       article
-        div.workspace
+        .workspace
           h1.workspace__heading
           canvas.worspace__canvas
 
       aside
-        div.settings
+        .settings
           form
             h2.settings__heading
-            div.settings__images
-              div.images
+            .settings__images
+              .images
                 form
-                  input(type='file').images__source
-                  input(type='file').images__watermark
-            div.settings__position
-              div.position
+                  #progressbar
+                  input(id='image-original', type='file').images__source
+                  #original-result
+                  input(id='image-watermark', type='file').images__watermark
+                  #watermark-result
+            .settings__position
+              .position
                 h3.position__heading
-                div.position__controls
-                  div.position__aligment
-                  div.position__xy
-                    div.position__x
+                .position__controls
+                  .position__aligment
+                  .position__xy
+                    .position__x
                       input.position__x-value
-                      div.position__x-up
-                      div.position__x-down
-                    div.position__y
+                      .position__x-up
+                      .position__x-down
+                    .position__y
                       input.position_y-value
-                      div.position__y-up
-                      div.position__y-down
-            div.settings__transparency
-              div.transparency
-                div.transparency__slider
+                      .position__y-up
+                      .position__y-down
+            .settings__transparency
+              .transparency
+                .transparency__slider
                   input.transparency__value
-            div.settings__buttons
+            .settings__buttons
               input.settings__save(type='submit', value='Сохранить') 
               input.settings__reset(type='reset', value='Сбросить')
 
       footer
-        div.foot
+        .foot
           ul.foot__language
             li.foot__rus 
               a.foot__rus-button(href='#') РУС
@@ -55,3 +69,7 @@ html
               a.foot__tw-link(href='#') twitter
             li.foot__tw 
               a.foot__vk-link(href='#') vkontakte
+
+    // build:js js/combined.js
+    script(src='/js/uploader.js')
+    // endbuild
