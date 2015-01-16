@@ -1,10 +1,7 @@
 var
     $ = require('gulp-load-plugins')({
         pattern: '*',
-        lazy: false,
-        rename: {
-            'browser-sync' : 'bsync'
-        }
+        lazy: false
     }),
     productionPath = './app/';
     tmpPath = '.tmp/';
@@ -78,7 +75,9 @@ $.gulp.task('wiredep', function() {
         .pipe($.gulp.dest('_dev/_jade/_layouts/'));
 });
 
-
+//
+// Собираем jade в app/index.html
+//
 $.gulp.task('jade', ['wiredep'], function () {
   return $.gulp.src('./_dev/_jade/_layouts/index.jade')
     .pipe($.jade({
@@ -95,8 +94,7 @@ $.gulp.task('server-ajax', function() {
     $.rimraf.sync(productionPath + 'ajax/', function (er) {
         if (er) throw er;
     });
-    $.gulp.src('./_dev/_server/ajax/*.php')
-    .on('error', log)
+    $.gulp.src('./_dev/_server/ajax/*.php').on('error', log)
     .pipe($.gulp.dest(productionPath + 'ajax/'));
 });
 
@@ -113,9 +111,11 @@ $.gulp.task('js', ['jade'], function() {
     .pipe($.gulp.dest('./app/'));
 });
 
-
+//
+// Livereload для браузеров
+//
 $.gulp.task('browser-sync', ['watch'], function () {
-  $.bsync({
+  $.browserSync({
     // server: {
     //   baseDir: productionPath
     // },
@@ -134,7 +134,7 @@ $.gulp.task('watch', ['build'], function () {
     // Перезагрузка браузера на любое изменение в конечной директории
     // Немного избыточно, т.к. перезагружает браузер на каждый чих в productionPath
     // Зато работает
-    $.gulp.watch(productionPath + '/**/*', $.bsync.reload);
+    $.gulp.watch(productionPath + '/**/*', $.browserSync.reload);
 
     // $.gulp.watch('./_dev/**/*', ['jade', 'sass', 'css_img', 'build']);
 });
