@@ -4,5 +4,5 @@ node_modules
 app
 .sass-cache
 _dev/_sass/style.css
-_dev/_jade/_pages/index.html
+_dev/_jade/_pages/*.html
 _dev/_sass/style.css.map
