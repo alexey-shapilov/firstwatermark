@@ -40,6 +40,6 @@
     }); //создаем наш бегунок
 
     slider.init();
-
+    console.log(slider);
 }();
 

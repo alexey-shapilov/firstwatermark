@@ -5,53 +5,6 @@ var
     }),
     productionPath = './app/';
 
-$.gulp.task('build', function () {
-    var assets = $.useref.assets();
-    $.rimraf.sync(productionPath, function (er) {
-        console.log('myErr');
-        if (er) throw er;
-    });
-    $.gulp.src(['./_dev/_server/.htaccess', './_dev/_server/**/*.php'])
-        .pipe($.wiredep.stream({
-            directory: '_dev/_bower',
-            fileTypes: {
-                php: {
-                    block: /(([ \t]*)<!--\s*bower:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbower\s*-->)/gi,
-                    detect: {
-                        js: /<script.*src=['"]([^'"]+)/gi,
-                        css: /<link.*href=['"]([^'"]+)/gi
-                    },
-                    replace: {
-                        js: '<script src="{{filePath}}"></script>',
-                        css: '<link rel="stylesheet" href="{{filePath}}" />'
-                    }
-                }
-            }
-        })).on('error', log)
-        .pipe(assets).on('error', log)
-        .pipe($.if('*.js', $.uglify())).on('error', log)
-        .pipe($.if('*.css', $.minifyCss())).on('error', log)
-        .pipe(assets.restore()).on('error', log)
-        .pipe($.useref()).on('error', log)
-        .pipe($.gulp.dest(function (file) {
-            var path;
-            if (file.base.indexOf('_server') !== -1) {
-                path = file.base.substr((file.cwd + '/_dev/_server').length + 1);
-            }
-            else {
-                path = file.base.substr((file.cwd + '/_dev').length + 1);
-            }
-            return path;
-        }, {cwd: productionPath})).on('error', log);
-});
-
-$.gulp.task('css_img', function () {
-    $.gulp.src(['./_dev/_sass/img/*'])
-        .pipe($.gulp.dest(function (file) {
-            return file.base.substr((file.cwd + '/_dev').length + 1);
-        }, {cwd: productionPath})).on('error', log);
-});
-
 $.gulp.task('sass', function () {
     $.gulp.src(['./_dev/_sass/*.scss'])
         .pipe($.compass({
@@ -63,23 +16,54 @@ $.gulp.task('sass', function () {
 
 
 $.gulp.task('jade', function () {
-    $.rimraf.sync(productionPath, function (er) {
-        console.log('myErr');
-        if (er) throw er;
-    });
     return $.gulp.src('./_dev/_jade/_pages/*.jade')
         .pipe($.jade({
             pretty: true
         })).on('error', log)
-        .pipe($.gulp.dest(productionPath));
+        .pipe($.gulp.dest('./_dev/_jade/_pages'));
 });
 
-$.gulp.task('watch', ['build'], function () {
-    $.gulp.watch('./_jade/**/*.jade', ['jade']);
-    $.gulp.watch('./_server/**/*.php', ['build']);
-    // $.gulp.watch('./_dev/**/*', ['jade', 'sass', 'css_img', 'build']);
+$.gulp.task('js', ['jade'], function () {
+    var assets = $.useref.assets();
+    $.rimraf.sync(productionPath, function (er) {
+        console.log('myErr');
+        if (er) throw er;
+    });
+    return $.gulp.src('./_dev/_jade/_pages/*.html')
+        .pipe(assets).on('error', log)
+        .pipe($.if('*.js', $.uglify())).on('error', log)
+        .pipe($.if('*.css', $.minifyCss())).on('error', log)
+        .pipe(assets.restore()).on('error', log)
+        .pipe($.useref()).on('error', log)
+        .pipe($.gulp.dest(productionPath)).on('error', log);
 });
 
+$.gulp.task('js_watch', function () {
+    var assets = $.useref.assets();
+    $.rimraf.sync(productionPath, function (er) {
+        console.log('myErr');
+        if (er) throw er;
+    });
+    return $.gulp.src('./_dev/_jade/_pages/*.html')
+        .pipe(assets).on('error', log)
+        .pipe($.if('*.js', $.uglify())).on('error', log)
+        .pipe($.if('*.css', $.minifyCss())).on('error', log)
+        .pipe(assets.restore()).on('error', log)
+        .pipe($.useref()).on('error', log)
+        .pipe($.gulp.dest(productionPath)).on('error', log);
+});
+
+$.gulp.task('watch', ['js'], function () {
+    $.gulp.watch('./_dev/_jade/_pages/*.jade', ['jade']);
+    $.gulp.watch(['./_dev/_jade/_pages/*.html', './_dev/_js/*.js', './_dev/_js/_vendor/*.js'], ['js_watch']);
+    $.gulp.watch(productionPath + '/**/*', $.browserSync.reload);
+});
+
+$.gulp.task('browser-sync', ['watch'], function () {
+    $.browserSync({
+        proxy: "localhost:8000"
+    });
+});
 
 function log(error) {
     console.log([
