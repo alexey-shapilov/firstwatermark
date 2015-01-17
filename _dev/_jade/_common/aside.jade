@@ -1,0 +1,16 @@
+aside.aside
+    .aside__coll
+        .lang
+            ul.lang__list
+                each title in ["РУС", "ENG"]
+                    li.lang__item
+                        a.lang__link(href="#")
+                            span.lang__text= title
+    .aside__coll
+        .social
+            a.social__head
+            ul.social__list
+                each title in ["facebook", "twitter", "vkontacte"]
+                    li.social__item
+                        a.social__link(class="social__item_"+title)
+                            span.social__text= title
