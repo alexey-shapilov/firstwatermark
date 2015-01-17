@@ -67,18 +67,19 @@ $.gulp.task('sass', function () {
 // Автоматически контролируем зависимости библиотек в index.jade
 // в секциях bower:*
 //
-$.gulp.task('wiredep', function() {
-    $.gulp.src('_dev/_jade/_layouts/index.jade')
+$.gulp.task('wiredep', ['jade'], function() {
+    return $.gulp.src('./app/index.html')
         .pipe($.wiredep.stream({
-            directory: '_dev/_bower',
+            directory: './_dev/_bower',
+            exclude: [ 'jquery.fileupload-angular.js' ],
         }))
-        .pipe($.gulp.dest('_dev/_jade/_layouts/'));
+        .pipe($.gulp.dest('./app/'));
 });
 
 //
 // Собираем jade в app/index.html
 //
-$.gulp.task('jade', ['wiredep'], function () {
+$.gulp.task('jade', function () {
   return $.gulp.src('./_dev/_jade/_layouts/index.jade')
     .pipe($.jade({
       pretty: true
@@ -99,16 +100,31 @@ $.gulp.task('server-ajax', function() {
 });
 
 //
-// Собираем js/combined.js из секции build:js
+// Собираем js/vendor.js и js/combined.js из секций build:js
 //
-$.gulp.task('js', ['jade'], function() {
+$.gulp.task('build-js', ['wiredep'], function() {
     var assets = $.useref.assets();
 
     $.gulp.src('./app/index.html')
-    .pipe(assets)
+    .pipe(assets).on('error', log)
     .pipe($.if('*.js', $.uglify())).on('error', log)
-    .pipe(assets.restore())
-    .pipe($.gulp.dest('./app/'));
+    .pipe(assets.restore()).on('error', log)
+    .pipe($.useref()).on('error', log)
+    .pipe($.gulp.dest('./app/')).on('error', log);
+});
+
+//
+// Собираем js/vendor.css и js/combined.css из секций build:css
+//
+$.gulp.task('build-css', function() {
+    var assets = $.useref.assets();
+
+    $.gulp.src('./app/index.html')
+    .pipe(assets).on('error', log)
+    .pipe($.if('*.css', $.minify())).on('error', log)
+    .pipe(assets.restore()).on('error', log)
+    .pipe($.useref()).on('error', log)
+    .pipe($.gulp.dest('./app/')).on('error', log);
 });
 
 //
@@ -124,11 +140,12 @@ $.gulp.task('browser-sync', ['watch'], function () {
 });
 
 
-$.gulp.task('watch', ['build'], function () {
+$.gulp.task('watch', function () {
 
-    $.gulp.watch('./_dev/_jade/**/*.jade', ['jade']   );
-    $.gulp.watch('./_dev/_js/**/*.js',     ['js']     );
-    $.gulp.watch('bower.json',             ['wiredep']);
+    $.gulp.watch('./_dev/_jade/**/*.jade',    ['build-js']   );
+    $.gulp.watch('./_dev/_js/**/*.js',        ['build-js']   );
+    $.gulp.watch('./_dev/_server/ajax/*.php', ['server-ajax']);
+    $.gulp.watch('bower.json',                ['wiredep']    );
     // $.gulp.watch('./_server/**/*.php', ['build']);
 
     // Перезагрузка браузера на любое изменение в конечной директории
