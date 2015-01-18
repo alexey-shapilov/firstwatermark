@@ -3,24 +3,28 @@ $(function () {
 
   var url = '/ajax/uploader.php';
 
-  $('#image-original').fileupload({
+  $('#upload_picture').fileupload({
     url: url,
     dataType: 'json',
     done: function (e, data) {
       if(data.result.src) {
-        $('.worspace__img').attr('src', data.result.src);
+        $('.picture__upload').attr('src', data.result.src);
       } else {
-        console.log('error uploading the file');
+        console.log('error uploading the original file');
       }
     }
   });
 
 
-  $('#image-watermark').fileupload({
+  $('#upload_watermark').fileupload({
     url: url,
     dataType: 'json',
     done: function (e, data) {
-      console.log('done');
+      if(data.result.src) {
+        $('.picture__watermark').attr('src', data.result.src);
+      } else {
+        console.log('error uploading the watermark file');
+      }
     }
   });
 

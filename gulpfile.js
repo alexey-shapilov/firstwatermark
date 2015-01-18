@@ -79,7 +79,7 @@ $.gulp.task('wiredep', ['jade'], function() {
 // Собираем jade в app/index.html
 //
 $.gulp.task('jade', function () {
-  return $.gulp.src('./_dev/_jade/_layouts/index.jade')
+  return $.gulp.src('./_dev/_jade/_pages/index.jade')
     .pipe($.jade({
       pretty: true
     })).on('error', log)
