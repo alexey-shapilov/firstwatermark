@@ -70,8 +70,7 @@ $.gulp.task('sass', function () {
 $.gulp.task('wiredep', ['jade'], function() {
     return $.gulp.src('./app/index.html')
         .pipe($.wiredep.stream({
-            directory: './_dev/_bower',
-            exclude: [ 'jquery.fileupload-angular.js' ],
+            directory: './_dev/_bower'
         }))
         .pipe($.gulp.dest('./app/'));
 });
@@ -107,10 +106,24 @@ $.gulp.task('build-js', ['wiredep'], function() {
 
     $.gulp.src('./app/index.html')
     .pipe(assets).on('error', log)
-    .pipe($.if('*.js', $.uglify())).on('error', log)
+    // .pipe($.if('*.js', $.uglify())).on('error', log)
     .pipe(assets.restore()).on('error', log)
     .pipe($.useref()).on('error', log)
     .pipe($.gulp.dest('./app/')).on('error', log);
+});
+
+//
+// Только копируем только js-файлы, без минификации и конкатенации
+//
+$.gulp.task('build-js-copy', function() {
+    $.rimraf.sync(productionPath + 'js/', function (er) {
+        if (er) throw er;
+    });
+    $.gulp.src('./_dev/_js/*.js').on('error', log)
+    .pipe($.gulp.dest('./app/js/'));
+
+    $.gulp.src('./_dev/_bower/**/*.js')
+    .pipe($.gulp.dest('./app/js/vendor/'));
 });
 
 //
