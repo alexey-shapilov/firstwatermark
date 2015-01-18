@@ -110,6 +110,8 @@ $.gulp.task('build-new', ['wiredep'], function() {
         if (er) throw er;
     });
 
+    $.gulp.start('server-ajax');
+
     var assets = $.useref.assets();
     $.gulp.src('./app/index.html')
     .pipe(assets).on('error', log)
@@ -118,6 +120,10 @@ $.gulp.task('build-new', ['wiredep'], function() {
     .pipe(assets.restore()).on('error', log)
     .pipe($.useref()).on('error', log)
     .pipe($.gulp.dest('./app/')).on('error', log);
+
+    // создаем пустую папку uploads
+    $.gulp.src('./_dev/_server/uploads')
+    .pipe($.gulp.dest('./app/'));
 });
 
 //
