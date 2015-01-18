@@ -9,15 +9,15 @@ html
     // endbuild
   
     // build:css css/combined.css
-    link(rel='stylesheet', href='css/fonts.css')
-    link(rel='stylesheet', href='css/style.css')
+    link(rel='stylesheet', href='../_dev/_sass/fonts/fonts.css')
+    //- link(rel='stylesheet', href='css/style.css')
     // endbuild
 
     .container
       article
         .workspace
           h1.workspace__heading
-          canvas.worspace__canvas
+          img.worspace__img
 
       aside
         .settings
@@ -27,9 +27,9 @@ html
               .images
                 form
                   #progressbar
-                  input(id='image-original', type='file').images__source
+                  input(name='upload', id='image-original', type='file').images__source
                   #original-result
-                  input(id='image-watermark', type='file').images__watermark
+                  input(name='upload', id='image-watermark', type='file').images__watermark
                   #watermark-result
             .settings__position
               .position
@@ -72,6 +72,12 @@ html
     // build:js js/vendor.js
     // bower:js
     // endbower
+    // endbuild
+
+    // build:js js/vendor-manual.js
+    script(src='../_dev/_js/_vendor/jquery.ui.widget.js')
+    script(src='../_dev/_js/_vendor/jquery.iframe-transport.js')
+    script(src='../_dev/_js/_vendor/jquery.fileupload.js')
     // endbuild
 
     // build:js js/combined.js

@@ -101,12 +101,20 @@ $.gulp.task('server-ajax', function() {
 //
 // Собираем js/vendor.js и js/combined.js из секций build:js
 //
-$.gulp.task('build-js', ['wiredep'], function() {
-    var assets = $.useref.assets();
+$.gulp.task('build-new', ['wiredep'], function() {
 
+    $.rimraf.sync(productionPath + 'js/', function (er) {
+        if (er) throw er;
+    });
+    $.rimraf.sync(productionPath + 'css/', function (er) {
+        if (er) throw er;
+    });
+
+    var assets = $.useref.assets();
     $.gulp.src('./app/index.html')
     .pipe(assets).on('error', log)
-    // .pipe($.if('*.js', $.uglify())).on('error', log)
+    .pipe($.if('*.js', $.uglify())).on('error', log)
+    .pipe($.if('*.css', $.minifyCss())).on('error', log)
     .pipe(assets.restore()).on('error', log)
     .pipe($.useref()).on('error', log)
     .pipe($.gulp.dest('./app/')).on('error', log);
@@ -155,8 +163,8 @@ $.gulp.task('browser-sync', ['watch'], function () {
 
 $.gulp.task('watch', function () {
 
-    $.gulp.watch('./_dev/_jade/**/*.jade',    ['build-js']   );
-    $.gulp.watch('./_dev/_js/**/*.js',        ['build-js']   );
+    $.gulp.watch('./_dev/_jade/**/*.jade',    ['build-new']   );
+    $.gulp.watch('./_dev/_js/**/*.js',        ['build-new']   );
     $.gulp.watch('./_dev/_server/ajax/*.php', ['server-ajax']);
     $.gulp.watch('bower.json',                ['wiredep']    );
     // $.gulp.watch('./_server/**/*.php', ['build']);
