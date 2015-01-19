@@ -15,12 +15,12 @@ html
         meta(name="description" content="")
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
 
-        // build:css css/vendor.css
+        // build:css(_dev/_jade/_pages) /css/vendor.css
         // bower:css
         // endbower
         // endbuild
         
-        // build:css css/combined.css
+        // build:css(_dev/_jade/_pages) /css/style.css
         // endbuild
 
     body
@@ -39,24 +39,20 @@ html
             // ===================================== FOOTER =====================================
             include ../_common/footer.jade
             
-        // build:js js/vendor.js
+        // build:js(_dev/_jade/_pages) /js/vendor.js
         // bower:js
         // endbower
         // endbuild
 
-        // build:js js/vendor-manual.js
-        script(src='../_dev/_js/_vendor/jquery.ui.widget.js')
-        script(src='../_dev/_js/_vendor/jquery.iframe-transport.js')
-        script(src='../_dev/_js/_vendor/jquery.fileupload.js')
+        // build:js(_dev/_jade/_pages) /js/mvendor.js
+        script(src='../../_js/_vendor/jquery-ui.mini.js')
+        script(src='../../_js/_vendor/jquery.ui.widget.js')
+        script(src='../../_js/_vendor/jquery.iframe-transport.js')
+        script(src='../../_js/_vendor/jquery.fileupload.js')
         // endbuild
-
-        //build:js(_dev/_jade/_pages) /js/vendor.js
-        script(src='../../_js/_vendor/jquery-ui.min.js')
-        //endbuild
         //build:js(_dev/_jade/_pages) /js/script.js
+        script(src='../../_js/draggable.js')
+        script(src='../../_js/position.js')
         script(src='../../_js/slider.js')
-        //endbuild
-        // build:js js/combined.js
-        script(src='../_dev/_js/app.js')
-        script(src='../_dev/_js/uploader.js')
+        script(src='../../_js/uploader.js')
         // endbuild

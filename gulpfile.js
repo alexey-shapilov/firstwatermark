@@ -28,8 +28,10 @@ $.gulp.task('wiredep', ['jade'], function() {
         .pipe($.gulp.dest('./app/'));
 });
 
+// Задачи необходимы если хотим собрать проект без php ====================================
+
 //
-// Собираем jade в app/index.html
+// Собираем jade
 //
 $.gulp.task('jade', function () {
     return $.gulp.src('./_dev/_jade/_pages/*.jade')
@@ -39,13 +41,18 @@ $.gulp.task('jade', function () {
         .pipe($.gulp.dest('./_dev/_jade/_pages'));
 });
 
+//
+// Собираем js
+//
 $.gulp.task('js', ['jade'], function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
-        console.log('myErr');
         if (er) throw er;
     });
     return $.gulp.src('./_dev/_jade/_pages/*.html')
+        .pipe($.wiredep.stream({
+            directory: './_dev/_bower'
+        }))
         .pipe(assets).on('error', log)
         .pipe($.if('*.js', $.uglify())).on('error', log)
         .pipe($.if('*.css', $.minifyCss())).on('error', log)
@@ -53,6 +60,11 @@ $.gulp.task('js', ['jade'], function () {
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(productionPath)).on('error', log);
 });
+
+//
+//====================================
+//
+
 //
 // Копируем обработчики аякса из _dev/_server/_ajax в /app/ajax
 //
