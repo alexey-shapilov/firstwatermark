@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
     var Drag = function(){ //создаем функцию конструктор
 
@@ -31,5 +31,5 @@
         $dragElem: $('.picture__watermark')
     });
 
-}());
+})(jQuery);
 

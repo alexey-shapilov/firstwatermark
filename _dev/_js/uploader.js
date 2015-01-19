@@ -1,7 +1,7 @@
 $(function () {
   'use strict';
 
-  var url = '/ajax/uploader.php';
+  var url = '/uploader.ajax';
 
   $('#upload_picture').fileupload({
     url: url,
