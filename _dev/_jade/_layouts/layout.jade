@@ -1,0 +1,56 @@
+doctype html
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv='X-UA-Compatible', content="IE=edge,chrome=1")
+
+        title
+            block title
+        meta(name="description" content="")
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+
+        // build:css css/vendor.css
+        // bower:css
+        // endbower
+        // endbuild
+        
+        // build:css css/combined.css
+        // endbuild
+
+    body
+        <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        
+        .container
+            // ===================================== HEADER =====================================
+            include ../_common/header.jade
+            // ===================================== ASIDE =====================================
+            include ../_common/aside.jade
+            // ===================================== CONTAINER =====================================
+            .wrapper
+                block content
+            // ===================================== FOOTER =====================================
+            include ../_common/footer.jade
+            
+        // build:js js/vendor.js
+        // bower:js
+        // endbower
+        // endbuild
+        
+        // build:js js/vendor-manual.js
+        script(src='../_dev/_js/_vendor/jquery.ui.widget.js')
+        script(src='../_dev/_js/_vendor/jquery.iframe-transport.js')
+        script(src='../_dev/_js/_vendor/jquery.fileupload.js')
+        // endbuild
+
+        // build:js js/combined.js
+        script(src='../_dev/_js/app.js')
+        script(src='../_dev/_js/uploader.js')
+        // endbuild

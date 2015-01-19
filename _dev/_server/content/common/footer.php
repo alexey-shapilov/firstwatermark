@@ -8,6 +8,10 @@ if (!defined('INIT')) exit('No direct script access allowed');
 <!-- endbower -->
 <!-- endbuild -->
 
+<!-- build:js(_dev/_server/content/common) js/mvendor.js -->
+<script src="../../../_js/_vendor/module.js"></script>
+<!-- endbuild -->
+
 <!-- build:js(_dev/_server/content/common) js/script.js -->
 <script src="../../../_js/app.js"></script>
 <!-- endbuild -->
