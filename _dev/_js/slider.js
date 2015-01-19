@@ -33,7 +33,6 @@
     Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
         this.$elemOpacity.css('opacity', val);
     };
-
     var slider = new Slider({// указываем ему необходимые элементы для работы
         $rangeOpacity: $('.transparent__body'),
         $elemOpacity: $('.picture__watermark')
@@ -42,4 +41,3 @@
     slider.init();
     console.log(slider);
 }();
-
