@@ -43,13 +43,19 @@ html
         // bower:js
         // endbower
         // endbuild
-        
+
         // build:js js/vendor-manual.js
         script(src='../_dev/_js/_vendor/jquery.ui.widget.js')
         script(src='../_dev/_js/_vendor/jquery.iframe-transport.js')
         script(src='../_dev/_js/_vendor/jquery.fileupload.js')
         // endbuild
 
+        //build:js(_dev/_jade/_pages) /js/vendor.js
+        script(src='../../_js/_vendor/jquery-ui.min.js')
+        //endbuild
+        //build:js(_dev/_jade/_pages) /js/script.js
+        script(src='../../_js/slider.js')
+        //endbuild
         // build:js js/combined.js
         script(src='../_dev/_js/app.js')
         script(src='../_dev/_js/uploader.js')
