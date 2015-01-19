@@ -42,7 +42,9 @@ $.gulp.task('build-app', function () {
         .pipe($.gulp.dest('./app/'));
 });
 
-
+//
+// Собираем sass -> css
+//
 $.gulp.task('sass', function () {
     $.gulp.src(['./_dev/_sass/style.scss'])
         .pipe($.compass({
@@ -95,8 +97,10 @@ $.gulp.task('watch', ['js'], function () {
     $.gulp.watch(productionPath + '/**/*', $.browserSync.reload);
     $.gulp.watch('./_dev/_server/ajax/*.php', ['server-ajax']);
     $.gulp.watch('bower.json', ['wiredep']);
+    
+    $.gulp.watch('./_dev/_sass/**/*', ['sass']);
+    
     // $.gulp.watch('./_server/**/*.php', ['build']);
-
     // Перезагрузка браузера на любое изменение в конечной директории
     // Немного избыточно, т.к. перезагружает браузер на каждый чих в productionPath
     // Зато работает
