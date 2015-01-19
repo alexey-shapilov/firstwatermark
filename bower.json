@@ -2,7 +2,7 @@
   "name": "firstwatermark",
   "dependencies": {
     "modernizr": "~2.8.3",
-    "jquery": "~1.11.1"
-  },
-  "devDependencies": {}
+    "jquery": "~1.11.1",
+    "normalize.css": "~3.0.2"
+  }
 }
