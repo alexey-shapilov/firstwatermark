@@ -1,4 +1,4 @@
-!function () {
+!function ($) {
 
     function Slider(options) {
         this.value = null; //текущее значение слайдера
@@ -39,5 +39,4 @@
     }); //создаем наш бегунок
 
     slider.init();
-    console.log(slider);
-}();
+}(jQuery);

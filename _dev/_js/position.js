@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
     var Position = function(){ //создаем функцию конструктор
 
@@ -155,4 +155,4 @@
         $centerTop: $('.centerTop'),
     });
 
-}());
+})(jQuery);
