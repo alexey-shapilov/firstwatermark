@@ -1,4 +1,4 @@
-!function () {
+!function ($) {
 
     function Slider(options) {
         this.value = null; //текущее значение слайдера
@@ -33,12 +33,10 @@
     Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
         this.$elemOpacity.css('opacity', val);
     };
-
     var slider = new Slider({// указываем ему необходимые элементы для работы
         $rangeOpacity: $('.transparent__body'),
         $elemOpacity: $('.picture__watermark')
     }); //создаем наш бегунок
 
     slider.init();
-    console.log(slider);
-}();
+}(jQuery);

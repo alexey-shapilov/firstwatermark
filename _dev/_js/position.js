@@ -1,4 +1,4 @@
-(function(){
+!function(){
 
     var Position = function(){ //создаем функцию конструктор
 
@@ -310,4 +310,4 @@
         $bottomRight : "bottomRight"
     });
 
-}());
+}();
