@@ -1,11 +1,16 @@
-(function($){
+!function(){
 
     var Position = function(){ //создаем функцию конструктор
 
         var self = this;
 
-        this.init =  function(options){ //метод принимающий нужные элементы
-            // здесь я перешел на английский =)
+        this.init =  function(options){
+
+            /****
+             *
+             * * drag and work with value X and Y
+             *
+             */
 
             //x coords button and value
             this.$xCoordInputValue = options.$xCoordInputValue;
@@ -14,18 +19,25 @@
 
             //y coords button and value
             this.$yCoordInputValue = options.$yCoordInputValue;
-            this.$yCoordUpButton = options.$yCoordUpButton;
             this.$yCoordDownpButton = options.$yCoordDownpButton;
+            this.$yCoordUpButton = options.$yCoordUpButton;
+
 
             //style position our elem and listener coords when drag
-            this.$elemCoord = options.$elemCoord;
+            this.$elem = options.$elem;
+            this.$elemWidth = options.$elem.width();
+            this.$elemHeight = options.$elem.height();
             this.coordsX = 0;
             this.coordsY = 0;
 
-            //area our button
-            this.$areaCoord = options.$areaCoord;
-            this.$areaCoordWidth = this.$areaCoord.width() - this.$elemCoord.width();
-            this.$areaCoordHeight = this.$areaCoord.height() - this.$elemCoord.height();
+            //area our watermark
+            this.$placeElem = options.$placeElem;
+            this.$placeElemWidth = this.$placeElem.width() - this.$elem.width();
+            this.$placeElemHeight = this.$placeElem.height() - this.$elem.height();
+
+            this.$placeElemWidthtForGrid = this.$placeElem.width();
+            this.$placeElemHeightForGrid = this.$placeElem.height();
+
 
             // all work width X coords
             this.xCoordsWork();
@@ -34,12 +46,140 @@
             this.yCoordsWork();
 
             //drag working
-            self.$elemCoord.on('drag', function( event, ui ) {
+            self.$elem.on('drag', function( event, ui ) {
                 self.coordsX = ui.position.left;
                 self.coordsY = ui.position.top;
                 self.texWriteX(self.coordsX);
                 self.texWriteY(self.coordsY);
             });
+
+            /****
+             *
+             * * grid work
+             *
+             */
+
+            //option
+            this.sectorWidth = 0;
+            this.sectorHeight = 0;
+
+            //place grid
+            this.$placeGrind = options.$placeGrind;
+
+            //top
+            this.$leftTop = options.$leftTop;
+            this.$rightTop = options.$rightTop;
+            this.$centerTop = options.$centerTop;
+
+            //center
+            this.$centerLeft = options.$centerLeft;
+            this.$centerCenter = options.$centerCenter;
+            this.$centerRight = options.$centerRight;
+
+            //bottom
+            this.$bottomLeft = options.$bottomLeft;
+            this.$bottomCenter = options.$bottomCenter;
+            this.$bottomRight = options.$bottomRight;
+
+            //event click
+            this.$placeGrind.click(function(e){
+                var event = e || window.event,
+                    target = event.target || event.srcElement;
+
+                self.eventPosition(target);
+
+            });
+        };
+
+        this.eventPosition = function(pos){
+            var classNameTarget = pos.className,
+                posX,
+                posY,
+                sectorCenterX = self.$placeElemWidthtForGrid / 2,
+                sectorCenterY = self.$placeElemHeightForGrid / 2;
+
+            switch (classNameTarget) {
+
+            /***
+             * top position
+             */
+                case self.$leftTop:
+                    posX = 0;
+                    posY = 0;
+                    self.movePositionElem(posX, posY);
+                    break;
+
+                case self.$centerTop:
+                    posX = sectorCenterX - self.$elemWidth/2;
+                    posY = 0;
+                    self.movePositionElem(posX, posY);
+                    break;
+
+                case self.$rightTop:
+                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
+                    posY = 0;
+                    self.movePositionElem(posX, posY);
+                    break;
+
+
+            /***
+             * center position
+             */
+
+                case self.$centerLeft:
+                    posX = 0;
+                    posY = sectorCenterY - self.$elemHeight / 2;
+
+                    self.movePositionElem(posX, posY);
+                    break;
+                case self.$centerCenter:
+                    posX = sectorCenterX - self.$elemWidth/2;
+                    posY = sectorCenterY - self.$elemHeight / 2;
+
+                    self.movePositionElem(posX, posY);
+                    break;
+                case self.$centerRight:
+                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
+                    posY = sectorCenterY - self.$elemHeight / 2;
+
+                    self.movePositionElem(posX, posY);
+                    break;
+
+            /***
+             * bottom position
+             */
+
+                case self.$bottomLeft:
+                    posX = 0;
+                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    self.movePositionElem(posX, posY);
+                    break;
+                case self.$bottomCenter:
+                    posX = sectorCenterX - self.$elemWidth/2;
+                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    self.movePositionElem(posX, posY);
+                    break;
+                case self.$bottomRight:
+                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
+                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    self.movePositionElem(posX, posY);
+                    break;
+
+                default:
+                    alert('Я таких значений не знаю');
+            }
+        };
+
+        this.movePositionElem = function(x,y){
+
+            self.$elem.css({
+                top: y,
+                left: x
+            });
+            self.coordsX = x;
+            self.coordsY = y;
+            self.texWriteX(x);
+            self.texWriteY(y);
         };
 
         this.xCoordsWork = function() {
@@ -59,7 +199,7 @@
 
             self.$xCoordUpButton.click(function(){
 
-                if(self.coordsX < self.$areaCoordWidth){
+                if(self.coordsX < self.$placeElemWidth){
                     ++self.coordsX;
                 }
                 self.positionCssElem(self.coordsX,self.coordsY);
@@ -76,11 +216,10 @@
         // write text value X
         this.texWriteX = function(textX){
 
-            var textX = textX || 0;
-            if(textX >= 0 && textX <= self.$areaCoordWidth){
+            var textX = Math.round(textX) || 0;
+            if(textX >= 0 && textX <= self.$placeElemWidth){
                 self.$xCoordInputValue.val(textX);
             }
-
         };
 
 
@@ -100,7 +239,7 @@
 
             self.$yCoordDownpButton.click(function(){
 
-                if(self.coordsY < self.$areaCoordHeight){
+                if(self.coordsY < self.$placeElemHeight){
                     ++self.coordsY;
                 }
                 self.positionCssElem(self.coordsX,self.coordsY);;
@@ -117,22 +256,22 @@
         // write text value Y
         this.texWriteY = function(textY){
 
-            var textY = textY || 0;
-            if(textY >= 0 && textY <= self.$areaCoordHeight){
+            var textY = Math.round(textY) || 0;
+            if(textY >= 0 && textY <= self.$placeElemHeight){
                 self.$yCoordInputValue.val(textY);
             }
 
         };
 
-        this.positionCssElem = function(posX,posY){
-            console.log(posX);
-            var posY = posY || 0,
-                posX = posX || 0;
+        this.positionCssElem = function(posCssX,posCssY){
 
-            if((posX >= 0 && posX <= self.$areaCoordWidth) && (posY >= 0 && posY <= self.$areaCoordHeight)){
-                self.$elemCoord.css({
-                    left: posX + 'px',
-                    top: posY + 'px'
+            var posCssY = posCssY || 0,
+                posCssX = posCssX || 0;
+
+            if((posCssX >= 0 && posCssX <= self.$placeElemWidth) && (posCssY >= 0 && posCssY <= self.$placeElemHeight)){
+                self.$elem.css({
+                    left: posCssX + 'px',
+                    top: posCssY + 'px'
                 });
             }
         };
@@ -141,18 +280,34 @@
 
     p = new Position(); //создаем наш бегунок
 
-    p.init({// указываем ему необходимые элементы для работы
+    p.init({
+
+        //x and Y value, button
         $xCoordInputValue: $('#x_coordinate'),
         $xCoordDownButton: $('.coord__arrow_down'),
         $xCoordUpButton: $('.coord__arrow_up'),
         $yCoordInputValue: $('#y_coordinate'),
         $yCoordUpButton: $('.button__arrow_up'),
         $yCoordDownpButton: $('.button__arrow_down'),
-        $areaCoord: $('.picture__body'),
-        $elemCoord: $('.picture__watermark'),
-        $leftTop: $('.leftTop'),
-        $rightTop: $('.rightTop'),
-        $centerTop: $('.centerTop'),
+
+        //area elem
+        $placeElem: $('.picture__body'),
+        //elem
+        $elem: $('.picture__watermark'),
+
+        // place grid events
+        $placeGrind : $('.grid'),
+
+        //position grid buttons
+        $leftTop : "leftTop",
+        $rightTop : "rightTop",
+        $centerTop : "centerTop",
+        $centerLeft : "centerLeft",
+        $centerCenter : "centerCenter",
+        $centerRight : "centerRight",
+        $bottomLeft : "bottomLeft",
+        $bottomCenter : "bottomCenter",
+        $bottomRight : "bottomRight"
     });
 
-})(jQuery);
+}();
