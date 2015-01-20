@@ -60,7 +60,7 @@ $.gulp.task('build-with-php', ['sass'], function () {
 // Собираем sass -> css
 //
 $.gulp.task('sass', function () {
-    $.gulp.src(['./_dev/_sass/style.scss'])
+    return $.gulp.src(['./_dev/_sass/style.scss'])
         // вызов плагина gulp-compass
         .pipe($.compass({
             css: './_dev/_sass',
@@ -75,7 +75,7 @@ $.gulp.task('sass', function () {
 // Собираем jade
 //
 $.gulp.task('jade', function () {
-    $.gulp.src('./_dev/_jade/_pages/*.jade')
+    return $.gulp.src('./_dev/_jade/_pages/*.jade')
         // вызов плагина gulp-jade
         .pipe($.jade({
             pretty: true
