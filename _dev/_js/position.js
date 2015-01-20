@@ -32,6 +32,12 @@
 
             //area our watermark
             this.$placeElem = options.$placeElem;
+            this.$placeElemImg = options.$placeElemImg;
+            this.$placeElemBodyImg = options.$placeElemBodyImg;
+
+            this.$placeElemWidthforImg = this.$placeElemImg.width();
+            this.$placeElemHeightforImg = this.$placeElemImg.height();
+
             this.$placeElemWidth = this.$placeElem.width() - this.$elem.width();
             this.$placeElemHeight = this.$placeElem.height() - this.$elem.height();
 
@@ -291,7 +297,9 @@
         $yCoordDownpButton: $('.button__arrow_down'),
 
         //area elem
-        $placeElem: $('.picture__body'),
+        $placeElem: $('.picture'),
+        $placeElemImg: $('.picture__apload'),
+        $placeElemBodyImg: $('.picture__body'),
         //elem
         $elem: $('.picture__watermark'),
 

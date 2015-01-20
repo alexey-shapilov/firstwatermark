@@ -1,4 +1,4 @@
-(function($){
+(function(){
 
     var Drag = function(){ //создаем функцию конструктор
 
@@ -27,9 +27,9 @@
     d = new Drag(); //создаем наш драг объект
 
     d.init({// указываем ему необходимые элементы для работы
-        $dragPlace: $('.picture__body'),
+        $dragPlace: $('.picture'),
         $dragElem: $('.picture__watermark')
     });
 
-})(jQuery);
+}());
 
