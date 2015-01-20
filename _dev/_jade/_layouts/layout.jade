@@ -14,9 +14,17 @@ html
             block title
         meta(name="description" content="")
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        
-        link(rel='stylesheet' type='text/css' href='_dev/_bower' media='screen, projection, print')
-        script(src='_dev/_bower')
+
+        // build:css /css/vendor.css
+        // bower:css
+        // endbower
+        // endbuild
+
+
+        // build:css(_dev/_j/de/_pages) /css/style.css
+        link(rel="stylesheet" href="../../_sass/style.css" type="text/css" media="screen")
+        // endbuild
+
     body
         <!--[if lt IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -33,9 +41,19 @@ html
             // ===================================== FOOTER =====================================
             include ../_common/footer.jade
             
-        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-        script.
-           window.jQuery || document.write('<script src="/js/_vendor/jquery-1.11.0.min.js"><\/script>');
-        
-        script(src='/js/')
-        script(src='/js/')
+        // build:js(_dev/_jade/_pages) /js/vendor.js
+        // bower:js
+        // endbower
+        // endbuild
+
+        // build:js(_dev/_jade/_pages) /js/mvendor.js
+        script(src='../../_js/_vendor/jquery-ui.mini.js')
+        script(src='../../_js/_vendor/jquery.iframe-transport.js')
+        script(src='../../_js/_vendor/jquery.fileupload.js')
+        // endbuild
+        //build:js(_dev/_jade/_pages) /js/script.js
+        script(src='../../_js/draggable.js')
+        script(src='../../_js/position.js')
+        script(src='../../_js/slider.js')
+        script(src='../../_js/uploader.js')
+        // endbuild

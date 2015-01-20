@@ -9,8 +9,8 @@ block content
             .picture
                 h1.picture__title
                 .picture__body
-                    .picture__watermark
-                    .picture__apload
+                    img.picture__watermark
+                    img.picture__upload
 
         // --------------------------------------- adjustment
         section.workspace
@@ -22,12 +22,10 @@ block content
                 .adjust__raw
                     .upload
                         label.upload__title(for="upload_picture") Исходное изображежние
-                        input.upload__field#upload_picture(type="text")
-                        input.upload__button(type="button" value="dl")
+                        input.upload__field#upload_picture(type="file",name="upload")
                     .upload
                         label.upload__title(for="upload_watermark") Водяной знак
-                        input.upload__field#upload_watermark(type="text")
-                        input.upload__button(type="button" value="dl")
+                        input.upload__field#upload_watermark(type="file",name="upload")
 
                 // place watermark
                 .adjust__raw
