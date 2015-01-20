@@ -2,8 +2,6 @@
 
 namespace Firstwatermark;
 
-die('test');
-
 class Uploader
 {
 
