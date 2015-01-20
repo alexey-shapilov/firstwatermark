@@ -107,8 +107,13 @@ $.gulp.task('build-without-php', ['jade','sass'], function () {
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(productionPath)).on('error', log);
 
-    $.gulp.src('./_dev/_sass/fonts/*')
-        .pipe($.gulp.dest('./app/css/fonts/'));
+        // шрифты
+        $.gulp.src('./_dev/_sass/fonts/*')
+            .pipe($.gulp.dest('./app/css/fonts/'));
+    
+        // изображения для стилей
+        $.gulp.src('./_dev/_sass/img/*')
+            .pipe($.gulp.dest('./app/css/img/'));
 });
 
 //
