@@ -1,5 +1,8 @@
+@import "../_mixin/_mixin";
+@import "../_mixin/_variables";
+
 header.header {
     background: #a00;
-    height: 100px;
+    height: $headerHeight;
     width: 100%;
 }

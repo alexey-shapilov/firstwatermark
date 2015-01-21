@@ -1,25 +1,20 @@
-@mixin clearfix {
-    zoom:1;
-    &:before, &:after {
-        content: "\0020"; 
-        display: block; 
-        height: 0; 
-        overflow: hidden; 
-    }
-    &:after {
-        clear: both;
-    }
-}
+@import "../_mixin/_mixin";
+@import "../_mixin/_variables";
+
+
 
 .aside {
-    background: #acaceb;
     padding: 100px 0 0 0;
     float: left;
 }
 .aside__coll {
-    
-    
+    padding: 10px 0 0 0;
+    & * {
+        font-size: 1px;
+    }
 }
+
+// --------------------------------------- language
 .lang {
     
 }
@@ -27,11 +22,48 @@
     
 }
 .lang__item {
-    
+    background: rgba(255, 255, 255, 0.5);
+    width: 43px;
+    &:first-child {
+        border-bottom: solid 1px rgba(90, 90, 90, 0.5);
+    }
 }
 .lang__link {
-    
+    display: block;
+    text-align: center;
 }
 .lang__text {
-    
+    color: #777;
+    font-size: 16px;
+    line-height: 35px;
+}
+// --------------------------------------- social
+.social {
+    display: block;
+    background: #eee;
+//    width: 100px;
+}
+.social__head {
+    display: inline-block;
+    background: #f2185b;
+    vertical-align: top;
+    @extend .socialLinks;
+}
+
+.social__list {
+    display: inline-block;
+    vertical-align: top;
+}
+.social__item {
+    display: block;
+    background: #943aef;
+    overflow: hidden;
+    text-indent: -99999px;
+    @extend .socialLinks;
+}
+.social__link {
+    display: block;
+}
+.social__text {
+    line-height: 41px;
 }
