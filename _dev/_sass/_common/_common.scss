@@ -1,6 +1,8 @@
 @import "../_mixin/_mixin";
 @import "../_mixin/_variables";
 
+
+// ---------------------------------------
 html * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -31,9 +33,18 @@ a {
     text-decoration: none;
 }
 
+input,
+button {
+	outline: none;
+}
+// ---------------------------------------
+
+
+
+
 .container {
-//    background: #aaa;
-    background: url(img/common_bg.jpg) no-repeat;
+    background: #aaa;
+//    background: url(img/common_bg.jpg) no-repeat;
     background-size: 101%;
     height: 100%;
     position: relative;
@@ -60,10 +71,14 @@ footer {
     padding-bottom: $footerHeight;
 }
 .wrapper {
-//    background: #eee;
+    background: #2e231b;
     margin: 0 auto;
     position: relative;
-    padding: 10px 0 0 0;
+    margin-top: 10px;
     width: $wrapperWidth;
     @include clearfix;
+}
+
+.text {
+    
 }
