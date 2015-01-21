@@ -32,9 +32,9 @@ a {
 }
 
 .container {
-    background: #aaa;
-//    background: #aaa url(img/common_bg.jpg) no-repeat;
-//    background-size: 101%;
+//    background: #aaa;
+    background: url(img/common_bg.jpg) no-repeat;
+    background-size: 101%;
     height: 100%;
     position: relative;
     width: 100%;
@@ -53,7 +53,6 @@ footer {
 }
 
 .content {
-    background: #aad3b0;
     margin-top: -($headerHeight);
     margin-bottom: -($footerHeight);
     min-height: 100%;
@@ -61,7 +60,7 @@ footer {
     padding-bottom: $footerHeight;
 }
 .wrapper {
-    background: #eee;
+//    background: #eee;
     margin: 0 auto;
     position: relative;
     padding: 10px 0 0 0;
