@@ -48,8 +48,8 @@
 
 // --------------------------------------- adjustment
 .adjust {
-    background: #4f9852;
-    height: 100%;
+    background: #aaa;
+    min-height: $contentHeight;
     width: $ajustmentBlockWidth;
 }
 .adjust__title {
@@ -57,62 +57,132 @@
     line-height: 80px;
     text-align: center;
 }
-
-// upload files
-.adjust__raw {
-    border-top: 2px solid #f00;
+.adjust__body {
     position: relative;
-    &:first-child  {
-        border-top: 5px solid #00f;
+}
+.adjust__raw {
+    border-top: 1px solid #f00;
+    padding: 0 20px;
+    position: relative;
+    &:first-child {
+        border-top: none;
+        &:after {
+            display: none;
+        }
+        &:before {
+            display: none;
+        }
+    }
+    &:before {
+        border-top: solid 10px #f00;
+        border-bottom: solid 10px transparent;
+        border-right: solid 10px transparent;
+        border-left: solid 10px transparent;
+        content: "";
+        display: block;
+        left: 125px;
+        position: absolute;
+        top: 0px;
+    }
+    &:after {
+        border-top: solid 10px #aaa;
+        border-bottom: solid 10px transparent;
+        border-right: solid 10px transparent;
+        border-left: solid 10px transparent;
+        content: "";
+        display: block;
+        left: 125px;
+        position: absolute;
+        top: -1px;
     }
 }
+
+
+// upload files
 .upload {
-//    background: #ddd;
+    background: #aaa;
+    padding: 10px 0;
+}
+.upload__title {
+    background: #999;
+}
+.upload__field {
+    
+}
+.upload {
+    
+}
+.upload__title {
+    
+}
+.upload__field {
+    
 }
 
-.upload__title {
-    padding-left: 20px;
-}
-.upload__field {
-    
-}
-.upload {
-    
-}
-.upload__title {
-    
-}
-.upload__field {
-    
-}
 
 // place watermark
 .place {
     background: #eee;
 }
 .place__title  {
-    background: #eee;
+    background: #ddd;
+    line-height: 45px;
 }
 .place__body {
-    @include clearfix;
+    padding: 20px 0;
 }
+
+
+// grid
 .grid {
     display: inline-block;
     vertical-align: top;
     width: ($grid)*3;
+    @include clearfix;
 }
 .grid__item {
-    background: #f00;
+    border-style: solid;
+    border-color: #f00;
+    background: #888;
     float: left;
     height: $grid;
     width: $grid;
     @include clearfix;
 }
+.grid__item_1 {
+    border-width: 1px 0px 0px 1px;
+}
+.grid__item_2 {
+    border-width: 1px 1px 0px 1px;
+}
+.grid__item_3 {
+    border-width: 1px 1px 0px 0px;
+}
+.grid__item_4 {
+    border-width: 1px 0px 1px 1px;
+}
+.grid__item_5 {
+    border-width: 1px 1px 1px 1px;
+}
+.grid__item_6 {
+    border-width: 1px 1px 1px 0px;
+}
+.grid__item_7 {
+    border-width: 0px 0px 1px 1px;
+}
+.grid__item_8 {
+    border-width: 0px 1px 1px 1px;
+}
+.grid__item_9 {
+    border-width: 0px 1px 1px 0px;
+}
+
+
+// coordinate
 .coord {
     display: inline-block;
-    background: #f00;
+    background: #66f;
     vertical-align: top;
-    width: 150px;
 }
 .coord__raw {
     
@@ -132,36 +202,10 @@
 .coord__arrow_up {
     
 }
-.coord__arrow {
-    
-}
 .coord__arrow_down {
     
 }
-.coord__raw {
-    
-}
-.coord__title {
-    
-}
-.coord__field {
-    
-}
-.coord__buttons {
-    
-}
-.button__arrow {
-    
-}
-.button__arrow_up {
-    
-}
-.button__arrow {
-    
-}
-.button__arrow_down {
-    
-}
+
 
 // transparent
 .transparent {
@@ -173,6 +217,7 @@
 .transparent__body {
     
 }
+
 
 // download result
 .form {
