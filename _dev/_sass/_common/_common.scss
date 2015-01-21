@@ -1,26 +1,19 @@
-@mixin clearfix {
-    zoom:1;
-    &:before, &:after {
-        content: "\0020"; 
-        display: block; 
-        height: 0; 
-        overflow: hidden; 
-    }
-    &:after {
-        clear: both;
-    }
-}
+@import "../_mixin/_mixin";
+@import "../_mixin/_variables";
+
 html * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 body, html {
   height: 100%;
 }
 body {
     padding: 0;
     margin: 0;
+    font-family: robotolight, Arial, sans-serif;
 }
 p {
     padding: 0;
@@ -33,6 +26,18 @@ ul,li {
 h1,h2,h3,h4,h5,h6 {
     margin: 0;
     padding: 0;
+}
+a {
+    text-decoration: none;
+}
+
+.container {
+//    background: #aaa;
+    background: url(img/common_bg.jpg) no-repeat;
+    background-size: 101%;
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
 header,
@@ -47,25 +52,18 @@ footer {
     z-index: 5;
 }
 
-.container {
-    background: #aaa;
-//    background: #aaa url(img/common_bg.jpg) no-repeat;
-//    background-size: 101%;
-    height: 100%;
-    position: relative;
-    width: 100%;
-}
 .content {
-    background: #aad3b0;
-    margin: -100px 0;
+    margin-top: -($headerHeight);
+    margin-bottom: -($footerHeight);
     min-height: 100%;
-    padding: 100px 0;
+    padding-top: $headerHeight;
+    padding-bottom: $footerHeight;
 }
 .wrapper {
-    background: #eee;
+//    background: #eee;
     margin: 0 auto;
     position: relative;
-    padding: 50px 0;
-    width: 960px;
+    padding: 10px 0 0 0;
+    width: $wrapperWidth;
     @include clearfix;
 }
