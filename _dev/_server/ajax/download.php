@@ -3,7 +3,7 @@
 namespace Firstwatermark;
 
 class ImageConverter {
-  public function convert($source, $watermark) {
+  public function convert($source, $watermark, $x, $y, $opacity) {
 
     $source = PATH_BASE . '/uploads/' . $source;
     $watermark = PATH_BASE . '/uploads/' . $watermark;
@@ -24,7 +24,7 @@ class ImageConverter {
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
 
     imagecopyresampled($newImage, imagecreatefromjpeg($source), 0, 0, 0, 0, $w1, $h1, $w1, $h1);
-    imagecopymerge($newImage, imagecreatefromjpeg($watermark), 0, 0, 0, 0, $w2, $h2, 50);
+    imagecopymerge($newImage, imagecreatefromjpeg($watermark), $x, $y, 0, 0, $w2, $h2, $opacity);
 
     header("Content-Type: application/stream");
     header("Content-Disposition: attachment; filename=result.jpg");
@@ -51,10 +51,12 @@ try {
 
   $source = $_GET['i1'];
   $watermark = $_GET['i2'];
+  $x = (int)$_GET['x'];
+  $y = (int)$_GET['y'];
+  $opacity = (int)$_GET['opacity'];
+  $opacity = 50;
 
-  ImageConverter::convert(
-    $source, 
-    $watermark);
+  ImageConverter::convert($source, $watermark, $x, $y, $opacity);
 
 } catch (\Exception $e) {
 
