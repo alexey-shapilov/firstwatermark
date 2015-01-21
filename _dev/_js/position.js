@@ -12,7 +12,7 @@
              *
              */
 
-            //x coords button and value
+                //x coords button and value
             this.$xCoordInputValue = options.$xCoordInputValue;
             this.$xCoordDownButton = options.$xCoordDownButton;
             this.$xCoordUpButton = options.$xCoordUpButton;
@@ -35,8 +35,18 @@
             this.$placeElemImg = options.$placeElemImg;
             this.$placeElemBodyImg = options.$placeElemBodyImg;
 
-            this.$placeElemWidthforImg = this.$placeElemImg.width();
-            this.$placeElemHeightforImg = this.$placeElemImg.height();
+            this.$placeElemImgWidth = this.$placeElemImg.width();
+            this.$placeElemImgHeight = this.$placeElemImg.height();
+
+            this.elemTop = parseFloat(this.$placeElemImg.position().top);
+            this.elemLeft = parseFloat(this.$placeElemImg.position().left);
+            this.elemMarginTop = parseFloat(this.$placeElemImg.css('margin-top'));
+            this.elemMarginLeft = parseFloat(this.$placeElemImg.css('margin-left'));
+
+            this.axis = {
+                top: (self.elemMarginTop == '0') ? self.elemTop : self.elemMarginTop,
+                left: (self.elemMarginLeft == '0') ? self.elemLeft : self.elemMarginLeft
+            }
 
             this.$placeElemWidth = this.$placeElem.width() - this.$elem.width();
             this.$placeElemHeight = this.$placeElem.height() - this.$elem.height();
@@ -44,7 +54,60 @@
             this.$placeElemWidthtForGrid = this.$placeElem.width();
             this.$placeElemHeightForGrid = this.$placeElem.height();
 
+            /****
+             *
+             * * mosh work START
+             *
+             */
+            this.mosh = {
+                status: false,
+                moshClone: 'mosh__item',
+                moshBody: 'mosh__body',
+                copyX: self.$placeElemWidth/self.$elemWidth,
+                copyY :self.$placeElemHeight/self.$elemHeight,
+                moshButton : options.$moshButton,
+                moshDelButton : options.$moshDelButton
+            }
 
+            this.mosh.moshButton.click(function(){
+
+                if(!self.mosh.status){
+                    self.$elem.css({
+                        top: 0,
+                        left: 0
+                    });
+                self.$placeElemBodyImg.append('<div class="mosh__body">');
+
+                    for(var i = 0; i < self.mosh.copyX; i++ ) {
+                        for(var j = 0; j < self.mosh.copyY; j++) {
+                            self.$elem.clone().addClass(self.mosh.moshClone)
+                                .css('left', '+=' + self.$elemWidth * i)
+                                .css('top', '+=' + self.$elemHeight * j)
+                                .appendTo('.'+self.mosh.moshBody);
+                        }
+                    }
+                    //$('.mosh__item').appendTo('.mosh__body');
+                    self.$elem.css('display','none');
+                    $('.mosh__body').draggable();
+                }
+
+                self.mosh.status = true;
+            });
+
+            this.mosh.moshDelButton.click(function(){
+
+                if(self.mosh) {
+                    $('.mosh__body').remove();
+                    self.$elem.css('display', 'block');
+                }
+                self.mosh.status = false;
+            });
+
+            /****
+             *
+             * * mosh work END
+             *
+             */
             // all work width X coords
             this.xCoordsWork();
 
@@ -59,13 +122,21 @@
                 self.texWriteY(self.coordsY);
             });
 
+            self.$elem.draggable({
+                stop: function( event, ui ) {
+                    self.coordsX = ui.position.left;
+                    self.coordsY = ui.position.top;
+                    self.texWriteX(self.coordsX);
+                    self.texWriteY(self.coordsY);
+                }
+            });
             /****
              *
              * * grid work
              *
              */
 
-            //option
+                //option
             this.sectorWidth = 0;
             this.sectorHeight = 0;
 
@@ -101,8 +172,8 @@
             var classNameTarget = pos.className,
                 posX,
                 posY,
-                sectorCenterX = self.$placeElemWidthtForGrid / 2,
-                sectorCenterY = self.$placeElemHeightForGrid / 2;
+                sectorCenterX = self.$placeElemImgWidth/2,
+                sectorCenterY = self.$placeElemImgHeight/2;
 
             switch (classNameTarget) {
 
@@ -110,20 +181,20 @@
              * top position
              */
                 case self.$leftTop:
-                    posX = 0;
-                    posY = 0;
+                    posX = this.axis.left;
+                    posY = this.axis.top;
                     self.movePositionElem(posX, posY);
                     break;
 
                 case self.$centerTop:
-                    posX = sectorCenterX - self.$elemWidth/2;
-                    posY = 0;
+                    posX = sectorCenterX - self.$elemWidth/2 + this.axis.left ;
+                    posY = this.axis.top;
                     self.movePositionElem(posX, posY);
                     break;
 
                 case self.$rightTop:
-                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
-                    posY = 0;
+                    posX = self.$placeElemImgWidth - self.$elemWidth + this.axis.left;
+                    posY = this.axis.top;
                     self.movePositionElem(posX, posY);
                     break;
 
@@ -133,20 +204,20 @@
              */
 
                 case self.$centerLeft:
-                    posX = 0;
-                    posY = sectorCenterY - self.$elemHeight / 2;
+                    posX = self.axis.left;
+                    posY = sectorCenterY - self.$elemHeight / 2 + self.axis.top;
 
                     self.movePositionElem(posX, posY);
                     break;
                 case self.$centerCenter:
-                    posX = sectorCenterX - self.$elemWidth/2;
-                    posY = sectorCenterY - self.$elemHeight / 2;
+                    posX = self.axis.left + sectorCenterX - self.$elemWidth/2;
+                    posY = self.axis.top + sectorCenterY - self.$elemHeight / 2;
 
                     self.movePositionElem(posX, posY);
                     break;
                 case self.$centerRight:
-                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
-                    posY = sectorCenterY - self.$elemHeight / 2;
+                    posX = self.axis.left + self.$placeElemImgWidth - self.$elemWidth;
+                    posY = self.axis.top + sectorCenterY - self.$elemHeight / 2;
 
                     self.movePositionElem(posX, posY);
                     break;
@@ -156,18 +227,18 @@
              */
 
                 case self.$bottomLeft:
-                    posX = 0;
-                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    posX = self.axis.left;
+                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
                     self.movePositionElem(posX, posY);
                     break;
                 case self.$bottomCenter:
-                    posX = sectorCenterX - self.$elemWidth/2;
-                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    posX = self.axis.left + sectorCenterX - self.$elemWidth/2;
+                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
                     self.movePositionElem(posX, posY);
                     break;
                 case self.$bottomRight:
-                    posX = self.$placeElemWidthtForGrid - self.$elemWidth;
-                    posY = self.$placeElemHeightForGrid - self.$elemHeight;
+                    posX = self.axis.left + self.$placeElemImgWidth - self.$elemWidth;
+                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
                     self.movePositionElem(posX, posY);
                     break;
 
@@ -194,10 +265,10 @@
             // START x coords and input value
             self.$xCoordDownButton.click(function(){
                 //console.log(self.coordsX);
-
-                if(self.coordsX  > 0){
+                console.log(self.coordsX);
+                //if(self.coordsX  > -self.$elemWidth){
                     --self.coordsX;
-                }
+                //}
 
                 self.positionCssElem(self.coordsX,self.coordsY);
                 self.texWriteX(self.coordsX);
@@ -205,9 +276,9 @@
 
             self.$xCoordUpButton.click(function(){
 
-                if(self.coordsX < self.$placeElemWidth){
+                //if(self.coordsX < self.$placeElemWidth+self.$elemWidth){
                     ++self.coordsX;
-                }
+                //}
                 self.positionCssElem(self.coordsX,self.coordsY);
                 self.texWriteX(self.coordsX);
             });
@@ -222,10 +293,10 @@
         // write text value X
         this.texWriteX = function(textX){
 
-            var textX = Math.round(textX) || 0;
-            if(textX >= 0 && textX <= self.$placeElemWidth){
+            var textX = Math.round(textX);
+            //if(textX >= -self.$elemWidth && textX <= self.$placeElemWidth+self.$elemWidth){
                 self.$xCoordInputValue.val(textX);
-            }
+            //}
         };
 
 
@@ -235,9 +306,9 @@
             self.$yCoordUpButton.click(function(){
                 //console.log(self.coordsX);
 
-                if(self.coordsY  > 0){
+                //if(self.coordsY  > -self.$elemHeight){
                     --self.coordsY;
-                }
+                //}
 
                 self.positionCssElem(self.coordsX,self.coordsY);
                 self.texWriteY(self.coordsY);
@@ -245,7 +316,7 @@
 
             self.$yCoordDownpButton.click(function(){
 
-                if(self.coordsY < self.$placeElemHeight){
+                if(self.coordsY < self.$placeElemHeight+self.$elemHeight){
                     ++self.coordsY;
                 }
                 self.positionCssElem(self.coordsX,self.coordsY);;
@@ -262,19 +333,19 @@
         // write text value Y
         this.texWriteY = function(textY){
 
-            var textY = Math.round(textY) || 0;
-            if(textY >= 0 && textY <= self.$placeElemHeight){
+            var textY = Math.round(textY);
+            //if(textY >= -self.$elemHeight && textY <= self.$placeElemHeight+self.$elemHeight){
                 self.$yCoordInputValue.val(textY);
-            }
+            //}
 
         };
 
         this.positionCssElem = function(posCssX,posCssY){
 
-            var posCssY = posCssY || 0,
-                posCssX = posCssX || 0;
+            var posCssY = posCssY,
+                posCssX = posCssX;
 
-            if((posCssX >= 0 && posCssX <= self.$placeElemWidth) && (posCssY >= 0 && posCssY <= self.$placeElemHeight)){
+            if((posCssX >= -self.$elemWidth && posCssX <= self.$placeElemWidth+self.$elemWidth) && (posCssY >= -self.$elemHeight && posCssY <= self.$placeElemHeight+self.$elemHeight)){
                 self.$elem.css({
                     left: posCssX + 'px',
                     top: posCssY + 'px'
@@ -297,7 +368,7 @@
         $yCoordDownpButton: $('.button__arrow_down'),
 
         //area elem
-        $placeElem: $('.picture'),
+        $placeElem: $('body'),
         $placeElemImg: $('.picture__apload'),
         $placeElemBodyImg: $('.picture__body'),
         //elem
@@ -315,7 +386,12 @@
         $centerRight : "centerRight",
         $bottomLeft : "bottomLeft",
         $bottomCenter : "bottomCenter",
-        $bottomRight : "bottomRight"
+        $bottomRight : "bottomRight",
+
+        //mosh buttons
+        $moshButton : $('.mosh'),
+        $moshDelButton : $('.mosh__del'),
+
     });
 
 }();

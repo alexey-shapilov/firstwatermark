@@ -60,7 +60,7 @@ $.gulp.task('build-with-php', ['sass'], function () {
 // Собираем sass -> css
 //
 $.gulp.task('sass', function () {
-    $.gulp.src(['./_dev/_sass/style.scss'])
+    return $.gulp.src(['./_dev/_sass/style.scss'])
         // вызов плагина gulp-compass
         .pipe($.compass({
             css: './_dev/_sass',
@@ -75,7 +75,7 @@ $.gulp.task('sass', function () {
 // Собираем jade
 //
 $.gulp.task('jade', function () {
-    $.gulp.src('./_dev/_jade/_pages/*.jade')
+    return $.gulp.src('./_dev/_jade/_pages/*.jade')
         // вызов плагина gulp-jade
         .pipe($.jade({
             pretty: true
@@ -107,8 +107,13 @@ $.gulp.task('build-without-php', ['jade','sass'], function () {
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(productionPath)).on('error', log);
 
-    $.gulp.src('./_dev/_sass/fonts/*')
-        .pipe($.gulp.dest('./app/css/fonts/'));
+        // шрифты
+        $.gulp.src('./_dev/_sass/fonts/*')
+            .pipe($.gulp.dest('./app/css/fonts/'));
+    
+        // изображения для стилей
+        $.gulp.src('./_dev/_sass/img/*')
+            .pipe($.gulp.dest('./app/css/img/'));
 });
 
 //
