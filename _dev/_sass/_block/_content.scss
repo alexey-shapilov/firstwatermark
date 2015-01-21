@@ -12,45 +12,66 @@
 }
 // --------------------------------------- Picture
 .picture {
-    background: #3b331d;
     float: left;
     height: $contentHeight;
     width: $pictureBlockWidth;
 }
 .picture__title {
-    
+    background: #ad9e75;
+    line-height: 70px;
+    padding: 0 0 0 25px;
 }
 .picture__body {
-    
+    background: #9b5528;
+    height: 600px;
+    padding: 40px 25px 25px 25px;
+    position: relative;
+}
+.picture__images {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    @extend .pictureWidth;
 }
 .picture__watermark {
-    
+    background: rgba(255, 119, 119, 0.44);
+    position: absolute;
+    z-index: 100;
+    @extend .pictureWidth;
 }
 .picture__upload {
-    
+    background: #eee;
+    position: relative;
+    z-index: 50;
+    @extend .pictureWidth;
 }
 
 // --------------------------------------- adjustment
 .adjust {
     background: #4f9852;
+    height: 100%;
     width: $ajustmentBlockWidth;
 }
 .adjust__title {
-    
-}
-.text {
-    
+    background: #eee;
+    line-height: 80px;
+    text-align: center;
 }
 
 // upload files
 .adjust__raw {
-    
+    border-top: 2px solid #f00;
+    position: relative;
+    &:first-child  {
+        border-top: 5px solid #00f;
+    }
 }
 .upload {
-    
+//    background: #ddd;
 }
+
 .upload__title {
-    
+    padding-left: 20px;
 }
 .upload__field {
     
@@ -66,26 +87,32 @@
 }
 
 // place watermark
-.adjust__raw {
-    
-}
 .place {
-    
+    background: #eee;
 }
 .place__title  {
-    
+    background: #eee;
 }
 .place__body {
-    
+    @include clearfix;
 }
 .grid {
-    
+    display: inline-block;
+    vertical-align: top;
+    width: ($grid)*3;
 }
-.grid__item grid {
-    
+.grid__item {
+    background: #f00;
+    float: left;
+    height: $grid;
+    width: $grid;
+    @include clearfix;
 }
 .coord {
-    
+    display: inline-block;
+    background: #f00;
+    vertical-align: top;
+    width: 150px;
 }
 .coord__raw {
     
@@ -94,7 +121,7 @@
     
 }
 .coord__field {
-    
+    width: 30px;
 }
 .coord__buttons {
     
@@ -137,9 +164,6 @@
 }
 
 // transparent
-.adjust__raw {
-    
-}
 .transparent {
     
 }
@@ -151,9 +175,6 @@
 }
 
 // download result
-.adjust__raw {
-    
-}
 .form {
     
 }
