@@ -1,4 +1,37 @@
-h1 {
-    color: #333;
-    background: #444;
+@mixin clearfix {
+    zoom:1;
+    &:before, &:after {
+        content: "\0020"; 
+        display: block; 
+        height: 0; 
+        overflow: hidden; 
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.aside {
+    background: #acaceb;
+    padding: 100px 0 0 0;
+    float: left;
+}
+.aside__coll {
+    
+    
+}
+.lang {
+    
+}
+.lang__list {
+    
+}
+.lang__item {
+    
+}
+.lang__link {
+    
+}
+.lang__text {
+    
 }
