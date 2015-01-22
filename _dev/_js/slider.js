@@ -4,7 +4,7 @@
         this.value = null; //текущее значение слайдера
         this.$rangeOpacity = options.$rangeOpacity; //запоминаем выбранные элементы в переменные
         this.$elemOpacity = options.$elemOpacity;
-        this.self = this; //ссылка на себя
+        //this.self = this; //ссылка на себя
     } //создаем функцию конструктор
 
 
@@ -14,7 +14,7 @@
 
     Slider.prototype.sliderActive = function () {
 
-        var self = this.self; // ссылка на себя
+        var self = this; // ссылка на себя
 
         this.$rangeOpacity.slider({// функция jquery ui, с настройками
 

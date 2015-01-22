@@ -1,198 +1,197 @@
-!function(){
+!function () {
 
-    var Position = function(){ //создаем функцию конструктор
+    var Tile = function (options) {
+        var
+            tileItemClass = 'tile-item',
+            tileWrapperClass = 'tile-wrapper',
+            self = this,
+            tile = options.tile,
+            tileContainer = options.tileContainer,
+            tileWrapper = $('<div/>'),
+            tileWidth = tile.width(),
+            tileHeight = tile.height();
+        tileWrapper.addClass(tileWrapperClass);
 
-        var self = this;
-
-        this.init =  function(options){
-
-            /****
-             *
-             * * drag and work with value X and Y
-             *
-             */
-
-                //x coords button and value
-            this.$xCoordInputValue = options.$xCoordInputValue;
-            this.$xCoordDownButton = options.$xCoordDownButton;
-            this.$xCoordUpButton = options.$xCoordUpButton;
-
-            //y coords button and value
-            this.$yCoordInputValue = options.$yCoordInputValue;
-            this.$yCoordDownpButton = options.$yCoordDownpButton;
-            this.$yCoordUpButton = options.$yCoordUpButton;
-
-
-            //style position our elem and listener coords when drag
-            this.$elem = options.$elem;
-            this.$elemWidth = options.$elem.width();
-            this.$elemHeight = options.$elem.height();
-            this.coordsX = 0;
-            this.coordsY = 0;
-
-            //area our watermark
-            this.$placeElem = options.$placeElem;
-            this.$placeElemImg = options.$placeElemImg;
-            this.$placeElemBodyImg = options.$placeElemBodyImg;
-
-            this.$placeElemImgWidth = this.$placeElemImg.width();
-            this.$placeElemImgHeight = this.$placeElemImg.height();
-
-            // this.elemTop = parseFloat(this.$placeElemImg.position().top);
-            // this.elemLeft = parseFloat(this.$placeElemImg.position().left);
-            // this.elemMarginTop = parseFloat(this.$placeElemImg.css('margin-top'));
-            // this.elemMarginLeft = parseFloat(this.$placeElemImg.css('margin-left'));
-
-            this.axis = {
-                top: (self.elemMarginTop == '0') ? self.elemTop : self.elemMarginTop,
-                left: (self.elemMarginLeft == '0') ? self.elemLeft : self.elemMarginLeft
-            }
-
-            this.$placeElemWidth = this.$placeElem.width() - this.$elem.width();
-            this.$placeElemHeight = this.$placeElem.height() - this.$elem.height();
-
-            /****
-             *
-             * * mosh work START
-             *
-             */
-            this.mosh = {
-                status: false,
-                moshClone: 'mosh__item',
-                moshBody: 'mosh__body',
-                copyX: self.$placeElemWidth/self.$elemWidth,
-                copyY :self.$placeElemHeight/self.$elemHeight,
-                moshButton : options.$moshButton,
-                moshDelButton : options.$moshDelButton
-            };
-
-            this.mosh.moshButton.click(function(){
-
-                if(!self.mosh.status){
-                    self.$elem.css({
-                        top: 0,
-                        left: 0
-                    });
-                self.$placeElemBodyImg.append('<div class="mosh__body">');
-
-                    for(var i = 0; i < self.mosh.copyX; i++ ) {
-                        for(var j = 0; j < self.mosh.copyY; j++) {
-                            self.$elem.clone().addClass(self.mosh.moshClone)
-                                .css('left', '+=' + self.$elemWidth * i)
-                                .css('top', '+=' + self.$elemHeight * j)
-                                .appendTo('.'+self.mosh.moshBody);
-                        }
-                    }
-                    //$('.mosh__item').appendTo('.mosh__body');
-                    self.$elem.css('display','none');
-                    $('.mosh__body').draggable();
-                }
-
-                self.mosh.status = true;
-            });
-
-            this.mosh.moshDelButton.click(function(){
-
-                if(self.mosh) {
-                    $('.mosh__body').remove();
-                    self.$elem.css('display', 'block');
-                }
-                self.mosh.status = false;
-            });
-
-            /****
-             *
-             * * mosh work END
-             *
-             */
-            // all work width X coords
-            this.xCoordsWork();
-
-            // all work width Y coords
-            this.yCoordsWork();
-
-            //drag working
-            self.$elem.on('drag', function( event, ui ) {
-                self.coordsX = ui.position.left;
-                self.coordsY = ui.position.top;
-                self.texWriteX(self.coordsX);
-                self.texWriteY(self.coordsY);
-            });
-
-            self.$elem.draggable({
-                stop: function( event, ui ) {
-                    self.coordsX = ui.position.left;
-                    self.coordsY = ui.position.top;
-                    self.texWriteX(self.coordsX);
-                    self.texWriteY(self.coordsY);
-                }
-            });
-            /****
-             *
-             * * grid work
-             *
-             */
-
-                //option
-            this.sectorWidth = 0;
-            this.sectorHeight = 0;
-
-            //place grid
-            this.$placeGrind = options.$placeGrind;
-
-            //top
-            this.$leftTop = options.$leftTop;
-            this.$rightTop = options.$rightTop;
-            this.$centerTop = options.$centerTop;
-
-            //center
-            this.$centerLeft = options.$centerLeft;
-            this.$centerCenter = options.$centerCenter;
-            this.$centerRight = options.$centerRight;
-
-            //bottom
-            this.$bottomLeft = options.$bottomLeft;
-            this.$bottomCenter = options.$bottomCenter;
-            this.$bottomRight = options.$bottomRight;
-
-            //event click
-            this.$placeGrind.click(function(e){
-                var event = e || window.event,
-                    target = event.target || event.srcElement;
-
-                self.eventPosition(target);
-
-            });
+        this.count = {
+            axisX: tileWidth / tileContainer.width(),
+            axisY: tileHeight / tileContainer.height()
         };
 
-        this.eventPosition = function(pos){
+        this.create = function () {
+            tile.css({
+                top: 0,
+                left: 0
+            });
+
+            var
+                img = '<img src="' + tile.attr('src') + '" class="' + tile.attr('class') + ' ' + tileItemClass + '" %style%>',
+                imgs = '';
+            for (var i = 0; i < self.count.axisX; i++) {
+                for (var j = 0; j < self.mosh.axisY; j++) {
+                    imgs += img.replace('%style%', 'style="left:' + (tileWidth * i) + 'px; top:' + (tileHeight * j) + 'px;"')
+                }
+            }
+            tileWrapper.html(imgs);
+
+            tile.css('display', 'none');
+            tileWrapper.draggable();
+        }
+    };
+
+    var Position = function (options) { //создаем функцию конструктор
+        this.options = options;
+        this.tile = new Tile(
+            {
+                tile: options.$watermark,
+                tileContainer: options.$mainImg
+            }
+        );
+
+        this.watermark = {
+            elem: options.$watermark,
+            width: options.$watermark.width(),
+            height: options.$watermark.height(),
+            position: {
+                left: 0,
+                top: 0
+            }
+        };
+
+        this.workspace = options.$workspace;
+        this.mainImg = {
+            elem: options.$mainImg,
+            width: options.$mainImg.width(),
+            height: options.$mainImg.height()
+        };
+        this.placeElemBodyImg = options.$placeElemBodyImg;
+        this.placeGrid = options.$placeGrid;
+        this.axisButtons = options.axisButtons;
+        this.gridButtons = function (elem) {
+            var
+                re = new RegExp(options.gridButtons + '_(\\d)', 'gi'),
+                gridNum = re.exec(elem.className),
+                result = '';
+
+            switch (gridNum[1]) {
+                case '1':
+                    result = 'leftTop';
+                    break;
+                case '2':
+                    result = 'centerTop';
+                    break;
+                case '3':
+                    result = 'rightTop';
+                    break;
+                case '4':
+                    result = 'leftCenter';
+                    break;
+                case '5':
+                    result = 'centerCenter';
+                    break;
+                case '6':
+                    result = 'rightCenter';
+                    break;
+                case '7':
+                    result = 'leftBottom';
+                    break;
+                case '8':
+                    result = 'centerBottom';
+                    break;
+                case '9':
+                    result = 'rightBottom';
+            }
+            return result;
+        }
+    };
+
+    Position.prototype.init = function () {
+        var
+            $tileBtn = this.options.$tileBtn,
+            self = this;
+
+        $tileBtn.on('click', function (event) {
+            self.tile.create();
+        });
+
+        /****
+         *
+         * * drag and work with value X and Y
+         *
+         */
+
+            //area our watermark
+            //this.$placeElemImg = options.$placeElemImg;
+            //this.$placeElemBodyImg = options.$placeElemBodyImg;
+
+        this.axis = {
+            top: (this.mainImg.elem.css('margin-top') == 0) ? this.mainImg.elem.position().top : this.mainImg.elem.css('margin-top'),
+            left: (this.mainImg.elem.css('margin-left') == 0) ? this.mainImg.elem.position().left : this.mainImg.elem.css('margin-left')
+        };
+
+        // all work width X coords
+        this.initCoordsX();
+
+        // all work width Y coords
+        this.initCoordsY();
+
+        //drag working
+        this.watermark.elem.on('drag', function (event, ui) {
+            self.watermark.position.left = ui.position.left;
+            self.watermark.position.top = ui.position.top;
+            self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
+            self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.y.input);
+        });
+
+        this.watermark.elem.draggable({
+            stop: function (event, ui) {
+                self.watermark.position.left = ui.position.left;
+                self.watermark.position.top = ui.position.top;
+                self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
+                self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.y.input);
+            }
+        });
+
+
+        /****
+         *
+         * * grid work
+         *
+         */
+
+        this.placeGrid.on('click', function (e) {
+            self.eventPosition(e.target);
+        });
+
+        this.eventPosition = function (pos) {
             var classNameTarget = pos.className,
                 posX,
                 posY,
-                sectorCenterX = self.$placeElemImgWidth/2,
-                sectorCenterY = self.$placeElemImgHeight/2;
+                sectorCenterX = self.mainImg.height / 2,
+                sectorCenterY = self.mainImg.height / 2;
+
+            console.log(this.gridButtons(pos));
 
             switch (classNameTarget) {
 
             /***
              * top position
              */
-                case self.$leftTop:
+                case this.$leftTop:
                     posX = this.axis.left;
                     posY = this.axis.top;
-                    self.movePositionElem(posX, posY);
+                    this.movePositionElem(posX, posY);
                     break;
 
-                case self.$centerTop:
-                    posX = sectorCenterX - self.$elemWidth/2 + this.axis.left ;
+                case this.$centerTop:
+                    posX = sectorCenterX - this.watermark.width / 2 + this.axis.left;
                     posY = this.axis.top;
-                    self.movePositionElem(posX, posY);
+                    this.movePositionElem(posX, posY);
                     break;
 
-                case self.$rightTop:
-                    posX = self.$placeElemImgWidth - self.$elemWidth + this.axis.left;
+                case this.$rightTop:
+                    posX = this.mainImg.width - this.watermark.width + this.axis.left;
                     posY = this.axis.top;
-                    self.movePositionElem(posX, posY);
+                    this.movePositionElem(posX, posY);
                     break;
 
 
@@ -200,43 +199,43 @@
              * center position
              */
 
-                case self.$centerLeft:
-                    posX = self.axis.left;
-                    posY = sectorCenterY - self.$elemHeight / 2 + self.axis.top;
+                case this.$centerLeft:
+                    posX = this.axis.left;
+                    posY = sectorCenterY - this.watermark.height / 2 + this.axis.top;
 
-                    self.movePositionElem(posX, posY);
+                    this.movePositionElem(posX, posY);
                     break;
-                case self.$centerCenter:
-                    posX = self.axis.left + sectorCenterX - self.$elemWidth/2;
-                    posY = self.axis.top + sectorCenterY - self.$elemHeight / 2;
+                case this.$centerCenter:
+                    posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
+                    posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
 
                     self.movePositionElem(posX, posY);
                     break;
                 case self.$centerRight:
-                    posX = self.axis.left + self.$placeElemImgWidth - self.$elemWidth;
-                    posY = self.axis.top + sectorCenterY - self.$elemHeight / 2;
+                    posX = this.axis.left + this.mainImg.width - this.$elemWidth;
+                    posY = this.axis.top + sectorCenterY - this.$elemHeight / 2;
 
-                    self.movePositionElem(posX, posY);
+                    this.movePositionElem(posX, posY);
                     break;
 
             /***
              * bottom position
              */
 
-                case self.$bottomLeft:
-                    posX = self.axis.left;
-                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
+                case this.$bottomLeft:
+                    posX = this.axis.left;
+                    posY = this.axis.top + this.mainImg.height - this.$elemHeight;
                     self.movePositionElem(posX, posY);
                     break;
-                case self.$bottomCenter:
-                    posX = self.axis.left + sectorCenterX - self.$elemWidth/2;
-                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
-                    self.movePositionElem(posX, posY);
+                case this.$bottomCenter:
+                    posX = this.axis.left + sectorCenterX - this.$elemWidth / 2;
+                    posY = this.axis.top + this.mainImg.height - this.$elemHeight;
+                    this.movePositionElem(posX, posY);
                     break;
-                case self.$bottomRight:
-                    posX = self.axis.left + self.$placeElemImgWidth - self.$elemWidth;
-                    posY = self.axis.top + self.$placeElemImgHeight - self.$elemHeight;
-                    self.movePositionElem(posX, posY);
+                case this.$bottomRight:
+                    posX = this.axis.left + this.mainImg.width - this.$elemWidth;
+                    posY = this.axis.top + this.mainImg.height - this.$elemHeight;
+                    this.movePositionElem(posX, posY);
                     break;
 
                 default:
@@ -244,151 +243,116 @@
             }
         };
 
-        this.movePositionElem = function(x,y){
+        this.movePositionElem = function (x, y) {
 
-            self.$elem.css({
+            self.watermark.elem.css({
                 top: y,
                 left: x
             });
-            self.coordsX = x;
-            self.coordsY = y;
-            self.texWriteX(x);
-            self.texWriteY(y);
+            self.watermark.position.left = x;
+            self.watermark.position.top = y;
+            self.axisButtons.writeCoord(x, self.axisButtons.x.input);
+            self.axisButtons.writeCoord(y, self.axisButtons.y.input);
         };
 
-        this.xCoordsWork = function() {
+        this.positionCssElem = function (posCssX, posCssY) {
 
-
-            // START x coords and input value
-            self.$xCoordDownButton.click(function(){
-                //console.log(self.coordsX);
-                console.log(self.coordsX);
-                //if(self.coordsX  > -self.$elemWidth){
-                    --self.coordsX;
-                //}
-
-                self.positionCssElem(self.coordsX,self.coordsY);
-                self.texWriteX(self.coordsX);
-            });
-
-            self.$xCoordUpButton.click(function(){
-
-                //if(self.coordsX < self.$placeElemWidth+self.$elemWidth){
-                    ++self.coordsX;
-                //}
-                self.positionCssElem(self.coordsX,self.coordsY);
-                self.texWriteX(self.coordsX);
-            });
-
-            self.$xCoordInputValue.change(function(){
-                self.coordsX = this.value;
-                self.positionCssElem(self.coordsX,self.coordsY);
-            });
-            // END x coords and input value
-        };
-
-        // write text value X
-        this.texWriteX = function(textX){
-
-            var textX = Math.round(textX);
-            //if(textX >= -self.$elemWidth && textX <= self.$placeElemWidth+self.$elemWidth){
-                self.$xCoordInputValue.val(textX);
-            //}
-        };
-
-
-        this.yCoordsWork = function() {
-
-            // START y coords and input value
-            self.$yCoordUpButton.click(function(){
-                //console.log(self.coordsX);
-
-                //if(self.coordsY  > -self.$elemHeight){
-                    --self.coordsY;
-                //}
-
-                self.positionCssElem(self.coordsX,self.coordsY);
-                self.texWriteY(self.coordsY);
-            });
-
-            self.$yCoordDownpButton.click(function(){
-
-                if(self.coordsY < self.$placeElemHeight+self.$elemHeight){
-                    ++self.coordsY;
-                }
-                self.positionCssElem(self.coordsX,self.coordsY);;
-                self.texWriteY(self.coordsY);
-            });
-
-            self.$yCoordInputValue.change(function(){
-                self.coordsY = this.value;
-                self.positionCssElem(self.coordsX,self.coordsY);
-            });
-            // END x coords and input value
-        };
-
-        // write text value Y
-        this.texWriteY = function(textY){
-
-            var textY = Math.round(textY);
-            //if(textY >= -self.$elemHeight && textY <= self.$placeElemHeight+self.$elemHeight){
-                self.$yCoordInputValue.val(textY);
-            //}
-
-        };
-
-        this.positionCssElem = function(posCssX,posCssY){
-
-            var posCssY = posCssY,
-                posCssX = posCssX;
-
-            if((posCssX >= -self.$elemWidth && posCssX <= self.$placeElemWidth+self.$elemWidth) && (posCssY >= -self.$elemHeight && posCssY <= self.$placeElemHeight+self.$elemHeight)){
-                self.$elem.css({
-                    left: posCssX + 'px',
-                    top: posCssY + 'px'
+            if ((posCssX >= -this.watermark.width && posCssX <= this.mainImg.width + this.watermark.width) && (posCssY >= -this.watermark.height && posCssY <= this.mainImg.height + this.watermark.height)) {
+                this.watermark.elem.css({
+                    left: posCssX,
+                    top: posCssY
                 });
             }
         };
 
     };
 
-    p = new Position(); //создаем наш бегунок
+    Position.prototype.initCoordsX = function () {
+        var self = this;
+        // START x coords and input value
+        this.axisButtons.x.btnDown.on('click', function () {
+            console.log();
+            self.watermark.position.left -= 1;
+            self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
+            self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
+        });
 
-    p.init({
+        this.axisButtons.x.btnUp.on('click', function () {
+            console.log(self.watermark.position.left);
+            self.watermark.position.left += 1;
+            self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
+            self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
+        });
+
+        this.axisButtons.x.input.change(function () {
+            self.watermark.position.left = this.value;
+            self.positionCssElem(sself.watermark.position.left, self.watermark.position.top);
+        });
+        // END x coords and input value
+    };
+
+
+    Position.prototype.initCoordsY = function () {
+        var self = this;
+        // START y coords and input value
+        this.axisButtons.y.btnUp.on('click', function () {
+            --self.watermark.position.top;
+            self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
+            self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.x.input);
+        });
+
+        this.axisButtons.y.btnDown.on('click', function () {
+            if (self.coordsY < self.$placeElemHeight + self.watermark.height) {
+                ++self.watermark.position.top;
+            }
+            self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
+            self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.x.input);
+        });
+
+        this.axisButtons.y.input.change(function () {
+            self.watermark.position.top = this.value;
+            self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
+        });
+        // END x coords and input value
+    };
+
+    var p = new Position({
 
         //x and Y value, button
-        $xCoordInputValue: $('#x_coordinate'),
-        $xCoordDownButton: $('.coord__arrow_down'),
-        $xCoordUpButton: $('.coord__arrow_up'),
-        $yCoordInputValue: $('#y_coordinate'),
-        $yCoordUpButton: $('.button__arrow_up'),
-        $yCoordDownpButton: $('.button__arrow_down'),
+        axisButtons: {
+            x: {
+                input: $('#x_coordinate'),
+                btnUp: $('.coord__arrow_up'),
+                btnDown: $('.coord__arrow_down')
+            },
+            y: {
+                input: $('#y_coordinate'),
+                btnUp: $('.button__arrow_up'),
+                btnDown: $('.button__arrow_down')
+            },
+            writeCoord: function (coord, input) {
+                input.val(Math.round(coord));
+            }
+        },
 
         //area elem
-        $placeElem: $('body'),
-        $placeElemImg: $('.picture__upload'),
+        $workspace: $('body'),
+        $mainImg: $('.picture__upload'),
         $placeElemBodyImg: $('.picture__body'),
         //elem
-        $elem: $('.picture__watermark'),
+        $watermark: $('.picture__watermark'),
 
         // place grid events
-        $placeGrind : $('.grid'),
+        $placeGrid: $('.grid'),
 
         //position grid buttons
-        $leftTop : "leftTop",
-        $rightTop : "rightTop",
-        $centerTop : "centerTop",
-        $centerLeft : "centerLeft",
-        $centerCenter : "centerCenter",
-        $centerRight : "centerRight",
-        $bottomLeft : "bottomLeft",
-        $bottomCenter : "bottomCenter",
-        $bottomRight : "bottomRight",
+        gridButtons: 'grid__item',
 
         //mosh buttons
-        $moshButton : $('.mosh'),
-        $moshDelButton : $('.mosh__del'),
 
-    });
+        $tileBtn: $('.tile')
+    }); //создаем наш бегунок
+
+    p.init();
 
 }();
