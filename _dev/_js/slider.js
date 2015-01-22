@@ -1,4 +1,4 @@
-!function ($) {
+!function () {
 
     function Slider(options) {
         this.value = null; //текущее значение слайдера
@@ -31,12 +31,15 @@
     };
 
     Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
-        this.$elemOpacity.css('opacity', val);
+        this.$elemOpacity.css('opacity', val); //изменение прозрачности водяного знака
+        $('.mosh__item').css('opacity', val);//изменение прозрачности копий водяного знака
     };
+
     var slider = new Slider({// указываем ему необходимые элементы для работы
         $rangeOpacity: $('.transparent__body'),
         $elemOpacity: $('.picture__watermark')
     }); //создаем наш бегунок
 
     slider.init();
-}(jQuery);
+    console.log(slider);
+}();
