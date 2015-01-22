@@ -26,8 +26,8 @@ $(function () {
       return false;
     }
 
-    var waterX = $waterEl[0].offsetTop;
-    var waterY = $waterEl[0].offsetLeft;
+    var waterX = $waterEl[0].offsetLeft;
+    var waterY = $waterEl[0].offsetTop;
     var opacity = $waterEl.css('opacity');
 
     window.open('/index.php?q=download.ajax&i1=' + i1 + '&i2=' + i2 + 
