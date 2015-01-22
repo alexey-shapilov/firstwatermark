@@ -1,6 +1,20 @@
 @import "../_mixin/_mixin";
 @import "../_mixin/_variables";
 
+/* =====================================================
+    setings from HTML5boilerplate classic mode
+===================================================== */
+//html,
+//button,
+//input,
+//select,
+//textarea {
+//    color: #222;
+//}
+//html {
+//    font-size: 1em;
+//    line-height: 1.4;
+//}
 
 // ---------------------------------------
 html * {
@@ -8,7 +22,6 @@ html * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 body, html {
   height: 100%;
 }
@@ -32,7 +45,6 @@ h1,h2,h3,h4,h5,h6 {
 a {
     text-decoration: none;
 }
-
 input,
 button {
 	outline: none;
@@ -40,17 +52,15 @@ button {
 // ---------------------------------------
 
 
-
-
 .container {
-    background: #777;
-//    background: url(img/common_bg.jpg) no-repeat;
-    background-size: 101%;
+//    background: #777;
+    background: url(img/common_bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     height: 100%;
     position: relative;
     width: 100%;
 }
-
 header,
 aside,
 footer,
@@ -62,7 +72,6 @@ aside,
 footer {
     z-index: 5;
 }
-
 .content {
     margin-top: -($headerHeight);
     margin-bottom: -($footerHeight);
@@ -71,14 +80,14 @@ footer {
     padding-bottom: $footerHeight;
 }
 .wrapper {
-    background: #2e231b;
+    background: rgba(46, 54, 65, 0.6);
     margin: 0 auto;
     position: relative;
     margin-top: 10px;
     width: $wrapperWidth;
     @include clearfix;
 }
-
 .text {
     
 }
+
