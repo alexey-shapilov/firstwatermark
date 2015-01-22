@@ -18,9 +18,9 @@
                     height: 0
                 };
             if (data.result.src) {
-                pic.hide();
                 console.log('Новый фон ===================: ');
                 pic.removeProp('style');
+                pic.hide();
                 pic.attr('src', data.result.src);
                 pic.on('load', (function () {
                         console.log('сработало событие pic.load');
