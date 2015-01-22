@@ -62,11 +62,13 @@
 
 // --------------------------------------- adjustment
 .adjust {
-    background: #eee;
+    background: #f1f1f5;
     min-height: $contentHeight;
     width: $ajustmentBlockWidth;
 }
 .adjust__title {
+    font-family: robotothin;
+    font-size: 16px;
     line-height: 80px;
     text-align: center;
 }
@@ -74,8 +76,9 @@
     position: relative;
 }
 .adjust__raw {
+//    background: #0ff;
     border-top: 1px solid #f00;
-    padding: 0 20px;
+    padding: 0 10px;
     position: relative;
     &:first-child {
         border-top: none;
@@ -87,7 +90,7 @@
         }
     }
     &:before {
-        border-top: solid 10px #f00;
+        border-top: solid 10px #f97e76;
         border-bottom: solid 10px transparent;
         border-right: solid 10px transparent;
         border-left: solid 10px transparent;
@@ -98,7 +101,7 @@
         top: 0px;
     }
     &:after {
-        border-top: solid 10px #eee;
+        border-top: solid 10px #f1f1f5;
         border-bottom: solid 10px transparent;
         border-right: solid 10px transparent;
         border-left: solid 10px transparent;
@@ -113,33 +116,46 @@
 
 // upload files
 .upload {
-    padding: 0px 0 20px 0;
+    padding: 0 10px 20px 10px;
 }
 .upload__item {
-    padding: 10px 0 0 0;
+    padding: 10px 0;
 }
 .upload__title {
-    line-height: 30px;
+//    background: #aaa;
+    font: normal 16px robotolight;
+    line-height: 20px;
+}
+.upload__raw {
+    display: block;
+    width: 100%;
+    @include clearfix;
 }
 .upload__field {
-
+    background: #eee;
+    border: 1px solid #333;
+    display: block;
+    float: left;
+    height: 30px;
+    padding: 0 0 0 5px;
+    width: 180px;
 }
-.upload {
-
+.upload__button {
+    background: #f97e76;
+    border: none;
+    display: block;
+    float: left;
+    height: 30px;
+    width: 40px
 }
-.upload__title {
-
-}
-.upload__field {
-
-}
-
 
 // place watermark
 .place {
-    
+    padding: 0 10px;
 }
 .place__title  {
+//    background: #fff;
+    font: normal 16px robotolight;
     line-height: 45px;
 }
 .place__body {
@@ -157,15 +173,15 @@
 }
 .grid__item {
     border-style: solid;
-    border-color: #f00;
-    background: #888;
+    border-color: #f97e76;
+    background: #dbe1e8;
     display: block;
     float: left;
     height: $grid;
     width: $grid;
     @include clearfix;
     &:hover {
-        background: #f77;
+        background: #f97e76;
         border: none;
     }
 }
@@ -223,18 +239,21 @@
     display: block;
     line-height: 20px;
     text-align: center;
-    width: 25px;
+    width: 30px;
 }
 .coord__arrow {
+    background: transparent;
+//    background: #999;
     border: none;
     display: block;
+    font: normal 14px robotolight;
     line-height: 12px;
-    width: 20px;
+    width: 12px;
     margin: 0;
     padding: 0;
 }
 .coord__arrow_up {
-
+    
 }
 .coord__arrow_down {
     margin: 4px 0 0 0;
@@ -243,17 +262,17 @@
 
 // transparent
 .transparent {
-
+    padding: 0 10px 15px 10px;
 }
 .transparent__title {
+    font: normal 16px robotolight;
     line-height: 45px;
 }
 .transparent__body {
-    padding: 30px 0;
+    padding: 15px 0;
 }
 .transparent__item {
-    background: #777;
-    height: 4px;
+    height: 3px;
     width: 100%;
 }
 
@@ -262,16 +281,32 @@
 .form {
     display: block;
     min-height: 100px;
-    padding: 100px 0 0 0;
+    padding: 60px 0 0 0;
     text-align: center;
+    @include clearfix;
 }
 .form__coll {
     float: left;
-    text-align: center;
+    text-align: left;
     width: 50%;
 }
+.form__coll_reset {
+//    background: #33f;
+    padding: 0 20px 0 0;
+}
+.form__coll_submit {
+//    background: #f33;
+    padding: 0 0 0 20px;
+}
 .form__button {
+    border: none;
     display: inline-block;
-    line-height: 26px;
-    padding: 0 10px;
+    height: 42px;
+    width: 100%;
+}
+.form__button_reset {
+    background: #c1cfd9;
+}
+.form__button_submit {
+    background: #f97e76;
 }

@@ -26,10 +26,14 @@ block content
                         .upload
                             .upload__item
                                 label.upload__title(for="upload_picture") Исходное изображежние
-                                input.upload__field#upload_picture(type="file",name="upload")
+                                .upload__raw
+                                    input.upload__field#upload_picture(type="text",name="upload")
+                                    button.upload__button(type="file",name="upload")
                             .upload__item
                                 label.upload__title(for="upload_watermark") Водяной знак
-                                input.upload__field#upload_watermark(type="file",name="upload")
+                                .upload__raw
+                                    input.upload__field#upload_watermark(type="text",name="upload")
+                                    button.upload__button(type="file",name="upload")
 
                     // place watermark
                     .adjust__raw
@@ -69,7 +73,7 @@ block content
                     // download result
                     .adjust__raw
                         form.form
-                            .form__coll
-                                input.form__button(type="reset" value="Сброс")
-                            .form__coll
-                                input.form__button(type="submit" value="Скачать")
+                            .form__coll.form__coll_reset
+                                input.form__button.form__button_reset(type="reset" value="Сброс")
+                            .form__coll.form__coll_submit
+                                input.form__button.form__button_submit(type="submit" value="Скачать")
