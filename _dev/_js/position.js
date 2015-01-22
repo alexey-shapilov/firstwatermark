@@ -38,10 +38,10 @@
             this.$placeElemImgWidth = this.$placeElemImg.width();
             this.$placeElemImgHeight = this.$placeElemImg.height();
 
-            this.elemTop = parseFloat(this.$placeElemImg.position().top);
-            this.elemLeft = parseFloat(this.$placeElemImg.position().left);
-            this.elemMarginTop = parseFloat(this.$placeElemImg.css('margin-top'));
-            this.elemMarginLeft = parseFloat(this.$placeElemImg.css('margin-left'));
+            // this.elemTop = parseFloat(this.$placeElemImg.position().top);
+            // this.elemLeft = parseFloat(this.$placeElemImg.position().left);
+            // this.elemMarginTop = parseFloat(this.$placeElemImg.css('margin-top'));
+            // this.elemMarginLeft = parseFloat(this.$placeElemImg.css('margin-left'));
 
             this.axis = {
                 top: (self.elemMarginTop == '0') ? self.elemTop : self.elemMarginTop,
