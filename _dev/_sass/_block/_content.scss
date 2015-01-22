@@ -16,16 +16,16 @@
 // --------------------------------------- Picture
 .picture {
     float: left;
+    font-family: robotothin;
     height: $contentHeight;
     width: $pictureBlockWidth;
 }
 .picture__title {
-    background: #ad9e75;
+    color: #eee;
     line-height: 70px;
     padding: 0 0 0 25px;
 }
 .picture__body {
-    background: #9b5528;
     height: 600px;
     padding: 40px 25px 25px 25px;
     position: relative;
@@ -37,7 +37,7 @@
     @include pictureWidth;
 }
 .picture__wrapper {
-    background: rgba(255, 119, 119, 0.44);
+    position: relative;
     @include pictureWidth;
 }
 .picture__watermark {
@@ -45,13 +45,20 @@
     z-index: 100;
 }
 .picture__upload {
-    background: #eee;
     position: absolute;
     margin: auto;
-    left: 0; bottom: 0; top: 0; right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
     z-index: 50;
 }
-
+.picture__bg {
+    background: url("img/grid.png");
+    position: relative;
+    z-index: 10;
+    @include pictureWidth;
+}
 
 // --------------------------------------- adjustment
 .adjust {

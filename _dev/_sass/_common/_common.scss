@@ -39,8 +39,8 @@ button {
 
 
 .container {
-    background: #777;
-//    background: url(img/common_bg.jpg) no-repeat;
+//    background: #777;
+    background: url(img/common_bg.jpg) no-repeat;
     background-size: 101%;
     height: 100%;
     position: relative;
@@ -65,7 +65,7 @@ footer {
     padding-bottom: $footerHeight;
 }
 .wrapper {
-    background: #2e231b;
+    background: rgba(46, 54, 65, 0.6);
     margin: 0 auto;
     position: relative;
     margin-top: 10px;

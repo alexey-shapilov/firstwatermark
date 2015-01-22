@@ -54,9 +54,6 @@
     &:hover {
         background-position: -40px -143px;
     }
-//    &:hover ~ .social__list {
-//        padding: 10px 0 0 0;
-//    }
     display: inline-block;
     vertical-align: top;
     @include socialLinks;
@@ -64,9 +61,6 @@
 .social__list {
     display: none;
     vertical-align: top;
-//    &:hover {
-//        padding: 10px 0 0 0;
-//    }
 }
 
 .social__item {
