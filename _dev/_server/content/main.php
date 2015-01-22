@@ -9,7 +9,9 @@ ob_start();
                 <div class="picture">
                     <h1 class="picture__title">Генератор водяных знаков</h1>
                     <div class="picture__body">
-                        <div class="picture__images"><img class="picture__watermark"><img class="picture__upload"></div>
+                        <div class="picture__images">
+                            <div class="picture__wrapper"><img class="picture__watermark"><img class="picture__upload"></div>
+                        </div>
                     </div>
                 </div>
             </section>

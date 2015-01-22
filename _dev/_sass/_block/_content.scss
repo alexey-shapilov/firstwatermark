@@ -2,7 +2,7 @@
 @import "../_mixin/_variables";
 
 .workspace {
-    
+
 }
 .workspace_left {
     float: left;
@@ -31,19 +31,26 @@
     height: 100%;
     width: 100%;
     position: relative;
-    @extend .pictureWidth;
+//    @extend .pictureWidth;
+    @include pictureWidth;
+}
+.picture__wrapper {
+    background: rgba(255, 119, 119, 0.44);
+    @include pictureWidth;
 }
 .picture__watermark {
-    background: rgba(255, 119, 119, 0.44);
+//    background: rgba(255, 119, 119, 0.44);
     position: absolute;
     z-index: 100;
-    @extend .pictureWidth;
+//    @extend .pictureWidth;
 }
 .picture__upload {
     background: #eee;
-    position: relative;
+    position: absolute;
+    margin: auto;
+    left: 0; bottom: 0; top: 0; right: 0;
     z-index: 50;
-    @extend .pictureWidth;
+//    @extend .pictureWidth;
 }
 
 // --------------------------------------- adjustment
@@ -110,16 +117,16 @@
     line-height: 30px;
 }
 .upload__field {
-    
+
 }
 .upload {
-    
+
 }
 .upload__title {
-    
+
 }
 .upload__field {
-    
+
 }
 
 
@@ -232,7 +239,7 @@
     padding: 0;
 }
 .coord__arrow_up {
-    
+
 }
 .coord__arrow_down {
     margin: 4px 0 0 0;
@@ -241,7 +248,7 @@
 
 // transparent
 .transparent {
-    
+
 }
 .transparent__title {
     line-height: 45px;
