@@ -22,11 +22,12 @@ block content
                 .adjust__body
                     .adjust__raw
                         .upload
-                            label.upload__title(for="upload_picture") Исходное изображежние
-                            input.upload__field#upload_picture(type="file",name="upload")
-                        .upload
-                            label.upload__title(for="upload_watermark") Водяной знак
-                            input.upload__field#upload_watermark(type="file",name="upload")
+                            .upload__item
+                                label.upload__title(for="upload_picture") Исходное изображежние
+                                input.upload__field#upload_picture(type="file",name="upload")
+                            .upload__item
+                                label.upload__title(for="upload_watermark") Водяной знак
+                                input.upload__field#upload_watermark(type="file",name="upload")
 
                     // place watermark
                     .adjust__raw
@@ -41,15 +42,19 @@ block content
                                 // coordinate
                                 .coord
                                     .coord__raw
-                                        label.coord__title(for="x_coordinate") X
-                                        input.coord__field#x_coordinate(type="text")
-                                        .coord__buttons
+                                        .coord__coll
+                                            label.coord__title(for="x_coordinate") X
+                                        .coord__coll
+                                            input.coord__field#x_coordinate(type="text")
+                                        .coord__coll
                                             input.coord__arrow.coord__arrow_up(type="button" value="∧")
                                             input.coord__arrow.coord__arrow_down(type="button" value="∨")
                                     .coord__raw
-                                        label.coord__title(for="x_coordinate") Y
-                                        input.coord__field#x_coordinate(type="text")
-                                        .coord__buttons
+                                        .coord__coll
+                                            label.coord__title(for="y_coordinate") Y
+                                        .coord__coll
+                                            input.coord__field#y_coordinate(type="text")
+                                        .coord__coll
                                             input.coord__arrow.coord__arrow_up(type="button" value="∧")
                                             input.coord__arrow.coord__arrow_down(type="button" value="∨")
 
@@ -58,7 +63,7 @@ block content
                         .transparent
                             h3.transparent__title Прозрачность
                             .transparent__body
-
+                                .transparent__item
                     // download result
                     .adjust__raw
                         form.form
