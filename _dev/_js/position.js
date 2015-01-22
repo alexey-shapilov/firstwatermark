@@ -51,9 +51,6 @@
             this.$placeElemWidth = this.$placeElem.width() - this.$elem.width();
             this.$placeElemHeight = this.$placeElem.height() - this.$elem.height();
 
-            this.$placeElemWidthtForGrid = this.$placeElem.width();
-            this.$placeElemHeightForGrid = this.$placeElem.height();
-
             /****
              *
              * * mosh work START
@@ -67,7 +64,7 @@
                 copyY :self.$placeElemHeight/self.$elemHeight,
                 moshButton : options.$moshButton,
                 moshDelButton : options.$moshDelButton
-            }
+            };
 
             this.mosh.moshButton.click(function(){
 
@@ -369,7 +366,7 @@
 
         //area elem
         $placeElem: $('body'),
-        $placeElemImg: $('.picture__apload'),
+        $placeElemImg: $('.picture__upload'),
         $placeElemBodyImg: $('.picture__body'),
         //elem
         $elem: $('.picture__watermark'),
