@@ -48,12 +48,12 @@
 
 // --------------------------------------- adjustment
 .adjust {
-    background: #aaa;
+    background: #eee;
     min-height: $contentHeight;
     width: $ajustmentBlockWidth;
 }
 .adjust__title {
-    background: #eee;
+//    background: #eee;
     line-height: 80px;
     text-align: center;
 }
@@ -85,7 +85,7 @@
         top: 0px;
     }
     &:after {
-        border-top: solid 10px #aaa;
+        border-top: solid 10px #eee;
         border-bottom: solid 10px transparent;
         border-right: solid 10px transparent;
         border-left: solid 10px transparent;
@@ -100,11 +100,14 @@
 
 // upload files
 .upload {
-    background: #aaa;
-    padding: 10px 0;
+//    background: #aaa;
+    padding: 0px 0 20px 0;
+}
+.upload__item {
+    padding: 10px 0 0 0;
 }
 .upload__title {
-    background: #999;
+    line-height: 30px;
 }
 .upload__field {
     
@@ -122,20 +125,22 @@
 
 // place watermark
 .place {
-    background: #eee;
+//    background: #eee;
 }
 .place__title  {
-    background: #ddd;
+//    background: #ddd;
     line-height: 45px;
 }
 .place__body {
     padding: 20px 0;
+    @include clearfix;
 }
 
 
 // grid
 .grid {
-    display: inline-block;
+//    display: inline-block;
+    float: left;
     vertical-align: top;
     width: ($grid)*3;
     @include clearfix;
@@ -144,10 +149,15 @@
     border-style: solid;
     border-color: #f00;
     background: #888;
+    display: block;
     float: left;
     height: $grid;
     width: $grid;
     @include clearfix;
+    &:hover {
+        background: #f77;
+        border: none;
+    }
 }
 .grid__item_1 {
     border-width: 1px 0px 0px 1px;
@@ -180,30 +190,52 @@
 
 // coordinate
 .coord {
-    display: inline-block;
-    background: #66f;
+//    display: inline-block;
+//    background: #66f;
+    float: right;
+    padding: 5px 0 0 0;
     vertical-align: top;
 }
 .coord__raw {
-    
+    text-align: center;
+    padding: 15px 0 0 10px;
+    width: 100%;
+    @include clearfix;
 }
+.coord__coll {
+//    display: inline-block;
+//    background: #a00;
+//    height: 20px;
+    float: left;
+    padding: 0 0 0 5px;
+    vertical-align: top;
+//    width: 33%;
+}
+
 .coord__title {
-    
+    display: inline-block;
+    line-height: 30px;
 }
 .coord__field {
-    width: 30px;
+    display: block;
+    line-height: 20px;
+    text-align: center;
+    width: 25px;
 }
-.coord__buttons {
-    
-}
+
 .coord__arrow {
-    
+    border: none;
+    display: block;
+    line-height: 12px;
+    width: 20px;
+    margin: 0;
+    padding: 0;
 }
 .coord__arrow_up {
     
 }
 .coord__arrow_down {
-    
+    margin: 4px 0 0 0;
 }
 
 
@@ -212,26 +244,32 @@
     
 }
 .transparent__title {
-    
+    line-height: 45px;
 }
 .transparent__body {
-    
+    padding: 30px 0;
 }
-
+.transparent__item {
+    background: #777;
+    height: 4px;
+    width: 100%;
+}
 
 // download result
 .form {
-    
+//    background: #ddd;
+    display: block;
+    min-height: 100px;
+    padding: 100px 0 0 0;
+    text-align: center;
 }
 .form__coll {
-    
+    float: left;
+    text-align: center;
+    width: 50%;
 }
 .form__button {
-    
-}
-.form__coll {
-    
-}
-.form__button {
-    
+    display: inline-block;
+    line-height: 26px;
+    padding: 0 10px;
 }
