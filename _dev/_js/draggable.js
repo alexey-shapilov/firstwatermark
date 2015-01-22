@@ -1,4 +1,4 @@
-(function($){
+(function(){
 
     var Drag = function(){ //создаем функцию конструктор
 
@@ -11,13 +11,15 @@
             this.$dragPlace = options.$dragPlace; //запоминаем выбранные элементы в переменные
             this.$dragElem = options.$dragElem;
 
+            this.areaWidth =  this.$dragPlace.width() + this.$dragElem.width();
+            this.areaHeight =  this.$dragPlace.height() + this.$dragElem.height();
             self.dragActive(); // вызываем метод у конструктора
-
+            //console.log([self.areaHeight, self.areaWidth]);
         };
         this.dragActive = function(){
 
             this.$dragElem.draggable({
-                containment: this.$dragPlace,
+                //containment: [-(self.$dragElem.width()), 0, self.areaHeight, self.areaWidth, self.areaHeight],
                 scroll: false
             })
         };
@@ -31,5 +33,5 @@
         $dragElem: $('.picture__watermark')
     });
 
-})(jQuery);
+}());
 

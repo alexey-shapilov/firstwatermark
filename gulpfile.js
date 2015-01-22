@@ -125,7 +125,7 @@ $.gulp.task('watch-without-php', ['build-without-php'], function () {
 });
 
 $.gulp.task('watch-with-php', ['build-with-php'], function () {
-    $.gulp.watch(['./_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['build-without-php']);
+    $.gulp.watch(['./_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
 });
 
 function log(error) {

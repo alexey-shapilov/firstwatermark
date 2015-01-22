@@ -56,13 +56,21 @@
 }
 .social__item {
     display: block;
-    background: #943aef;
     overflow: hidden;
     text-indent: -99999px;
     @extend .socialLinks;
 }
 .social__link {
     display: block;
+}
+.social__item_facebook {
+    background: #943aef;
+}
+.social__item_twitter {
+    background: #6c25b4;
+}
+.social__item_vkontacte {
+    background: #3b1660;
 }
 .social__text {
     line-height: 41px;
