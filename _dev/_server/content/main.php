@@ -78,7 +78,7 @@ ob_start();
                             <input type="reset" value="Сброс" class="form__button">
                         </div>
                         <div class="form__coll">
-                            <input type="submit" value="Скачать" class="form__button">
+                            <input type="button" value="Скачать" class="form__button form__download-button">
                         </div>
                     </form>
                 </div>

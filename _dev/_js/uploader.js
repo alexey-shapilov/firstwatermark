@@ -1,7 +1,8 @@
 $(function () {
   'use strict';
 
-  var url = '/uploader.ajax';
+  var url = '/index.php?q=uploader.ajax';
+  console.log('uploader init');
 
   $('#upload_picture').fileupload({
     url: url,
@@ -9,6 +10,7 @@ $(function () {
     done: function (e, data) {
       if(data.result.src) {
         $('.picture__upload').attr('src', data.result.src);
+        console.log('upload succesful');
       } else {
         console.log('error uploading the original file');
       }
