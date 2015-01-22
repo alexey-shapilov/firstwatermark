@@ -66,43 +66,8 @@
         this.placeElemBodyImg = options.$placeElemBodyImg;
         this.placeGrid = options.$placeGrid;
         this.axisButtons = options.axisButtons;
-        this.gridButtons = function (elem) {
-            var
-                re = new RegExp(options.gridButtons + '_(\\d)', 'gi'),
-                gridNum = re.exec(elem.className),
-                result = '';
-
-            switch (gridNum[1]) {
-                case '1':
-                    result = 'leftTop';
-                    break;
-                case '2':
-                    result = 'centerTop';
-                    break;
-                case '3':
-                    result = 'rightTop';
-                    break;
-                case '4':
-                    result = 'leftCenter';
-                    break;
-                case '5':
-                    result = 'centerCenter';
-                    break;
-                case '6':
-                    result = 'rightCenter';
-                    break;
-                case '7':
-                    result = 'leftBottom';
-                    break;
-                case '8':
-                    result = 'centerBottom';
-                    break;
-                case '9':
-                    result = 'rightBottom';
-            }
-            return result;
-        }
-    };
+        this.gridButtons = options.gridButtons;
+    }
 
     Position.prototype.init = function () {
         var
@@ -167,28 +132,28 @@
                 posX,
                 posY,
                 sectorCenterX = self.mainImg.height / 2,
-                sectorCenterY = self.mainImg.height / 2;
+                sectorCenterY = self.mainImg.height / 2,
+                re = new RegExp(self.gridButtons + '_(\\d)', 'gi'),
+                gridNum = re.exec(classNameTarget);
 
-            console.log(this.gridButtons(pos));
-
-            switch (classNameTarget) {
+            switch (gridNum[1]) {
 
             /***
              * top position
              */
-                case this.$leftTop:
+                case '1':
                     posX = this.axis.left;
                     posY = this.axis.top;
                     this.movePositionElem(posX, posY);
                     break;
 
-                case this.$centerTop:
+                case '2':
                     posX = sectorCenterX - this.watermark.width / 2 + this.axis.left;
                     posY = this.axis.top;
                     this.movePositionElem(posX, posY);
                     break;
 
-                case this.$rightTop:
+                case '3':
                     posX = this.mainImg.width - this.watermark.width + this.axis.left;
                     posY = this.axis.top;
                     this.movePositionElem(posX, posY);
@@ -199,19 +164,19 @@
              * center position
              */
 
-                case this.$centerLeft:
+                case '4':
                     posX = this.axis.left;
                     posY = sectorCenterY - this.watermark.height / 2 + this.axis.top;
 
                     this.movePositionElem(posX, posY);
                     break;
-                case this.$centerCenter:
+                case '5':
                     posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
                     posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
 
                     self.movePositionElem(posX, posY);
                     break;
-                case self.$centerRight:
+                case '6':
                     posX = this.axis.left + this.mainImg.width - this.$elemWidth;
                     posY = this.axis.top + sectorCenterY - this.$elemHeight / 2;
 
@@ -222,17 +187,17 @@
              * bottom position
              */
 
-                case this.$bottomLeft:
+                case '7':
                     posX = this.axis.left;
                     posY = this.axis.top + this.mainImg.height - this.$elemHeight;
                     self.movePositionElem(posX, posY);
                     break;
-                case this.$bottomCenter:
+                case '8':
                     posX = this.axis.left + sectorCenterX - this.$elemWidth / 2;
                     posY = this.axis.top + this.mainImg.height - this.$elemHeight;
                     this.movePositionElem(posX, posY);
                     break;
-                case this.$bottomRight:
+                case '9':
                     posX = this.axis.left + this.mainImg.width - this.$elemWidth;
                     posY = this.axis.top + this.mainImg.height - this.$elemHeight;
                     this.movePositionElem(posX, posY);

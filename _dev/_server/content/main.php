@@ -10,7 +10,9 @@ ob_start();
                     <h1 class="picture__title">Генератор водяных знаков</h1>
                     <div class="picture__body">
                         <div class="picture__images">
-                            <div class="picture__wrapper"><img class="picture__watermark"><img class="picture__upload"></div>
+                            <div class="picture__wrapper"><img class="picture__watermark"><img class="picture__upload">
+                                <div class="picture__bg"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -27,11 +29,19 @@ ob_start();
                             <div class="upload">
                                 <div class="upload__item">
                                     <label for="upload_picture" class="upload__title">Исходное изображежние</label>
-                                    <input id="upload_picture" type="file" name="upload" class="upload__field">
+                                    <div class="upload__raw">
+                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file">
+                                        <input type="text" name="upload" class="upload__field">
+                                        <button type="file" name="upload" class="upload__button"></button>
+                                    </div>
                                 </div>
                                 <div class="upload__item">
                                     <label for="upload_watermark" class="upload__title">Водяной знак</label>
-                                    <input id="upload_watermark" type="file" name="upload" class="upload__field">
+                                    <div class="upload__raw">
+                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file">
+                                        <input type="text" name="upload" class="upload__field">
+                                        <button type="file" name="upload" class="upload__button"></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -94,11 +104,11 @@ ob_start();
                         <!-- download result-->
                         <div class="adjust__raw">
                             <form class="form">
-                                <div class="form__coll">
-                                    <input type="reset" value="Сброс" class="form__button">
+                                <div class="form__coll form__coll_reset">
+                                    <input type="reset" value="Сброс" class="form__button form__button_reset">
                                 </div>
-                                <div class="form__coll">
-                                    <input type="submit" value="Скачать" class="form__button">
+                                <div class="form__coll form__coll_submit">
+                                    <input type="submit" value="Скачать" class="form__button form__button_submit">
                                 </div>
                             </form>
                         </div>

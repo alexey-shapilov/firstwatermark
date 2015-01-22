@@ -27,12 +27,14 @@ block content
                             .upload__item
                                 label.upload__title(for="upload_picture") Исходное изображежние
                                 .upload__raw
-                                    input.upload__field#upload_picture(type="text",name="upload")
+                                    input.upload__field-file#upload_picture(type="file",name="upload_picture")
+                                    input.upload__field(type="text",name="upload")
                                     button.upload__button(type="file",name="upload")
                             .upload__item
                                 label.upload__title(for="upload_watermark") Водяной знак
                                 .upload__raw
-                                    input.upload__field#upload_watermark(type="text",name="upload")
+                                    input.upload__field-file#upload_watermark(type="file",name="upload_watermark")
+                                    input.upload__field(type="text",name="upload")
                                     button.upload__button(type="file",name="upload")
 
                     // place watermark
