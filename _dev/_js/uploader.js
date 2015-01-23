@@ -13,6 +13,7 @@
         done: function (e, data) {
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
+                picture__workspace = $('.picture__workspace'),
                 picSizeOriginal = {
                     width: 0,
                     height: 0
@@ -36,6 +37,7 @@
                         console.log('рабочая область: ', workspace.width(), ' ', workspace.height());
                         $this.attr('style', 'max-width:' + workspace.width() + 'px;' + 'max-height:' + workspace.height() + 'px;');
                         console.log('картинка после масштабирования: ', $this.width(), ' ', $this.height());
+                        picture__workspace.attr('style', 'width:' + $this.width() + 'px;' + 'height:' + $this.height() + 'px;');
                         scale.x = picSizeOriginal.width / $this.width();
                         scale.y = picSizeOriginal.height / $this.height();
                         console.log('масштаб: ', scale);
@@ -107,9 +109,9 @@
                         },
 
                         //area elem
-                        $workspace: $('body'),
+                        $workspace: $('.picture__workspace'),
                         $mainImg: $('.picture__upload'),
-                        $placeElemBodyImg: $('.picture__body'),
+
                         //elem
                         $watermark: $('.picture__watermark'),
 

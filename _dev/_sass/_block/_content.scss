@@ -37,7 +37,14 @@
     @include pictureWidth;
 }
 .picture__wrapper {
-    position: relative;
+    position: absolute;
+    @include pictureWidth;
+    top: 0;
+    left: 0;
+}
+.picture__workspace {
+    overflow: hidden;
+    @include center();
     @include pictureWidth;
 }
 .picture__watermark {
@@ -45,12 +52,7 @@
     z-index: 100;
 }
 .picture__upload {
-    position: absolute;
-    margin: auto;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    right: 0;
+    @include center();
     z-index: 50;
 }
 .picture__bg {

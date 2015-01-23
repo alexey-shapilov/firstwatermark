@@ -10,7 +10,11 @@ ob_start();
                     <h1 class="picture__title">Генератор водяных знаков</h1>
                     <div class="picture__body">
                         <div class="picture__images">
-                            <div class="picture__wrapper"><img class="picture__watermark"><img class="picture__upload">
+                            <div class="picture__wrapper">
+                                <div class="picture__workspace">
+                                    <img class="picture__watermark">
+                                    <img class="picture__upload">
+                                </div>
                                 <div class="picture__bg"></div>
                             </div>
                         </div>
@@ -46,7 +50,7 @@ ob_start();
                         <!-- place watermark-->
                         <div class="adjust__raw">
                             <div class="place">
-                                <h3 class="place__title">Положение</h3>
+                                <h3 class="place__title tile">Положение</h3>
                                 <div class="place__body">
                                     <!-- grid-->
                                     <div class="grid">

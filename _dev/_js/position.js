@@ -11,8 +11,8 @@ function Tile(options) {
     tileWrapper.addClass(tileWrapperClass);
 
     this.count = {
-        axisX: tileWidth / tileContainer.width(),
-        axisY: tileHeight / tileContainer.height()
+        axisX: tileContainer.width() / tileWidth,
+        axisY: tileContainer.height() / tileHeight
     };
 
     this.make = function () {
@@ -25,16 +25,19 @@ function Tile(options) {
             img = '<img src="' + tile.attr('src') + '" class="' + tile.attr('class') + ' ' + tileItemClass + '" %style%>',
             imgs = '';
         for (var i = 0; i < self.count.axisX; i++) {
-            for (var j = 0; j < self.mosh.axisY; j++) {
-                imgs += img.replace('%style%', 'style="left:' + (tileWidth * i) + 'px; top:' + (tileHeight * j) + 'px;"')
+            for (var j = 0; j < self.count.axisY; j++) {
+                imgs += img.replace('%style%', 'style="left:' + (tileWidth * i) + 'px; top:' + (tileHeight * j) + 'px; width:' + tileWidth + 'px; height:' + tileHeight + 'px; "')
             }
         }
         tileWrapper.html(imgs);
 
+        tileWrapper.attr('style','position:absolute; left:0; top:0;');
+
         tile.css('display', 'none');
         tileWrapper.draggable();
+        return tileWrapper;
     }
-};
+}
 
 function Position(options) { //создаем функцию конструктор
     this.options = options;
@@ -61,7 +64,7 @@ function Position(options) { //создаем функцию конструкт�
         width: options.$mainImg.width(),
         height: options.$mainImg.height()
     };
-    this.placeElemBodyImg = options.$placeElemBodyImg;
+
     this.placeGrid = options.$placeGrid;
     this.axisButtons = options.axisButtons;
     this.gridButtons = options.gridButtons;
@@ -72,8 +75,9 @@ Position.prototype.init = function () {
         $tileBtn = this.options.$tileBtn,
         self = this;
 
-    $tileBtn.on('click', function (event) {
-        self.tile.make();
+    $tileBtn.on('click', function () {
+        var tile = self.tile.make();
+        self.workspace.append(tile)
     });
 
     /****
