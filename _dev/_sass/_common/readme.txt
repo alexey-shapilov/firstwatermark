@@ -1,0 +1,1 @@
+general adjusments for scss structure

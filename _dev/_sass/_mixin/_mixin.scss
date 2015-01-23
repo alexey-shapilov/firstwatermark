@@ -1,0 +1,31 @@
+@mixin clearfix {
+    zoom:1;
+    &:before, &:after {
+        content: ""; 
+        display: block; 
+        height: 0; 
+        overflow: hidden; 
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin socialLinks {
+    height: 41px;
+    width: 43px;
+}
+
+@mixin pictureWidth {
+    height: 100%;
+    width: 100%;
+}
+
+@mixin center {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+}

@@ -1,3 +1,324 @@
-h3 {
-    color: #111;
+@import "../_mixin/_mixin";
+@import "../_mixin/_variables";
+
+
+.workspace {
+    
+}
+.workspace_left {
+    float: left;
+}
+.workspace_right {
+    float: right;
+}
+
+
+// --------------------------------------- Picture
+.picture {
+    float: left;
+    font-family: robotothin;
+    height: $contentHeight;
+    width: $pictureBlockWidth;
+}
+.picture__title {
+    color: #eee;
+    line-height: 70px;
+    padding: 0 0 0 25px;
+}
+.picture__body {
+    height: 600px;
+    padding: 40px 25px 25px 25px;
+    position: relative;
+}
+.picture__images {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    @include pictureWidth;
+}
+.picture__wrapper {
+    position: absolute;
+    @include pictureWidth;
+    top: 0;
+    left: 0;
+}
+.picture__workspace {
+    overflow: hidden;
+    @include center();
+    @include pictureWidth;
+}
+.picture__watermark {
+    position: absolute;
+    z-index: 100;
+}
+.picture__upload {
+    @include center();
+    z-index: 50;
+}
+.picture__bg {
+    background: url("img/grid.png");
+    position: relative;
+    z-index: 10;
+    @include pictureWidth;
+}
+
+// --------------------------------------- adjustment
+.adjust {
+    background: #f1f1f5;
+    min-height: $contentHeight;
+    width: $ajustmentBlockWidth;
+}
+.adjust__title {
+    font-family: robotothin;
+    font-size: 16px;
+    line-height: 80px;
+    text-align: center;
+}
+.adjust__body {
+    position: relative;
+}
+.adjust__raw {
+//    background: #0ff;
+    border-top: 1px solid #f00;
+    padding: 0 10px;
+    position: relative;
+    &:first-child {
+        border-top: none;
+        &:after {
+            display: none;
+        }
+        &:before {
+            display: none;
+        }
+    }
+    &:before {
+        border-top: solid 10px #f97e76;
+        border-bottom: solid 10px transparent;
+        border-right: solid 10px transparent;
+        border-left: solid 10px transparent;
+        content: "";
+        display: block;
+        left: 125px;
+        position: absolute;
+        top: 0px;
+    }
+    &:after {
+        border-top: solid 10px #f1f1f5;
+        border-bottom: solid 10px transparent;
+        border-right: solid 10px transparent;
+        border-left: solid 10px transparent;
+        content: "";
+        display: block;
+        left: 125px;
+        position: absolute;
+        top: -1px;
+    }
+}
+
+
+// upload files
+.upload {
+    padding: 0 10px 20px 10px;
+}
+.upload__item {
+    padding: 10px 0;
+}
+.upload__title {
+//    background: #aaa;
+    font: normal 16px robotolight;
+    line-height: 20px;
+}
+.upload__raw {
+    display: block;
+    width: 100%;
+    position: relative;
+    @include clearfix;
+}
+.upload__field-file {
+    cursor: pointer;
+    height: 30px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 220px;
+}
+.upload__field {
+    background: #eee;
+    border: 1px solid #333;
+    display: block;
+    float: left;
+    height: 30px;
+    padding: 0 0 0 5px;
+    width: 180px;
+}
+.upload__button {
+    background: #f97e76;
+    border: none;
+    display: block;
+    float: left;
+    height: 30px;
+    width: 40px
+}
+
+// place watermark
+.place {
+    padding: 0 10px;
+}
+.place__title  {
+//    background: #fff;
+    font: normal 16px robotolight;
+    line-height: 45px;
+}
+.place__body {
+    padding: 20px 0;
+    @include clearfix;
+}
+
+
+// grid
+.grid {
+    float: left;
+    vertical-align: top;
+    width: ($grid)*3;
+    @include clearfix;
+}
+.grid__item {
+    border-style: solid;
+    border-color: #f97e76;
+    background: #dbe1e8;
+    display: block;
+    float: left;
+    height: $grid;
+    width: $grid;
+    @include clearfix;
+    &:hover {
+        background: #f97e76;
+        border: none;
+    }
+}
+.grid__item_1 {
+    border-width: 1px 0px 0px 1px;
+}
+.grid__item_2 {
+    border-width: 1px 1px 0px 1px;
+}
+.grid__item_3 {
+    border-width: 1px 1px 0px 0px;
+}
+.grid__item_4 {
+    border-width: 1px 0px 1px 1px;
+}
+.grid__item_5 {
+    border-width: 1px 1px 1px 1px;
+}
+.grid__item_6 {
+    border-width: 1px 1px 1px 0px;
+}
+.grid__item_7 {
+    border-width: 0px 0px 1px 1px;
+}
+.grid__item_8 {
+    border-width: 0px 1px 1px 1px;
+}
+.grid__item_9 {
+    border-width: 0px 1px 1px 0px;
+}
+
+
+// coordinate
+.coord {
+    float: right;
+    padding: 5px 0 0 0;
+    vertical-align: top;
+}
+.coord__raw {
+    text-align: center;
+    padding: 15px 0 0 10px;
+    width: 100%;
+    @include clearfix;
+}
+.coord__coll {
+    float: left;
+    padding: 0 0 0 5px;
+    vertical-align: top;
+}
+.coord__title {
+    display: inline-block;
+    line-height: 30px;
+}
+.coord__field {
+    display: block;
+    line-height: 20px;
+    text-align: center;
+    width: 30px;
+}
+.coord__arrow {
+    background: transparent;
+//    background: #999;
+    border: none;
+    display: block;
+    font: normal 14px robotolight;
+    line-height: 12px;
+    width: 12px;
+    margin: 0;
+    padding: 0;
+}
+.coord__arrow_up {
+    
+}
+.coord__arrow_down {
+    margin: 4px 0 0 0;
+}
+
+
+// transparent
+.transparent {
+    padding: 0 10px 15px 10px;
+}
+.transparent__title {
+    font: normal 16px robotolight;
+    line-height: 45px;
+}
+.transparent__body {
+    padding: 15px 0;
+}
+.transparent__item {
+    height: 3px;
+    width: 100%;
+}
+
+
+// download result
+.form {
+    display: block;
+    min-height: 100px;
+    padding: 60px 0 0 0;
+    text-align: center;
+    @include clearfix;
+}
+.form__coll {
+    float: left;
+    text-align: left;
+    width: 50%;
+}
+.form__coll_reset {
+//    background: #33f;
+    padding: 0 20px 0 0;
+}
+.form__coll_submit {
+//    background: #f33;
+    padding: 0 0 0 20px;
+}
+.form__button {
+    border: none;
+    display: inline-block;
+    height: 42px;
+    width: 100%;
+}
+.form__button_reset {
+    background: #c1cfd9;
+}
+.form__button_submit {
+    background: #f97e76;
 }

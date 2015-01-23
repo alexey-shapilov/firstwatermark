@@ -50,8 +50,14 @@ $.gulp.task('build-with-php', ['sass'], function () {
         .pipe($.gulp.dest(function (file) {
             return file.base.substr((file.cwd + '/_dev/_server').length + 1);
         }, {cwd: productionPath})).on('error', log);
+    // шрифты
     $.gulp.src('./_dev/_sass/fonts/*')
         .pipe($.gulp.dest('./app/css/fonts/'));
+
+    // изображения для стилей
+    $.gulp.src('./_dev/_sass/img/*')
+        .pipe($.gulp.dest('./app/css/img/'));
+
     $.gulp.src('./_dev/_server/uploads')
         .pipe($.gulp.dest('./app/'));
 });
@@ -125,7 +131,7 @@ $.gulp.task('watch-without-php', ['build-without-php'], function () {
 });
 
 $.gulp.task('watch-with-php', ['build-with-php'], function () {
-    $.gulp.watch(['./_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['build-without-php']);
+    $.gulp.watch(['./_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
 });
 
 function log(error) {
