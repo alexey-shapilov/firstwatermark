@@ -72,8 +72,8 @@ ob_start();
                                                 <input id="x_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="x_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="x_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                         </div>
                                         <div class="coord__raw">
@@ -84,8 +84,8 @@ ob_start();
                                                 <input id="y_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="y_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="y_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                         </div>
                                     </div>
