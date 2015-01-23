@@ -107,7 +107,22 @@
                                 input.val(Math.round(coord));
                             }
                         },
-
+                        //mosh X and Y value
+                        moshButtons: {
+                            x: {
+                                input: $('#x_coordinate'),
+                                btnUp: $('#x_coordinate_up'),
+                                btnDown: $('#x_coordinate_down')
+                            },
+                            y: {
+                                input: $('#y_coordinate'),
+                                btnUp: $('#y_coordinate_up'),
+                                btnDown: $('#y_coordinate_down')
+                            },
+                            writeCoord: function (coord, input) {
+                                input.val(Math.round(coord));
+                            }
+                        },
                         //area elem
                         $workspace: $('.picture__workspace'),
                         $mainImg: $('.picture__upload'),
@@ -122,8 +137,8 @@
                         gridButtons: 'grid__item',
 
                         //mosh buttons
-
-                        $tileBtn: $('.tile')
+                        $tileBtn: $('.tile'),
+                        $tileBtnDel: $('.tile__del')
                     });
 
                     p.init();

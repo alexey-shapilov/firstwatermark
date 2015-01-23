@@ -3,6 +3,7 @@ function Tile(options) {
         tileItemClass = 'tile-item',
         tileWrapperClass = 'tile-wrapper',
         self = this,
+        tileStatus = false,
         tile = options.tile,
         tileContainer = options.tileContainer,
         tileWrapper = $('<div/>'),
@@ -36,6 +37,10 @@ function Tile(options) {
         tile.css('display', 'none');
         tileWrapper.draggable();
         return tileWrapper;
+    };
+    this.del = function () {
+        tileWrapper.remove();
+        tile.css('display', 'block');
     }
 }
 
@@ -67,17 +72,28 @@ function Position(options) { //создаем функцию конструкт�
 
     this.placeGrid = options.$placeGrid;
     this.axisButtons = options.axisButtons;
+    this.moshButtons = options.moshButtons;
     this.gridButtons = options.gridButtons;
 }
 
 Position.prototype.init = function () {
     var
         $tileBtn = this.options.$tileBtn,
+        $tileBtnDel = this.options.$tileBtnDel,
         self = this;
 
     $tileBtn.on('click', function () {
         var tile = self.tile.make();
-        self.workspace.append(tile)
+        self.workspace.append(tile);
+        moshStatus = true;
+        //	grid mosh work
+        self.initMoshX();
+        self.initMoshY();
+    });
+
+    $tileBtnDel.on('click', function () {
+        self.tile.del();
+        moshStatus = false;
     });
 
     /****
@@ -237,6 +253,43 @@ Position.prototype.init = function () {
     return this;
 };
 
+//START Mosh buttons X and Y working
+Position.prototype.initMoshX = function () {
+    var self = this;
+    // START x coords and input value
+    this.moshButtons.x.btnDown.on('click', function () {
+
+    });
+
+    this.moshButtons.x.btnUp.on('click', function () {
+
+    });
+
+    this.moshButtons.x.input.change(function () {
+
+    });
+    // END x coords and input value
+};
+Position.prototype.initMoshY = function () {
+    var self = this;
+    // START y coords and input value
+    this.moshButtons.y.btnUp.on('click', function () {
+        
+    });
+
+    this.moshButtons.y.btnDown.on('click', function () {
+
+    });
+
+    this.moshButtons.y.input.change(function () {
+
+    });
+    // END x coords and input value
+};
+//END Mosh buttons X and Y working
+
+
+//START one watermark buttons X and Y working
 Position.prototype.initCoordsX = function () {
     var self = this;
     // START x coords and input value
@@ -256,7 +309,7 @@ Position.prototype.initCoordsX = function () {
 
     this.axisButtons.x.input.change(function () {
         self.watermark.position.left = this.value;
-        self.positionCssElem(sself.watermark.position.left, self.watermark.position.top);
+        self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
 };
@@ -285,3 +338,4 @@ Position.prototype.initCoordsY = function () {
     });
     // END x coords and input value
 };
+//END one watermark buttons X and Y working
