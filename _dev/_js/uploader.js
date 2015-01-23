@@ -1,4 +1,4 @@
-!function ($) {
+var uploader = (function ($) {
     'use strict';
 
     var url = '/index.php?q=uploader.ajax',
@@ -134,4 +134,12 @@
         }
     });
 
-}(jQuery);
+    return {
+
+        getScale : function() {
+            return scale;
+        }
+
+    };
+
+})(jQuery);

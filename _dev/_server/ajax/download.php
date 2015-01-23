@@ -54,7 +54,7 @@ try {
   $x = (int)$_GET['x'];
   $y = (int)$_GET['y'];
   $opacity = (int)$_GET['opacity'];
-  $opacity = 50;
+  // $opacity = 100;
 
   ImageConverter::convert($source, $watermark, $x, $y, $opacity);
 
