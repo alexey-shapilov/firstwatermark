@@ -10,7 +10,13 @@ ob_start();
                     <h1 class="picture__title">Генератор водяных знаков</h1>
                     <div class="picture__body">
                         <div class="picture__images">
-                            <div class="picture__wrapper"><img class="picture__watermark"><img class="picture__upload"></div>
+                            <div class="picture__wrapper">
+                                <div class="picture__workspace">
+                                    <img class="picture__watermark">
+                                    <img class="picture__upload">
+                                </div>
+                                <div class="picture__bg"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -27,18 +33,24 @@ ob_start();
                             <div class="upload">
                                 <div class="upload__item">
                                     <label for="upload_picture" class="upload__title">Исходное изображежние</label>
-                                    <input id="upload_picture" type="file" name="upload" class="upload__field">
+                                    <div class="upload__raw">
+                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <button class="upload__button"></button>
+                                    </div>
                                 </div>
                                 <div class="upload__item">
                                     <label for="upload_watermark" class="upload__title">Водяной знак</label>
-                                    <input id="upload_watermark" type="file" name="upload" class="upload__field">
+                                    <div class="upload__raw">
+                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <button class="upload__button"></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- place watermark-->
                         <div class="adjust__raw">
                             <div class="place">
-                                <h3 class="place__title">Положение</h3>
+                                <h3 class="place__title tile">Положение</h3>
                                 <div class="place__body">
                                     <!-- grid-->
                                     <div class="grid">
@@ -62,8 +74,8 @@ ob_start();
                                                 <input id="x_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="x_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="x_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                         </div>
                                         <div class="coord__raw">
@@ -74,8 +86,8 @@ ob_start();
                                                 <input id="y_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="y_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="y_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                         </div>
                                     </div>
@@ -94,11 +106,11 @@ ob_start();
                         <!-- download result-->
                         <div class="adjust__raw">
                             <form class="form">
-                                <div class="form__coll">
-                                    <input type="reset" value="Сброс" class="form__button">
+                                <div class="form__coll form__coll_reset">
+                                    <input type="reset" value="Сброс" class="form__button form__button_reset">
                                 </div>
-                                <div class="form__coll">
-                                    <input type="submit" value="Скачать" class="form__button">
+                                <div class="form__coll form__coll_submit">
+                                    <input type="submit" value="Скачать" class="form__button form__button_submit">
                                 </div>
                             </form>
                         </div>

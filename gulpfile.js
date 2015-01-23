@@ -50,8 +50,14 @@ $.gulp.task('build-with-php', ['sass'], function () {
         .pipe($.gulp.dest(function (file) {
             return file.base.substr((file.cwd + '/_dev/_server').length + 1);
         }, {cwd: productionPath})).on('error', log);
+    // шрифты
     $.gulp.src('./_dev/_sass/fonts/*')
         .pipe($.gulp.dest('./app/css/fonts/'));
+
+    // изображения для стилей
+    $.gulp.src('./_dev/_sass/img/*')
+        .pipe($.gulp.dest('./app/css/img/'));
+
     $.gulp.src('./_dev/_server/uploads')
         .pipe($.gulp.dest('./app/'));
 });
