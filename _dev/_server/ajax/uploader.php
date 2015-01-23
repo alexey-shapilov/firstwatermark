@@ -9,9 +9,7 @@ class Uploader
 
     public static function save()
     {
-
         header('Content-Type: text/plain; charset=utf-8');
-
         try {
 
             // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -20,6 +18,7 @@ class Uploader
                 !isset($_FILES['upload']['error']) ||
                 is_array($_FILES['upload']['error'])
             ) {
+                var_dump($_FILES['upload']);
                 throw new \RuntimeException('Invalid parameters.');
             }
 
@@ -79,7 +78,9 @@ class Uploader
                 throw new \RuntimeException('Failed to move uploaded file.');
             }
 
-            echo json_encode(['src' => $file_url]);
+            $size = getimagesize($new_filename);
+
+            echo json_encode(array('src' => $file_url, size=>$size));
 
         } catch (\RuntimeException $e) {
 

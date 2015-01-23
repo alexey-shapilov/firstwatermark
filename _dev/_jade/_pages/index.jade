@@ -11,8 +11,10 @@ block content
                 .picture__body
                     .picture__images
                         .picture__wrapper
-                            img.picture__watermark
-                            img.picture__upload
+                            .picture__workspace
+                                img.picture__watermark
+                                img.picture__upload
+                            .picture__bg
 
         // --------------------------------------- adjustment
         section.workspace.workspace_right
@@ -25,10 +27,16 @@ block content
                         .upload
                             .upload__item
                                 label.upload__title(for="upload_picture") Исходное изображежние
-                                input.upload__field#upload_picture(type="file",name="upload")
+                                .upload__raw
+                                    input.upload__field-file#upload_picture(type="file",name="upload")
+                                    span.upload__field
+                                    button.upload__button
                             .upload__item
                                 label.upload__title(for="upload_watermark") Водяной знак
-                                input.upload__field#upload_watermark(type="file",name="upload")
+                                .upload__raw
+                                    input.upload__field-file#upload_watermark(type="file",name="upload")
+                                    span.upload__field
+                                    button.upload__button
 
                     // place watermark
                     .adjust__raw
@@ -48,16 +56,16 @@ block content
                                         .coord__coll
                                             input.coord__field#x_coordinate(type="text")
                                         .coord__coll
-                                            input.coord__arrow.coord__arrow_up(type="button" value="∧")
-                                            input.coord__arrow.coord__arrow_down(type="button" value="∨")
+                                            input.coord__arrow.coord__arrow_up#x_coordinate_up(type="button" value="∧")
+                                            input.coord__arrow.coord__arrow_down#x_coordinate_down(type="button" value="∨")
                                     .coord__raw
                                         .coord__coll
                                             label.coord__title(for="y_coordinate") Y
                                         .coord__coll
                                             input.coord__field#y_coordinate(type="text")
                                         .coord__coll
-                                            input.coord__arrow.coord__arrow_up(type="button" value="∧")
-                                            input.coord__arrow.coord__arrow_down(type="button" value="∨")
+                                            input.coord__arrow.coord__arrow_up#y_coordinate_up(type="button" value="∧")
+                                            input.coord__arrow.coord__arrow_down#y_coordinate_down(type="button" value="∨")
 
                     // transparent
                     .adjust__raw
@@ -68,7 +76,7 @@ block content
                     // download result
                     .adjust__raw
                         form.form
-                            .form__coll
-                                input.form__button(type="reset" value="Сброс")
-                            .form__coll
-                                input.form__button(type="submit" value="Скачать")
+                            .form__coll.form__coll_reset
+                                input.form__button.form__button_reset(type="reset" value="Сброс")
+                            .form__coll.form__coll_submit
+                                input.form__button.form__button_submit(type="submit" value="Скачать")
