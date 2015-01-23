@@ -5,7 +5,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
 
 <!-- ===================================== FOOTER =====================================-->
 <footer class="footer">
-    <p class="text text_footer"></p>
+    <p class="text text_footer">© 2014, Это мой сайт, пожалуйста, не копируйте и не воруйте его</p>
 </footer>
 </div>
 <!-- build:js(_dev/_server/content/common) /js/vendor.js-->
