@@ -144,11 +144,11 @@
     width: 220px;
 }
 .upload__field {
-    background: #fff;
+    background: transparent;
     border: 1px solid #9eb2c0;
     display: block;
     float: left;
-    height: 30px;
+    height: 26px;
     padding: 0 0 0 5px;
     width: 180px;
     @include  borderRadius( 3px 0 0 3px );
@@ -158,7 +158,7 @@
     border: none;
     display: block;
     float: left;
-    height: 30px;
+    height: 26px;
     position: relative;
     left: -1px;
     width: 40px;
@@ -166,6 +166,35 @@
 }
 
 // place watermark
+.toggle {
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+}
+.toggle__item {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+}
+.toggle__item_grid {
+    left: 0;
+    bottom: 0;
+    background: url('img/button.png') -3px -28px no-repeat;
+    &:hover {
+        background-position: -3px -4px;
+    }
+}
+.toggle__item_single {
+    left: 30px;
+    bottom: 0;
+    background: url('img/button.png') -31px -28px no-repeat;
+    &:hover {
+        background-position: -32px -4px;
+    }
+}
+
 .place {
     padding: 0 10px;
 }
@@ -185,7 +214,44 @@
     float: left;
     vertical-align: top;
     width: ($grid)*3;
+    position: relative;
     @include clearfix;
+}
+.grid__closed {
+    display: none;
+    position: absolute;
+    @include pictureWidth;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    &:before {
+        background: #f97e76;
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 42px;
+        height: 19px;
+        width: 100%;
+    }
+    &:after {
+        background: #f97e76;
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: 0;
+        left: 43px;
+        right: 0;
+        top: 0;
+        width: 19px;
+        height: 100%;
+    }
+}
+.grid__container {
+    position: relative;
+    @include pictureWidth;
 }
 .grid__item {
     border-style: solid;
@@ -193,6 +259,7 @@
     background: #dbe1e8;
     display: block;
     float: left;
+    position: relative;
     height: $grid;
     width: $grid;
     @include clearfix;
@@ -200,6 +267,7 @@
         background: #f97e76;
         border-color: #f97e76;
     }
+    z-index: 1;
 }
 .grid__item_1 {
     border-width: 1px 0px 0px 1px;
@@ -309,7 +377,7 @@
 .form {
     display: block;
     min-height: 100px;
-    padding: 60px 0 0 0;
+    padding: 80px 0 0 0;
     text-align: center;
     @include clearfix;
 }
@@ -328,6 +396,8 @@
 }
 .form__button {
     border: none;
+    color: #fff;
+    font-family: robotolight;
     display: inline-block;
     height: 42px;
     width: 100%;

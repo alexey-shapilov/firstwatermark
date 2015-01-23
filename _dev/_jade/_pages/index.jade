@@ -40,14 +40,19 @@ block content
 
                     // place watermark
                     .adjust__raw
+                        .toggle
+                            .toggle__item.toggle__item_grid
+                            .toggle__item.toggle__item_single
                         .place
                             h3.place__title Положение
                             .place__body
                                 // grid
                                 .grid
-                                    - for (var i = 0; i < 9; i++)
-                                        - var j = i +1
-                                        .grid__item(class="grid__item_"+j)
+                                    .grid__closed
+                                    .grid__container
+                                        - for (var i = 0; i < 9; i++)
+                                            - var j = i +1
+                                            .grid__item(class="grid__item_"+j)
                                 // coordinate
                                 .coord
                                     .coord__raw
