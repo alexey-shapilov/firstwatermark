@@ -30,17 +30,15 @@ ob_start();
                                 <div class="upload__item">
                                     <label for="upload_picture" class="upload__title">Исходное изображежние</label>
                                     <div class="upload__raw">
-                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file">
-                                        <input type="text" name="upload" class="upload__field">
-                                        <button type="file" name="upload" class="upload__button"></button>
+                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <button class="upload__button"></button>
                                     </div>
                                 </div>
                                 <div class="upload__item">
                                     <label for="upload_watermark" class="upload__title">Водяной знак</label>
                                     <div class="upload__raw">
-                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file">
-                                        <input type="text" name="upload" class="upload__field">
-                                        <button type="file" name="upload" class="upload__button"></button>
+                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <button class="upload__button"></button>
                                     </div>
                                 </div>
                             </div>
