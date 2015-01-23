@@ -3,8 +3,10 @@ $(function () {
 
   console.log('downloader init');
 
-  $('.form__download-button').click(function(e) {
+  $('.form__button_submit').click(function(e) {
     e.preventDefault();
+
+    console.log('form__download_button click');
 
     var $originalEl = $('.picture__upload');
     var $waterEl = $('.picture__watermark');
