@@ -144,13 +144,14 @@
     width: 220px;
 }
 .upload__field {
-    background: #eee;
-    border: 1px solid #333;
+    background: #fff;
+    border: 1px solid #9eb2c0;
     display: block;
     float: left;
     height: 30px;
     padding: 0 0 0 5px;
     width: 180px;
+    @include  borderRadius( 3px 0 0 3px );
 }
 .upload__button {
     background: #f97e76;
@@ -158,7 +159,10 @@
     display: block;
     float: left;
     height: 30px;
-    width: 40px
+    position: relative;
+    left: -1px;
+    width: 40px;
+    @include  borderRadius( 0 3px 3px 0 );
 }
 
 // place watermark
@@ -185,7 +189,7 @@
 }
 .grid__item {
     border-style: solid;
-    border-color: #f97e76;
+    border-color: #9eb2c0;
     background: #dbe1e8;
     display: block;
     float: left;
@@ -194,17 +198,19 @@
     @include clearfix;
     &:hover {
         background: #f97e76;
-        border: none;
+        border-color: #f97e76;
     }
 }
 .grid__item_1 {
     border-width: 1px 0px 0px 1px;
+    @include  borderRadius( 3px 0 0 0 );
 }
 .grid__item_2 {
     border-width: 1px 1px 0px 1px;
 }
 .grid__item_3 {
     border-width: 1px 1px 0px 0px;
+    @include  borderRadius( 0 3px 0 0 );
 }
 .grid__item_4 {
     border-width: 1px 0px 1px 1px;
@@ -217,12 +223,14 @@
 }
 .grid__item_7 {
     border-width: 0px 0px 1px 1px;
+    @include  borderRadius( 0 0 0 3px );
 }
 .grid__item_8 {
     border-width: 0px 1px 1px 1px;
 }
 .grid__item_9 {
     border-width: 0px 1px 1px 0px;
+    @include  borderRadius( 0 0 3px 0 );
 }
 
 
@@ -244,25 +252,32 @@
     vertical-align: top;
 }
 .coord__title {
+    color: #555;
     display: inline-block;
     line-height: 30px;
 }
 .coord__field {
+    border: 1px solid #9eb2c0;
     display: block;
     line-height: 20px;
     text-align: center;
+    padding: 3px;
     width: 30px;
+    @include  borderRadius( 3px );
 }
 .coord__arrow {
     background: transparent;
-//    background: #999;
     border: none;
+    color: #9eb2c0;
     display: block;
     font: normal 14px robotolight;
     line-height: 12px;
-    width: 12px;
+    width: 15px;
     margin: 0;
     padding: 0;
+    &:hover {
+        color: #333;
+    }
 }
 .coord__arrow_up {
     
@@ -284,6 +299,7 @@
     padding: 15px 0;
 }
 .transparent__item {
+    background: #9eb2c0;
     height: 3px;
     width: 100%;
 }
@@ -315,10 +331,12 @@
     display: inline-block;
     height: 42px;
     width: 100%;
+    @include  borderRadius( 3px );
 }
 .form__button_reset {
     background: #c1cfd9;
 }
 .form__button_submit {
     background: #f97e76;
+    
 }
