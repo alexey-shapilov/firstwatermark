@@ -71,19 +71,19 @@
     @include socialLinks;
 }
 .social__item_facebook {
-    background: url("img/socialSprite.png") 2px -10px no-repeat;
+    background: url("img/socialsprite.png") 2px -10px no-repeat;
     &:hover {
         background-position: 2px -144px;
     }
 }
 .social__item_twitter {
-    background: url("img/socialSprite.png") 0px -51px no-repeat;
+    background: url("img/socialsprite.png") 0px -51px no-repeat;
     &:hover {
         background-position: 0px -185px;
     }
 }
 .social__item_vkontakte {
-    background: url("img/socialSprite.png") 0px -93px no-repeat;
+    background: url("img/socialsprite.png") 0px -93px no-repeat;
     &:hover {
         background-position: 0px -227px;
     }
