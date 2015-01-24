@@ -144,24 +144,57 @@
     width: 220px;
 }
 .upload__field {
-    background: #eee;
-    border: 1px solid #333;
+    background: transparent;
+    border: 1px solid #9eb2c0;
     display: block;
     float: left;
-    height: 30px;
+    height: 26px;
     padding: 0 0 0 5px;
     width: 180px;
+    @include  borderRadius( 3px 0 0 3px );
 }
 .upload__button {
     background: #f97e76;
     border: none;
     display: block;
     float: left;
-    height: 30px;
-    width: 40px
+    height: 26px;
+    position: relative;
+    left: -1px;
+    width: 40px;
+    @include  borderRadius( 0 3px 3px 0 );
 }
 
 // place watermark
+.toggle {
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+}
+.toggle__item {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+}
+.toggle__item_grid {
+    left: 0;
+    bottom: 0;
+    background: url('img/button.png') -3px -28px no-repeat;
+    &:hover {
+        background-position: -3px -4px;
+    }
+}
+.toggle__item_single {
+    left: 30px;
+    bottom: 0;
+    background: url('img/button.png') -31px -28px no-repeat;
+    &:hover {
+        background-position: -32px -4px;
+    }
+}
+
 .place {
     padding: 0 10px;
 }
@@ -181,30 +214,71 @@
     float: left;
     vertical-align: top;
     width: ($grid)*3;
+    position: relative;
     @include clearfix;
+}
+.grid__closed {
+    display: none;
+    position: absolute;
+    @include pictureWidth;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    &:before {
+        background: #f97e76;
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 42px;
+        height: 19px;
+        width: 100%;
+    }
+    &:after {
+        background: #f97e76;
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: 0;
+        left: 43px;
+        right: 0;
+        top: 0;
+        width: 19px;
+        height: 100%;
+    }
+}
+.grid__container {
+    position: relative;
+    @include pictureWidth;
 }
 .grid__item {
     border-style: solid;
-    border-color: #f97e76;
+    border-color: #9eb2c0;
     background: #dbe1e8;
     display: block;
     float: left;
+    position: relative;
     height: $grid;
     width: $grid;
     @include clearfix;
     &:hover {
         background: #f97e76;
-        border: none;
+        border-color: #f97e76;
     }
+    z-index: 1;
 }
 .grid__item_1 {
     border-width: 1px 0px 0px 1px;
+    @include  borderRadius( 3px 0 0 0 );
 }
 .grid__item_2 {
     border-width: 1px 1px 0px 1px;
 }
 .grid__item_3 {
     border-width: 1px 1px 0px 0px;
+    @include  borderRadius( 0 3px 0 0 );
 }
 .grid__item_4 {
     border-width: 1px 0px 1px 1px;
@@ -217,12 +291,14 @@
 }
 .grid__item_7 {
     border-width: 0px 0px 1px 1px;
+    @include  borderRadius( 0 0 0 3px );
 }
 .grid__item_8 {
     border-width: 0px 1px 1px 1px;
 }
 .grid__item_9 {
     border-width: 0px 1px 1px 0px;
+    @include  borderRadius( 0 0 3px 0 );
 }
 
 
@@ -244,25 +320,32 @@
     vertical-align: top;
 }
 .coord__title {
+    color: #555;
     display: inline-block;
     line-height: 30px;
 }
 .coord__field {
+    border: 1px solid #9eb2c0;
     display: block;
     line-height: 20px;
     text-align: center;
+    padding: 3px;
     width: 30px;
+    @include  borderRadius( 3px );
 }
 .coord__arrow {
     background: transparent;
-//    background: #999;
     border: none;
+    color: #9eb2c0;
     display: block;
     font: normal 14px robotolight;
     line-height: 12px;
-    width: 12px;
+    width: 15px;
     margin: 0;
     padding: 0;
+    &:hover {
+        color: #333;
+    }
 }
 .coord__arrow_up {
     
@@ -284,16 +367,16 @@
     padding: 15px 0;
 }
 .transparent__item {
+//    background: #9eb2c0;
     height: 3px;
     width: 100%;
 }
-
 
 // download result
 .form {
     display: block;
     min-height: 100px;
-    padding: 60px 0 0 0;
+    padding: 80px 0 0 0;
     text-align: center;
     @include clearfix;
 }
@@ -312,13 +395,19 @@
 }
 .form__button {
     border: none;
+    color: #fff;
+    font-family: robotolight;
     display: inline-block;
     height: 42px;
     width: 100%;
+    @include  borderRadius( 3px );
 }
 .form__button_reset {
     background: #c1cfd9;
 }
 .form__button_submit {
     background: #f97e76;
+    
 }
+
+// jquery UI slider
