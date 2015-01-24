@@ -51,9 +51,11 @@ try {
 
   $source = $_GET['i1'];
   $watermark = $_GET['i2'];
-  $x = (int)$_GET['x'];
-  $y = (int)$_GET['y'];
   $opacity = (int)$_GET['opacity'];
+  $scaleX = round((float)$_GET['scaleX'], 2);
+  $scaleY = round((float)$_GET['scaleY'], 2);
+  $x = (int)$_GET['x'] * $scaleX;
+  $y = (int)$_GET['y'] * $scaleY;
 
   ImageConverter::convert($source, $watermark, $x, $y, $opacity);
 
