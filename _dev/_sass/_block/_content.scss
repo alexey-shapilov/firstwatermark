@@ -204,11 +204,13 @@
 .place {
     padding: 0 10px;
 }
+
 .place__title  {
 //    background: #fff;
     font: normal 16px robotolight;
     line-height: 45px;
 }
+
 .place__body {
     padding: 20px 0;
     @include clearfix;
@@ -322,7 +324,7 @@
     @include clearfix;
 }
 .coord__coll {
-    float: left;
+    float: right;
     padding: 0 0 0 5px;
     vertical-align: top;
 }

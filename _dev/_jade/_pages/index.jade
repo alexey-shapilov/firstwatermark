@@ -57,21 +57,20 @@ block content
                                 .coord
                                     .coord__raw
                                         .coord__coll
-                                            label.coord__title(for="x_coordinate") X
+                                            input.coord__arrow.coord__arrow_up#x_coordinate_up(type="button" value="∧")
+                                            input.coord__arrow.coord__arrow_down#x_coordinate_down(type="button" value="∨")
                                         .coord__coll
                                             input.coord__field#x_coordinate(type="text")
                                         .coord__coll
-                                            input.coord__arrow.coord__arrow_up#x_coordinate_up(type="button" value="∧")
-                                            input.coord__arrow.coord__arrow_down#x_coordinate_down(type="button" value="∨")
+                                            label.coord__title.coord__title_x(for="x_coordinate") X
                                     .coord__raw
-                                        .coord__coll
-                                            label.coord__title(for="y_coordinate") Y
-                                        .coord__coll
-                                            input.coord__field#y_coordinate(type="text")
                                         .coord__coll
                                             input.coord__arrow.coord__arrow_up#y_coordinate_up(type="button" value="∧")
                                             input.coord__arrow.coord__arrow_down#y_coordinate_down(type="button" value="∨")
-
+                                        .coord__coll
+                                            input.coord__field#y_coordinate(type="text")
+                                        .coord__coll
+                                            label.coord__title.coord__title_y(for="y_coordinate") Y
                     // transparent
                     .adjust__raw
                         .transparent

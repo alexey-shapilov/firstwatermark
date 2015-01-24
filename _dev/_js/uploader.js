@@ -1,4 +1,4 @@
-!function ($) {
+var uploader = (function ($) {
     'use strict';
 
     var url = '/index.php?q=uploader.ajax',
@@ -95,11 +95,13 @@
                         axisButtons: {
                             x: {
                                 input: $('#x_coordinate'),
+                                inputTitle: $('.coord__title_x'),
                                 btnUp: $('#x_coordinate_up'),
                                 btnDown: $('#x_coordinate_down')
                             },
                             y: {
                                 input: $('#y_coordinate'),
+                                inputTitle: $('.coord__title_y'),
                                 btnUp: $('#y_coordinate_up'),
                                 btnDown: $('#y_coordinate_down')
                             },
@@ -123,7 +125,10 @@
 
                         //mosh buttons
 
-                        $tileBtn: $('.tile')
+                        switchBtn: {
+                            tileBtn: $('.toggle__item_grid'),
+                            singleBtn: $('.toggle__item_single')
+                        }
                     });
 
                     p.init();
@@ -134,4 +139,12 @@
         }
     });
 
-}(jQuery);
+    return {
+
+        getScale : function() {
+            return scale;
+        }
+
+    };
+
+})(jQuery);
