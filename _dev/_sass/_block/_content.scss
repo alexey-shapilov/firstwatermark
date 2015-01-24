@@ -373,13 +373,12 @@
     line-height: 45px;
 }
 .transparent__body {
-//    padding: 15px 0;
+    padding: 15px 0;
 }
-//.transparent__item {
-////    background: #9eb2c0;
-//    height: 3px;
-//    width: 100%;
-//}
+.transparent__item {
+    height: 3px;
+    width: 100%;
+}
 
 // download result
 .form {
@@ -420,24 +419,11 @@
 }
 
 
-// jquery UI slider
+// ================================= jquery UI slider
 
 
 
-.ui-slider-horizontal .ui-slider-range {
-	top: 0;
-	height: 100%;
-    background: #33f;
-}
-.ui-slider-horizontal .ui-slider-range-min {
-	left: 0;
-    background: #33f;
-}
-.ui-slider-horizontal .ui-slider-range-max {
-	right: 0;
-    background: #f00;
-}
-// ================================= .ui-slider
+
 .ui-slider {
 	position: relative;
 	text-align: left;
@@ -477,6 +463,19 @@
 }
 
 
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+    background: #33f;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+    background: #33f;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+    background: #f00;
+}
 .ui-slider-range      {
     background: #0ff;
 }
