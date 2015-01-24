@@ -95,11 +95,13 @@ var uploader = (function ($) {
                         axisButtons: {
                             x: {
                                 input: $('#x_coordinate'),
+                                inputTitle: $('.coord__title_x'),
                                 btnUp: $('#x_coordinate_up'),
                                 btnDown: $('#x_coordinate_down')
                             },
                             y: {
                                 input: $('#y_coordinate'),
+                                inputTitle: $('.coord__title_y'),
                                 btnUp: $('#y_coordinate_up'),
                                 btnDown: $('#y_coordinate_down')
                             },
@@ -123,7 +125,10 @@ var uploader = (function ($) {
 
                         //mosh buttons
 
-                        $tileBtn: $('.tile')
+                        switchBtn: {
+                            tileBtn: $('.toggle__item_grid'),
+                            singleBtn: $('.toggle__item_single')
+                        }
                     });
 
                     p.init();

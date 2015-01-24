@@ -49,45 +49,52 @@ ob_start();
                         </div>
                         <!-- place watermark-->
                         <div class="adjust__raw">
+                            <div class="toggle">
+                                <div class="toggle__item toggle__item_grid"></div>
+                                <div class="toggle__item toggle__item_single"></div>
+                            </div>
                             <div class="place">
-                                <h3 class="place__title tile">Положение</h3>
+                                <h3 class="place__title">Положение</h3>
                                 <div class="place__body">
                                     <!-- grid-->
                                     <div class="grid">
-                                        <div class="grid__item grid__item_1"></div>
-                                        <div class="grid__item grid__item_2"></div>
-                                        <div class="grid__item grid__item_3"></div>
-                                        <div class="grid__item grid__item_4"></div>
-                                        <div class="grid__item grid__item_5"></div>
-                                        <div class="grid__item grid__item_6"></div>
-                                        <div class="grid__item grid__item_7"></div>
-                                        <div class="grid__item grid__item_8"></div>
-                                        <div class="grid__item grid__item_9"></div>
+                                        <div class="grid__closed"></div>
+                                        <div class="grid__container">
+                                            <div class="grid__item grid__item_1"></div>
+                                            <div class="grid__item grid__item_2"></div>
+                                            <div class="grid__item grid__item_3"></div>
+                                            <div class="grid__item grid__item_4"></div>
+                                            <div class="grid__item grid__item_5"></div>
+                                            <div class="grid__item grid__item_6"></div>
+                                            <div class="grid__item grid__item_7"></div>
+                                            <div class="grid__item grid__item_8"></div>
+                                            <div class="grid__item grid__item_9"></div>
+                                        </div>
                                     </div>
                                     <!-- coordinate-->
                                     <div class="coord">
                                         <div class="coord__raw">
                                             <div class="coord__coll">
-                                                <label for="x_coordinate" class="coord__title">X</label>
+                                                <input id="x_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="x_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                             <div class="coord__coll">
                                                 <input id="x_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input id="x_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input id="x_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <label for="x_coordinate" class="coord__title coord__title_x">X</label>
                                             </div>
                                         </div>
                                         <div class="coord__raw">
                                             <div class="coord__coll">
-                                                <label for="y_coordinate" class="coord__title">Y</label>
+                                                <input id="y_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
+                                                <input id="y_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
                                             </div>
                                             <div class="coord__coll">
                                                 <input id="y_coordinate" type="text" class="coord__field">
                                             </div>
                                             <div class="coord__coll">
-                                                <input id="y_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input id="y_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <label for="y_coordinate" class="coord__title coord__title_y">Y</label>
                                             </div>
                                         </div>
                                     </div>

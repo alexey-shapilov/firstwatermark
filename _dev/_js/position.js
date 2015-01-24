@@ -5,20 +5,29 @@ function Tile(options) {
         self = this,
         tile = options.tile,
         tileContainer = options.tileContainer,
-        tileWrapper = $('<div/>'),
         tileWidth = tile.width(),
         tileHeight = tile.height(),
+        tileWrapper = this.tileWrapper,
         marginButtons = options.marginButtons;
+
     tileWrapper.addClass(tileWrapperClass);
 
+    this.created = false;
+
     this.margin = {
-        x: 0,
-        y: 0
+        x: {
+            value: 0,
+            marginClass: 'col_'
+        },
+        y: {
+            value: 0,
+            marginClass: 'row_'
+        }
     };
 
     this.count = {
-        axisX: tileContainer.width() / tileWidth,
-        axisY: tileContainer.height() / tileHeight
+        x: tileContainer.width() / tileWidth,
+        y: tileContainer.height() / tileHeight
     };
 
     this.make = function () {
@@ -29,79 +38,90 @@ function Tile(options) {
             col = 0,
             imgs = '';
 
-        for (var i = 0; i < self.count.axisX; i++) {
+        for (var i = 0; i < self.count.x; i++) {
             ++col;
             row = 0;
-            for (var j = 0; j < self.count.axisY; j++) {
+            for (var j = 0; j < self.count.y; j++) {
                 ++row;
                 imgs += img.replace('%style%', 'style="left:' + (tileWidth * i) + 'px; top:' + (tileHeight * j) + 'px; ' +
                 'width:' + tileWidth + 'px; height:' + tileHeight + 'px;"');
-                imgs = imgs.replace('%class%', 'class="' + tileClass + ' row_' + row + ' col_' + col + '"')
+                imgs = imgs.replace('%class%', 'class="' + tileClass + ' ' + self.margin.y.marginClass + row + ' ' + self.margin.x.marginClass + col + '"')
             }
         }
         tileWrapper.html(imgs);
 
         tileWrapper.attr('style', 'position:absolute; left:0; top:0;');
 
-        marginButtons.x.btnUp.off('click').on('click', function () {
-            self.margin.x += 1;
-            for (var i = 2; i <= self.count.axisX + 1; i++) {
-                tileWrapper.find('.col_' + i).each(function () {
-                    var $this = $(this);
-                    $this.css({
-                        left: '+=' + (i - 1)
-                    });
-                    marginButtons.writeCoord(self.margin.x, marginButtons.x.input);
-                });
-            }
-        });
-
-        marginButtons.x.btnDown.off('click').on('click', function () {
-            self.margin.x -= 1;
-            for (var i = 2; i <= self.count.axisX + 1; i++) {
-                tileWrapper.find('.col_' + i).each(function () {
-                    var $this = $(this);
-                    $this.css({
-                        left: '-=' + (i - 1)
-                    });
-                    marginButtons.writeCoord(self.margin.x, marginButtons.x.input);
-                });
-            }
-        });
-
-        marginButtons.y.btnUp.off('click').on('click', function () {
-            self.margin.y -= 1;
-            for (var i = 2; i <= self.count.axisY + 1; i++) {
-                tileWrapper.find('.row_' + i).each(function () {
-                    var $this = $(this);
-                    $this.css({
-                        top: '-=' + (i - 1)
-                    });
-                    marginButtons.writeCoord(self.margin.y, marginButtons.y.input);
-                });
-            }
-        });
-        marginButtons.y.btnDown.off('click').on('click', function () {
-            self.margin.y += 1;
-            for (var i = 2; i <= self.count.axisY + 1; i++) {
-                tileWrapper.find('.row_' + i).each(function () {
-                    var $this = $(this);
-                    $this.css({
-                        top: '+=' + (i - 1)
-                    });
-                    marginButtons.writeCoord(self.margin.y, marginButtons.y.input);
-                });
-            }
-        });
+        self.bindButtons();
 
         tile.css('display', 'none');
         tileWrapper.draggable();
+
+        self.created = true;
+
         return tileWrapper;
+    };
+
+    this.bindButtons = function () {
+        function tileMargin(axis, step) {
+            self.margin[axis]['value'] = self.margin[axis]['value'] + step;
+            for (var i = 2; i <= self.count[axis] + 1; i++) {
+                tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
+                    var $this = $(this);
+                    switch (axis) {
+                        case 'x':
+                            $this.css({
+                                left: '+=' + step * (i - 1)
+                            });
+                            break;
+                        case 'y':
+                            $this.css({
+                                top: '+=' + step * (i - 1)
+                            });
+                            break;
+                    }
+                    marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
+                });
+            }
+        }
+
+        marginButtons.x.inputTitle.text("\u2194");
+        marginButtons.y.inputTitle.text("\u2195");
+
+        marginButtons.writeCoord(self.margin.x.value, marginButtons.x.input);
+        marginButtons.writeCoord(self.margin.y.value, marginButtons.y.input);
+
+        marginButtons.x.btnUp.off('click').on('click', function () {
+            tileMargin('x', 1);
+        });
+
+        marginButtons.x.btnDown.off('click').on('click', function () {
+            tileMargin('x', -1);
+        });
+
+        marginButtons.y.btnUp.off('click').on('click', function () {
+            tileMargin('y', 1);
+        });
+        marginButtons.y.btnDown.off('click').on('click', function () {
+            tileMargin('y', -1);
+        });
+
+        marginButtons.x.input.off('change').on('change', function () {
+            tileMargin('x', this.value);
+        });
+        marginButtons.y.input.off('change').on('change', function () {
+            tileMargin('y', this.value);
+        });
     }
 }
 
+Tile.prototype.tileWrapper = $('<div/>');
+
 function Position(options) { //создаем функцию конструктор
     this.options = options;
+
+    this.created = false;
+
     this.tile = new Tile(
         {
             tile: options.$watermark,
@@ -132,16 +152,50 @@ function Position(options) { //создаем функцию конструкт�
     this.gridButtons = options.gridButtons;
 }
 
+Position.prototype.reInit = function () {
+    // all work width X coords
+    this.initCoordsX();
+
+    // all work width Y coords
+    this.initCoordsY();
+};
+
 Position.prototype.init = function () {
     var
-        $tileBtn = this.options.$tileBtn,
+        switchBtn = this.options.switchBtn,
         self = this;
 
-    $tileBtn.on('click', function () {
-        var tile = self.tile.make();
-        self.workspace.append(tile)
+    if (this.created) {
+        this.reInit();
+        return this
+    }
+
+    switchBtn.tileBtn.on('click', function () {
+        if (!self.tile.created) {
+            var
+                tile = self.tile.make();
+            self.workspace.append(tile)
+        } else {
+            self.tile.bindButtons();
+            self.tile.tileWrapper.show();
+        }
+        if (!switchBtn.tileBtn.hasClass('toggle__item_grid-active')) {
+            switchBtn.tileBtn.addClass('toggle__item_grid-active');
+            switchBtn.tileBtn.removeClass('toggle__item_single-active');
+        }
     });
 
+    switchBtn.singleBtn.on('click', function () {
+        self.init();
+        self.watermark.elem.show();
+        if (self.tile) {
+            self.tile.tileWrapper.hide();
+        }
+        if (!switchBtn.singleBtn.hasClass('toggle__item_single-active')) {
+            switchBtn.singleBtn.removeClass('toggle__item_grid-active');
+            switchBtn.singleBtn.addClass('toggle__item_single-active');
+        }
+    });
     /**
      *
      * * drag and work with value X and Y
@@ -291,11 +345,17 @@ Position.prototype.init = function () {
         }
     };
 
+    this.created = true;
+
     return this;
 };
 
 Position.prototype.initCoordsX = function () {
     var self = this;
+
+    this.axisButtons.writeCoord(this.watermark.position.left, this.axisButtons.x.input);
+    this.axisButtons.x.inputTitle.text('X');
+
     // START x coords and input value
     this.axisButtons.x.btnDown.off('click').on('click', function () {
         console.log();
@@ -311,9 +371,9 @@ Position.prototype.initCoordsX = function () {
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
     });
 
-    this.axisButtons.x.input.change(function () {
+    this.axisButtons.x.input.off('change').on('change', function () {
         self.watermark.position.left = this.value;
-        self.positionCssElem(sself.watermark.position.left, self.watermark.position.top);
+        self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
 };
@@ -321,6 +381,11 @@ Position.prototype.initCoordsX = function () {
 
 Position.prototype.initCoordsY = function () {
     var self = this;
+
+    this.axisButtons.writeCoord(this.watermark.position.top, this.axisButtons.y.input);
+
+    this.axisButtons.y.inputTitle.text('Y');
+
     // START y coords and input value
     this.axisButtons.y.btnUp.off('click').on('click', function () {
         self.watermark.position.top -= 1;
@@ -336,7 +401,7 @@ Position.prototype.initCoordsY = function () {
         self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.y.input);
     });
 
-    this.axisButtons.y.input.change(function () {
+    this.axisButtons.y.input.off('cjange').on('change', function () {
         self.watermark.position.top = this.value;
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
