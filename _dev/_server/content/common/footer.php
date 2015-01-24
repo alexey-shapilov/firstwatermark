@@ -21,6 +21,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
 <script src="../../../_js/position.js"></script>
 <script src="../../../_js/slider.js"></script>
 <script src="../../../_js/uploader.js"></script>
+<script src="../../../_js/download.js"></script>
 <!-- endbuild-->
 </body>
 </html>

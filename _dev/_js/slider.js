@@ -34,7 +34,7 @@ Slider.prototype.sliderOpacity = function (val) { // функция изменя
 };
 
 var slider = new Slider({// указываем ему необходимые элементы для работы
-    $rangeOpacity: $('.transparent__body'),
+    $rangeOpacity: $('.transparent__item'),
     $elemOpacity: $('.picture__watermark')
 }); //создаем наш бегунок
 

@@ -37,3 +37,8 @@
     -o-border-radius: $val;
     border-radius: $val;
 }
+
+@mixin boxShady($shad) {
+    -webkit-box-shadow: $shad;
+    box-shadow: $shad;
+}

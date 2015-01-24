@@ -154,7 +154,7 @@
     @include  borderRadius( 3px 0 0 3px );
 }
 .upload__button {
-    background: #f97e76;
+    background: #f97e76 url(img/download.png) 0 0 no-repeat;
     border: none;
     display: block;
     float: left;
@@ -174,6 +174,7 @@
     width: 60px;
 }
 .toggle__item {
+    cursor: pointer;
     height: 20px;
     width: 20px;
     position: absolute;
@@ -194,15 +195,22 @@
         background-position: -32px -4px;
     }
 }
-
+.toggle__item_grid-active {
+    background-position: -3px -4px;
+}
+.toggle__item_single-active {
+    background-position: -32px -4px;
+}
 .place {
     padding: 0 10px;
 }
+
 .place__title  {
 //    background: #fff;
     font: normal 16px robotolight;
     line-height: 45px;
 }
+
 .place__body {
     padding: 20px 0;
     @include clearfix;
@@ -257,6 +265,7 @@
     border-style: solid;
     border-color: #9eb2c0;
     background: #dbe1e8;
+    cursor: pointer;
     display: block;
     float: left;
     position: relative;
@@ -315,7 +324,7 @@
     @include clearfix;
 }
 .coord__coll {
-    float: left;
+    float: right;
     padding: 0 0 0 5px;
     vertical-align: top;
 }
@@ -364,13 +373,13 @@
     line-height: 45px;
 }
 .transparent__body {
-    padding: 15px 0;
+//    padding: 15px 0;
 }
-.transparent__item {
-//    background: #9eb2c0;
-    height: 3px;
-    width: 100%;
-}
+//.transparent__item {
+////    background: #9eb2c0;
+//    height: 3px;
+//    width: 100%;
+//}
 
 // download result
 .form {
@@ -410,4 +419,70 @@
     
 }
 
+
 // jquery UI slider
+
+
+
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+    background: #33f;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+    background: #33f;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+    background: #f00;
+}
+// ================================= .ui-slider
+.ui-slider {
+	position: relative;
+	text-align: left;
+}
+.ui-widget-content {
+//	background: #dbe1e8;
+}
+.ui-slider-horizontal {
+    border: none;
+    background: #dbe1e8;
+    height: 3px;
+}
+.ui-slider .ui-slider-handle {
+    background: #9eb2c0;
+    border: 8px solid #dbe1e8;
+	position: absolute;
+	z-index: 5;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+    margin: -11px 0 0 0;
+	-ms-touch-action: none;
+	touch-action: none;
+//    top -25px;
+    outline: none;
+    @include borderRadius(50%);
+    @include boxShady(0px 1px 2px #777);
+}
+
+.ui-slider .ui-slider-range {
+    background: #333;
+	position: absolute;
+	z-index: 100;
+	font-size: 3px;
+	display: block;
+	border: 0;
+}
+
+
+.ui-slider-range      {
+    background: #0ff;
+}
+.ui-slider-range-min  {
+    background: #f00;
+}
+.ui-slider-range-max  {
+    background: #ff0;
+}
