@@ -23,8 +23,30 @@ class ImageConverter {
     $newHeight = max($h1, $h2);
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
 
-    imagecopyresampled($newImage, imagecreatefromjpeg($source), 0, 0, 0, 0, $w1, $h1, $w1, $h1);
-    imagecopymerge($newImage, imagecreatefromjpeg($watermark), $x, $y, 0, 0, $w2, $h2, $opacity);
+    // определяем вызываемую функцию копирования в зависимости
+    // от разрешения загруженного файла
+    $image_create_source_func = 'imagecreatefrom';
+    $image_create_water_func = 'imagecreatefrom';
+
+    $allowed_ext = ['jpeg', 'png', 'gif'];
+    preg_match('/\.([a-z]*)$/', $source, $ext);
+
+    if(!array_search($ext[1], $allowed_ext)) {
+      throw new \RuntimeException('Invalid source extension.');
+    }
+
+    $image_create_source_func .= $ext[1];
+
+    preg_match('/\.([a-z]*)$/', $watermark, $ext);
+
+    if(!array_search($ext[1], $allowed_ext)) {
+      throw new \RuntimeException('Invalid watermark extension.');
+    }
+
+    $image_create_water_func .= $ext[1];
+
+    imagecopyresampled($newImage, $image_create_source_func($source), 0, 0, 0, 0, $w1, $h1, $w1, $h1);
+    imagecopymerge($newImage, $image_create_water_func($watermark), $x, $y, 0, 0, $w2, $h2, $opacity);
 
     header("Content-Type: application/stream");
     header("Content-Disposition: attachment; filename=result.jpg");
