@@ -16,9 +16,5 @@ $strings = [
 function t($string) {
   global $strings, $lang;
 
-  if($strings[$lang][$string]) {
-    return $strings[$lang][$string];
-  }
-
-  return $string;
+  return $strings[$lang][$string] ?: $string;
 }
