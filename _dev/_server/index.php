@@ -18,18 +18,32 @@ define('PATH_CONTENT_COMMON', PATH_CONTENT . '/common');
 
 $query = explode('/', $_GET['q']);
 
-//если корневой уровень сайта, будем загружать скрипт about
+//если корневой уровень сайта, будем загружать скрипт main
 if (!$query[0]) {
-    $query[0] = 'main';
+  $lang = $query[0] = 'ru';
+  $template = 'main';
+} else if($query[0] == 'ru' || $query[0] == 'eng') {
+  $lang = $query[0];
+  if($query[1]) {
+    $template = $query[1];
+  } else {
+    $template = $query[1] = 'main';
+  }
+} else {
+  $template = $query[0];  
 }
 
 // будем считать что может быть только один уровень сайта
 
-
 // все ajax запросы выполняются на адрес <название скрипта>.ajax
-if (strpos($query[0], 'ajax') !== false) {
-    require_once(PATH_SCRIPTS . '/' . substr($query[0], 0, -5) . '.php');
+if (strpos($template, 'ajax') !== false) {
+  if(strpos($template, '?') !== false) {
+    $template = substr($template, 0, strpos($template, '?'));  
+  }
+  require_once(PATH_SCRIPTS . '/' . str_replace('.ajax', '.php', $template));
 } else {
-    require_once(PATH_CONTENT . '/' . $query[0] . '.php');
-    require_once(PATH_CONTENT . '/' . 'template.php');
+  require_once(PATH_CONTENT . '/' . 'translate.php');
+  require_once(PATH_CONTENT . '/' . $template . '.php');
+  require_once(PATH_CONTENT . '/' . 'template.php');
 }
+

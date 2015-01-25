@@ -6,8 +6,8 @@
     <div class="aside__coll">
         <div class="lang">
             <ul class="lang__list">
-                <li class="lang__item"><a href="#" class="lang__link"><span class="lang__text">РУС</span></a></li>
-                <li class="lang__item"><a href="#" class="lang__link"><span class="lang__text">ENG</span></a></li>
+                <li class="lang__item"><a href="/ru/" class="lang__link"><span class="lang__text">РУС</span></a></li>
+                <li class="lang__item"><a href="/eng/" class="lang__link"><span class="lang__text">ENG</span></a></li>
             </ul>
         </div>
     </div>
