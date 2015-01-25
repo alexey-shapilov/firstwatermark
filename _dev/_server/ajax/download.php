@@ -22,6 +22,8 @@ class ImageConverter {
     $newWidth = $w1 + $w2;
     $newHeight = max($h1, $h2);
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
+    imagealphablending($newImage, true);
+    imagesavealpha($newImage, true);
 
     // определяем вызываемую функцию копирования в зависимости
     // от разрешения загруженного файла
@@ -36,6 +38,10 @@ class ImageConverter {
     }
 
     $image_create_source_func .= $ext[1];
+    $source_img = $image_create_source_func($source);
+    if($ext[1] == 'png') {
+      imagealphablending($source_img, true);
+    }
 
     preg_match('/\.([a-z]*)$/', $watermark, $ext);
 
@@ -44,14 +50,18 @@ class ImageConverter {
     }
 
     $image_create_water_func .= $ext[1];
+    $water_img = $image_create_source_func($watermark);
+    if($ext[1] == 'png') {
+      imagealphablending($water_img, true);
+    }
 
-    imagecopyresampled($newImage, $image_create_source_func($source), 0, 0, 0, 0, $w1, $h1, $w1, $h1);
-    imagecopymerge($newImage, $image_create_water_func($watermark), $x, $y, 0, 0, $w2, $h2, $opacity);
+    imagecopyresampled($newImage, $source_img, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
+    imagecopyresampled($newImage, $water_img, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
 
     header("Content-Type: application/stream");
-    header("Content-Disposition: attachment; filename=result.jpg");
+    header("Content-Disposition: attachment; filename=result.png");
 
-    imagejpeg($newImage);
+    imagepng($newImage);
 
   }
 }
