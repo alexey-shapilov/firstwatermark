@@ -18,7 +18,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <!-- endbower-->
     <!-- endbuild-->
 
-    <!-- build:css(_dev/_jade/_pages) css/style.css-->
+    <!-- build:css(_dev/_jade/_pages) /css/style.css-->
     <link rel="stylesheet" href="../../_sass/style.css" type="text/css" media="screen">
     <!-- endbuild-->
 </head>
