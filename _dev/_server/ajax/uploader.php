@@ -46,7 +46,7 @@ class Uploader
             if (false === $ext = array_search(
                     $finfo->file($_FILES['upload']['tmp_name']),
                     array(
-                        'jpg' => 'image/jpeg',
+                        'jpeg' => 'image/jpeg',
                         'png' => 'image/png',
                         'gif' => 'image/gif',
                     ),
@@ -55,26 +55,25 @@ class Uploader
             ) {
                 throw new \RuntimeException('Invalid file format.');
             }
-
             // You should name it uniquely.
             // DO NOT USE $_FILES['upload']['name'] WITHOUT ANY VALIDATION !!
             // On this example, obtain safe unique name from its binary data.
 
-            $new_filename = sprintf($_SERVER['DOCUMENT_ROOT'] . '/uploads/%s.%s',
+            $new_filename = sprintf(
+                $_SERVER['DOCUMENT_ROOT'] . '/uploads/%s.%s',
                 sha1_file($_FILES['upload']['tmp_name']),
                 $ext
             );
-            $file_url = sprintf('/uploads/%s.%s',
+            $file_url = sprintf(
+                '/uploads/%s.%s',
                 sha1_file($_FILES['upload']['tmp_name']),
                 $ext
             );
-
 
             if (!move_uploaded_file(
-                $_FILES['upload']['tmp_name'],
-                $new_filename
-            )
-            ) {
+                $_FILES['upload']['tmp_name'], 
+                $new_filename)) 
+            {
                 throw new \RuntimeException('Failed to move uploaded file.');
             }
 

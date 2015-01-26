@@ -30,12 +30,11 @@ Slider.prototype.sliderActive = function () {
 
 Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
     this.$elemOpacity.css('opacity', val); //изменение прозрачности водяного знака
-    $('.tile-wrapper').css('opacity', val);//изменение прозрачности копий водяного знака
-    $('.tile-wrapper').css('z-index', 100);//изменение прозрачности копий водяного знака
+    $('.mosh__item').css('opacity', val);//изменение прозрачности копий водяного знака
 };
 
 var slider = new Slider({// указываем ему необходимые элементы для работы
-    $rangeOpacity: $('.transparent__body'),
+    $rangeOpacity: $('.transparent__item'),
     $elemOpacity: $('.picture__watermark')
 }); //создаем наш бегунок
 

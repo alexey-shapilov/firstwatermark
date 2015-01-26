@@ -25,7 +25,7 @@ $.gulp.task('build-with-php', ['sass'], function () {
         console.log('myErr');
         if (er) throw er
     });
-    $.gulp.src(['./_dev/_server/.htaccess', './_dev/_server/**/*.php'])
+    $.gulp.src('./_dev/_server/**/*.php')
         .pipe($.wiredep.stream({
             directory: '_dev/_bower',
             fileTypes: {
@@ -57,6 +57,9 @@ $.gulp.task('build-with-php', ['sass'], function () {
     // изображения для стилей
     $.gulp.src('./_dev/_sass/img/*')
         .pipe($.gulp.dest('./app/css/img/'));
+
+    $.gulp.src(['./_dev/_server/.htaccess', './_dev/*.ico'])
+        .pipe($.gulp.dest('./app'));
 
     $.gulp.src('./_dev/_server/uploads')
         .pipe($.gulp.dest('./app/'));
@@ -92,7 +95,7 @@ $.gulp.task('jade', function () {
 //
 // Собираем проект без PHP
 //
-$.gulp.task('build-without-php', ['jade','sass'], function () {
+$.gulp.task('build-without-php', ['jade', 'sass'], function () {
     var assets = $.useref.assets(); //Функция плагина gulp-useref
 
     // Плагин rimraf удаляет каталог в переменной productionPath
@@ -113,13 +116,16 @@ $.gulp.task('build-without-php', ['jade','sass'], function () {
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(productionPath)).on('error', log);
 
-        // шрифты
-        $.gulp.src('./_dev/_sass/fonts/*')
-            .pipe($.gulp.dest('./app/css/fonts/'));
-    
-        // изображения для стилей
-        $.gulp.src('./_dev/_sass/img/*')
-            .pipe($.gulp.dest('./app/css/img/'));
+    // шрифты
+    $.gulp.src('./_dev/_sass/fonts/*')
+        .pipe($.gulp.dest('./app/css/fonts/'));
+
+    // изображения для стилей
+    $.gulp.src('./_dev/_sass/img/*')
+        .pipe($.gulp.dest('./app/css/img/'));
+
+    $.gulp.src('./_dev/*.ico')
+        .pipe($.gulp.dest('./app'));
 });
 
 //

@@ -1,10 +1,14 @@
-!function ($) {
+var uploader = (function ($) {
     'use strict';
 
-    var url = '/index.php?q=uploader.ajax',
+    var url = '/uploader.ajax',
         scale = {
             x: 1,
             y: 1
+        },
+        watermarkSizeOriginal = {
+            width: 0,
+            height: 0
         };
 
     $('#upload_picture').fileupload({
@@ -26,11 +30,8 @@
                 pic.on('load', (function () {
                         console.log('сработало событие pic.load');
                         var $this = $(this),
-                            watermark = $('.picture__watermark'),
-                            watermarkSizeOriginal = {
-                                width: 0,
-                                height: 0
-                            };
+                            watermark = $('.picture__watermark');
+
                         console.log('картинка: ', $this.width(), ' ', $this.height());
                         picSizeOriginal.width = $this.width();
                         picSizeOriginal.height = $this.height();
@@ -47,10 +48,8 @@
                         if (watermark.attr('src')) {
                             watermark.hide();
                             watermark.attr('style', '');
-                            console.log('водяной знак: ', watermark.width(), ' ', watermark.height());
-                            watermarkSizeOriginal.width = watermark.width();
-                            watermarkSizeOriginal.height = watermark.height();
-                            console.log('водяной знак должен стать: ', watermark.width() / scale.x, ' ', watermark.height() / scale.y);
+                            console.log('водяной знак: ', watermarkSizeOriginal.width, ' ', watermarkSizeOriginal.height);
+                            console.log('водяной знак должен стать: ', watermarkSizeOriginal.width / scale.x, ' ', watermarkSizeOriginal.height / scale.y);
                             watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
@@ -70,83 +69,83 @@
         dataType: 'json',
         done: function (e, data) {
             if (data.result.src) {
-                var watermark = $('.picture__watermark'),
-                    watermarkSizeOriginal = {
-                        width: 0,
-                        height: 0
-                    };
+                var watermark = $('.picture__watermark');
                 watermark.attr('style', '');
                 watermark.hide();
                 watermark.attr('src', data.result.src);
                 watermark.load(function () {
-                    var $this = $(this);
-                    console.log('водяной знак: ', $this.width(), ' ', $this.height());
-                    watermarkSizeOriginal.width = $this.width();
-                    watermarkSizeOriginal.height = $this.height();
-                    console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
-                    $this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
-                    console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
-                    $this.show();
-                    $this.off('load');
+                        var
+                            $this = $(this);
 
-                    var p = new Position({
+                        console.log('водяной знак: ', $this.width(), ' ', $this.height());
+                        watermarkSizeOriginal.width = $this.width();
+                        watermarkSizeOriginal.height = $this.height();
+                        console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
+                        $this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
+                        console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
 
-                        //x and Y value, button
-                        axisButtons: {
-                            x: {
-                                input: $('#x_coordinate'),
-                                btnUp: $('#x_coordinate_up'),
-                                btnDown: $('#x_coordinate_down')
+                        $this.show();
+                        $this.off('load');
+
+                        var p = new Position({
+
+                            //x and Y value, button
+                            axisButtons: {
+                                x: {
+                                    input: $('#x_coordinate'),
+                                    inputTitle: $('.coord__title_x'),
+                                    btnUp: $('#x_coordinate_up'),
+                                    btnDown: $('#x_coordinate_down')
+                                },
+                                y: {
+                                    input: $('#y_coordinate'),
+                                    inputTitle: $('.coord__title_y'),
+                                    btnUp: $('#y_coordinate_up'),
+                                    btnDown: $('#y_coordinate_down')
+                                },
+                                writeCoord: function (coord, input) {
+                                    input.val(Math.round(coord));
+                                }
                             },
-                            y: {
-                                input: $('#y_coordinate'),
-                                btnUp: $('#y_coordinate_up'),
-                                btnDown: $('#y_coordinate_down')
-                            },
-                            writeCoord: function (coord, input) {
-                                input.val(Math.round(coord));
+
+                            //area elem
+                            $workspace: $('.picture__workspace'),
+                            $mainImg: $('.picture__upload'),
+
+                            //elem
+                            $watermark: $('.picture__watermark'),
+
+                            // place grid events
+                            $placeGrid: $('.grid'),
+
+                            //position grid buttons
+                            gridButtons: 'grid__item',
+
+                            //mosh buttons
+
+                            switchBtn: {
+                                tileBtn: $('.toggle__item_grid'),
+                                singleBtn: $('.toggle__item_single')
                             }
-                        },
-                        //mosh X and Y value
-                        moshButtons: {
-                            x: {
-                                input: $('#x_coordinate'),
-                                btnUp: $('#x_coordinate_up'),
-                                btnDown: $('#x_coordinate_down')
-                            },
-                            y: {
-                                input: $('#y_coordinate'),
-                                btnUp: $('#y_coordinate_up'),
-                                btnDown: $('#y_coordinate_down')
-                            },
-                            writeCoord: function (coord, input) {
-                                input.val(Math.round(coord));
-                            }
-                        },
-                        //area elem
-                        $workspace: $('.picture__workspace'),
-                        $mainImg: $('.picture__upload'),
+                        });
 
-                        //elem
-                        $watermark: $('.picture__watermark'),
-
-                        // place grid events
-                        $placeGrid: $('.grid'),
-
-                        //position grid buttons
-                        gridButtons: 'grid__item',
-
-                        //mosh buttons
-                        $tileBtn: $('.tile'),
-                        $tileBtnDel: $('.tile__del')
-                    });
-
-                    p.init();
-                });
-            } else {
+                        p.init();
+                    }
+                )
+                ;
+            }
+            else {
                 console.log('error uploading the watermark file');
             }
         }
     });
 
-}(jQuery);
+    return {
+
+        getScale: function () {
+            return scale;
+        }
+
+    };
+
+})(jQuery);

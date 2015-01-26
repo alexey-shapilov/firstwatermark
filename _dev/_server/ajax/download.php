@@ -5,6 +5,7 @@ namespace Firstwatermark;
 class ImageConverter {
   public function convert($source, $watermark, $x, $y, $opacity) {
 
+    // 0. Убедимся, что файлы существуют и получим их размеры
     $source = PATH_BASE . '/uploads/' . $source;
     $watermark = PATH_BASE . '/uploads/' . $watermark;
 
@@ -19,17 +20,55 @@ class ImageConverter {
     list($w1, $h1, , ) = getimagesize($source);
     list($w2, $h2, , ) = getimagesize($watermark);
 
+    // 1. Создадим результирующий пустой холст, на котором будем рисовать
     $newWidth = $w1 + $w2;
     $newHeight = max($h1, $h2);
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
+    imagealphablending($newImage, true); // что-то как-то связанное с альфа каналами
+    imagesavealpha($newImage, true);     // в такой комбинации работает
 
-    imagecopyresampled($newImage, imagecreatefromjpeg($source), 0, 0, 0, 0, $w1, $h1, $w1, $h1);
-    imagecopymerge($newImage, imagecreatefromjpeg($watermark), $x, $y, 0, 0, $w2, $h2, $opacity);
+    // 1.1 определим вызываемую функцию копирования в зависимости
+    // от разрешения загруженного файла
+    $image_create_source_func = 'imagecreatefrom';
+    $image_create_water_func = 'imagecreatefrom';
+
+    $allowed_ext = ['jpeg', 'png', 'gif'];
+
+    // 1.1.1 ...для исходного изображения
+    preg_match('/\.([a-z]*)$/', $source, $ext);
+
+    if(!array_search($ext[1], $allowed_ext)) {
+      throw new \RuntimeException('Invalid source extension.');
+    }
+
+    $image_create_source_func .= $ext[1];
+    $source_img = $image_create_source_func($source);
+    if($ext[1] == 'png') {
+      imagealphablending($source_img, true); // в картинке может быть альфа-канал
+    }
+
+    // 1.1.2 ...для водяного знака
+    preg_match('/\.([a-z]*)$/', $watermark, $ext);
+
+    if(!array_search($ext[1], $allowed_ext)) {
+      throw new \RuntimeException('Invalid watermark extension.');
+    }
+
+    $image_create_water_func .= $ext[1];
+    $water_img = $image_create_source_func($watermark);
+    if($ext[1] == 'png') {
+      imagealphablending($water_img, true);
+    }
+
+
+    // 2. формируем исходное изображение
+    imagecopyresampled($newImage, $source_img, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
+    imagecopyresampled($newImage, $water_img, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
 
     header("Content-Type: application/stream");
-    header("Content-Disposition: attachment; filename=result.jpg");
+    header("Content-Disposition: attachment; filename=result.png");
 
-    imagejpeg($newImage);
+    imagepng($newImage);
 
   }
 }
@@ -51,10 +90,11 @@ try {
 
   $source = $_GET['i1'];
   $watermark = $_GET['i2'];
-  $x = (int)$_GET['x'];
-  $y = (int)$_GET['y'];
   $opacity = (int)$_GET['opacity'];
-  $opacity = 50;
+  $scaleX = round((float)$_GET['scaleX'], 2);
+  $scaleY = round((float)$_GET['scaleY'], 2);
+  $x = (int)$_GET['x'] * $scaleX;
+  $y = (int)$_GET['y'] * $scaleY;
 
   ImageConverter::convert($source, $watermark, $x, $y, $opacity);
 

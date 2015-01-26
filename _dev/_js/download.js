@@ -3,14 +3,23 @@ $(function () {
 
   console.log('downloader init');
 
-  $('.form__download-button').click(function(e) {
+  $('.form__button_submit').click(function(e) {
     e.preventDefault();
+
+    console.log('form__download_button click');
 
     var $originalEl = $('.picture__upload');
     var $waterEl = $('.picture__watermark');
 
     var i1 = '';
     var i2 = '';
+
+    var waterX = $waterEl[0].offsetLeft;
+    var waterY = $waterEl[0].offsetTop;
+    var opacity = Math.abs($waterEl.css('opacity') * 100);
+
+    var scale = uploader.getScale();
+    var downloadUrl = '';
 
     if($originalEl.attr('src')) {
       i1 = $originalEl.attr('src').split('/')[2];
@@ -26,12 +35,13 @@ $(function () {
       return false;
     }
 
-    var waterX = $waterEl[0].offsetLeft;
-    var waterY = $waterEl[0].offsetTop;
-    var opacity = $waterEl.css('opacity');
+    console.log(opacity);
 
-    window.open('/index.php?q=download.ajax&i1=' + i1 + '&i2=' + i2 + 
-      '&x=' + waterX + '&y=' + waterY + '&opacity=' + opacity, '_blank');
+    downloadUrl = '/download.ajax?i1=' + i1 + '&i2=' + i2 +
+      '&x=' + waterX + '&y=' + waterY + '&opacity=' + opacity + 
+      '&scaleX=' + scale.x + '&scaleY=' + scale.y;
+
+    window.open(downloadUrl, '_blank');
 
     // return false;
   });
