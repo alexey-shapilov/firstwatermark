@@ -29,41 +29,42 @@ class ImageConverter {
 
     // 1.1 определим вызываемую функцию копирования в зависимости
     // от разрешения загруженного файла
-    $image_create_source_func = 'imagecreatefrom';
-    $image_create_water_func = 'imagecreatefrom';
+    $imageCreateSourceFunc = 'imagecreatefrom';
+    $imageCreateWaterFunc = 'imagecreatefrom';
 
-    $allowed_ext = ['jpeg', 'png', 'gif'];
+    $allowedExt = array('jpeg', 'png', 'gif');
 
     // 1.1.1 ...для исходного изображения
     preg_match('/\.([a-z]*)$/', $source, $ext);
 
-    if(!array_search($ext[1], $allowed_ext)) {
+    if(!array_search($ext[1], $allowedExt)) {
       throw new \RuntimeException('Invalid source extension.');
     }
 
-    $image_create_source_func .= $ext[1];
-    $source_img = $image_create_source_func($source);
+    $imageCreateSourceFunc .= $ext[1];
+    $sourceImg = $imageCreateSourceFunc($source);
     if($ext[1] == 'png') {
-      imagealphablending($source_img, true); // в картинке может быть альфа-канал
+      imagealphablending($sourceImg, true); // в картинке может быть альфа-канал
     }
 
     // 1.1.2 ...для водяного знака
     preg_match('/\.([a-z]*)$/', $watermark, $ext);
 
-    if(!array_search($ext[1], $allowed_ext)) {
+    if(!array_search($ext[1], $allowedExt)) {
       throw new \RuntimeException('Invalid watermark extension.');
     }
 
-    $image_create_water_func .= $ext[1];
-    $water_img = $image_create_source_func($watermark);
+    $imageCreateWaterFunc .= $ext[1];
+    $waterImg = $imageCreateSourceFunc($watermark);
     if($ext[1] == 'png') {
-      imagealphablending($water_img, true);
+      imagealphablending($waterImg, true);
     }
 
 
-    // 2. формируем исходное изображение
-    imagecopyresampled($newImage, $source_img, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
-    imagecopyresampled($newImage, $water_img, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
+    // 2. формируем новое изображение - копируем исходные изображения
+    // в нужные позиции
+    imagecopyresampled($newImage, $sourceImg, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
+    imagecopyresampled($newImage, $waterImg, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
 
     header("Content-Type: application/stream");
     header("Content-Disposition: attachment; filename=result.png");
