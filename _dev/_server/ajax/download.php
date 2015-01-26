@@ -48,9 +48,6 @@ class ImageConverter {
 
     $imageCreateSourceFunc .= $ext[1];
     $sourceImg = $imageCreateSourceFunc($source);
-    if($ext[1] == 'png') {
-      imagealphablending($sourceImg, true); // в картинке может быть альфа-канал
-    }
 
     // 1.1.2 ...для водяного знака
     preg_match('/\.([a-z]*)$/', $watermark, $ext);
@@ -61,10 +58,6 @@ class ImageConverter {
 
     $imageCreateWaterFunc .= $ext[1];
     $waterImg = $imageCreateSourceFunc($watermark);
-    if($ext[1] == 'png') {
-      imagealphablending($waterImg, true);
-    }
-
 
     // 2. формируем новое изображение - копируем исходные изображения
     // в нужные позиции
