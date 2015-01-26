@@ -124,7 +124,6 @@
     padding: 10px 0;
 }
 .upload__title {
-//    background: #aaa;
     font: normal 16px robotolight;
     line-height: 20px;
 }
@@ -145,10 +144,13 @@
     z-index: 1;
 }
 .upload__field {
+    color: #9eb2c0;
+    font: normal 12px robotolight;
     background: transparent;
     border: 1px solid #9eb2c0;
     display: block;
     float: left;
+    line-height: 23px;
     height: 26px;
     padding: 0 0 0 5px;
     width: 180px;
@@ -445,7 +447,7 @@
 	width: 24px;
 	height: 24px;
 	cursor: pointer;
-    margin: -11px 0 0 0;
+    margin: -11px -12px 0 -12px;
 	-ms-touch-action: none;
 	touch-action: none;
 //    top -25px;
