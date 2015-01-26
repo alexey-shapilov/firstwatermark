@@ -1,7 +1,7 @@
 <?php
 
-$strings = [
-  'eng' => [
+$strings = array(
+  'eng' => array(
     'Генератор водяных знаков' => 'Watermark generator',
     'Настройки' => 'Settings',
     'Исходное изображение' => 'Source image',
@@ -10,8 +10,8 @@ $strings = [
     'Прозрачность' => 'Opacity',
     'Сброс' => 'Reset',
     'Скачать' => 'Download'
-  ]
-];
+  )
+);
 
 function t($string) {
   global $strings, $lang;
