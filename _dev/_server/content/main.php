@@ -34,14 +34,14 @@ ob_start();
                                 <div class="upload__item">
                                     <label for="upload_picture" class="upload__title"><?=t('Исходное изображение')?></label>
                                     <div class="upload__raw">
-                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field upload__field-source"></span>
                                         <button class="upload__button"></button>
                                     </div>
                                 </div>
                                 <div class="upload__item">
                                     <label for="upload_watermark" class="upload__title"><?=t('Водяной знак')?></label>
                                     <div class="upload__raw">
-                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field upload__field-watermark"></span>
                                         <button class="upload__button"></button>
                                     </div>
                                 </div>

@@ -14,6 +14,13 @@ var uploader = (function ($) {
     $('#upload_picture').fileupload({
         url: url,
         dataType: 'json',
+
+        change: function (e, data) {
+            $.each(data.files, function (index, file) {
+                $('.upload__field-source').html(file.name);
+            });
+        },
+
         done: function (e, data) {
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
@@ -67,6 +74,13 @@ var uploader = (function ($) {
     $('#upload_watermark').fileupload({
         url: url,
         dataType: 'json',
+
+        change: function (e, data) {
+            $.each(data.files, function (index, file) {
+                $('.upload__field-watermark').html(file.name);
+            });
+        },
+
         done: function (e, data) {
             if (data.result.src) {
                 var watermark = $('.picture__watermark');
@@ -140,6 +154,8 @@ var uploader = (function ($) {
         }
     });
 
+
+    // используется в download.js для получения текущего масштаба
     return {
 
         getScale: function () {
