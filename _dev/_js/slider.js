@@ -2,7 +2,6 @@ function Slider(options) {
     this.value = null; //текущее значение слайдера
     this.$rangeOpacity = options.$rangeOpacity; //запоминаем выбранные элементы в переменные
     this.$elemOpacity = options.$elemOpacity;
-    this.$moshElemsOpacityClass = options.$moshElemsOpacityClass;
     //this.self = this; //ссылка на себя
 } //создаем функцию конструктор
 
@@ -31,13 +30,16 @@ Slider.prototype.sliderActive = function () {
 
 Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
     this.$elemOpacity.css('opacity', val); //изменение прозрачности водяного знака
-    $($moshElemsOpacityClass).css('opacity', val);//изменение прозрачности копий водяного знака
+	
+	if($('.tile-wrapper').lenght){
+		$('.tile-wrapper').css('opacity', val);//изменение прозрачности копий водяного знака
+	}
+    
 };
 
 var slider = new Slider({// указываем ему необходимые элементы для работы
     $rangeOpacity: $('.transparent__item'),
-    $elemOpacity: $('.picture__watermark'),
-	$moshElemsOpacityClass: '.tile-wrapper'
+    $elemOpacity: $('.picture__watermark')
 }); //создаем наш бегунок
 
 slider.init();
