@@ -54,7 +54,7 @@ button {
 
 .container {
 //    background: #777;
-    background: url(img/common_bg.jpg) no-repeat;
+//    background: url(img/common_bg.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
     height: 100%;
@@ -73,6 +73,9 @@ footer {
     z-index: 5;
 }
 .content {
+    background: url(img/common_bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     margin-top: -($headerHeight);
     margin-bottom: -($footerHeight);
     min-height: 100%;
