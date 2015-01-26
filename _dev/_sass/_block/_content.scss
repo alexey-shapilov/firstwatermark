@@ -2,6 +2,8 @@
 @import "../_mixin/_variables";
 
 
+
+
 .workspace {
     
 }
@@ -78,9 +80,9 @@
     position: relative;
 }
 .adjust__raw {
-//    background: #0ff;
+    background: $help_2; // ----------------------HELP
     border-top: 1px solid #f00;
-    padding: 0 10px;
+    padding: 20px 10px;
     position: relative;
     &:first-child {
         border-top: none;
@@ -98,7 +100,7 @@
         border-left: solid 10px transparent;
         content: "";
         display: block;
-        left: 125px;
+        left: 120px;
         position: absolute;
         top: 0px;
     }
@@ -109,24 +111,30 @@
         border-left: solid 10px transparent;
         content: "";
         display: block;
-        left: 125px;
+        left: 120px;
         position: absolute;
         top: -1px;
     }
 }
+.upload__topic {
+    background: $help_5;       // ----------------------HELP
+    font: normal 14px robotolight;
+    display: block;
+    line-height: 1;
+    padding: 0 0 6px 0;
+}
 
-
-// upload files
+// ----------------- upload files
 .upload {
-    padding: 0 10px 20px 10px;
+    background: $help_1; // ----------------------HELP
+    padding: 0 10px;
 }
 .upload__item {
     padding: 10px 0;
 }
+// =============================================== DRY
 .upload__title {
-//    background: #aaa;
-    font: normal 16px robotolight;
-    line-height: 20px;
+    
 }
 .upload__raw {
     display: block;
@@ -142,12 +150,16 @@
     top: 0;
     left: 0;
     width: 220px;
+    z-index: 1;
 }
 .upload__field {
+    color: #9eb2c0;
+    font: normal 12px robotolight;
     background: transparent;
     border: 1px solid #9eb2c0;
     display: block;
     float: left;
+    line-height: 23px;
     height: 26px;
     padding: 0 0 0 5px;
     width: 180px;
@@ -165,7 +177,16 @@
     @include  borderRadius( 0 3px 3px 0 );
 }
 
-// place watermark
+// ----------------- place watermark
+
+.place {
+    background: $help_1; // ----------------------HELP
+    padding: 0 10px;
+}
+// =============================================== DRY
+.place__title  {
+    
+}
 .toggle {
     height: 30px;
     position: absolute;
@@ -201,65 +222,52 @@
 .toggle__item_single-active {
     background-position: -32px -4px;
 }
-.place {
-    padding: 0 10px;
-}
-
-.place__title  {
-//    background: #fff;
-    font: normal 16px robotolight;
-    line-height: 45px;
-}
 
 .place__body {
-    padding: 20px 0;
+    padding: 30px 0 20px 0;
     @include clearfix;
 }
-
-
-// grid
+// ----------------- grid
 .grid {
     float: left;
     vertical-align: top;
     width: ($grid)*3;
     position: relative;
     @include clearfix;
+    z-index: 1;
 }
 .grid__closed {
     display: none;
     position: absolute;
     @include pictureWidth;
+    z-index: 50;  
+}
+.grid__closed_x {
+    background: #f97e76;
+    position:absolute;
     top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    margin: auto;
     left: 0;
-    z-index: 50;
-    &:before {
-        background: #f97e76;
-        content: "";
-        position: absolute;
-        display: block;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: 42px;
-        height: 19px;
-        width: 100%;
-    }
-    &:after {
-        background: #f97e76;
-        content: "";
-        position: absolute;
-        display: block;
-        bottom: 0;
-        left: 43px;
-        right: 0;
-        top: 0;
-        width: 19px;
-        height: 100%;
-    }
+    z-index: 99999;
+}
+.grid__closed_y {
+    background: #f97e76;
+    position:absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    margin: 0 auto;
+    z-index: 99999;
 }
 .grid__container {
     position: relative;
     @include pictureWidth;
+    z-index: 10;
 }
 .grid__item {
     border-style: solid;
@@ -271,13 +279,16 @@
     position: relative;
     height: $grid;
     width: $grid;
-    @include clearfix;
-    &:hover {
-        background: #f97e76;
-        border-color: #f97e76;
-    }
     z-index: 1;
+    &:hover {
+        background: #9eb2c0;
+        border-color: #9eb2c0;}
+    &:active {
+        background: #f97e76;
+        border-color: #f97e76;}
+    @include clearfix;
 }
+
 .grid__item_1 {
     border-width: 1px 0px 0px 1px;
     @include  borderRadius( 3px 0 0 0 );
@@ -309,96 +320,109 @@
     border-width: 0px 1px 1px 0px;
     @include  borderRadius( 0 0 3px 0 );
 }
+.grid__item_active{
+    background: #f97e76;
+    border-color: #f97e76;
+}
 
-
-// coordinate
+// ----------------- coordinate
 .coord {
     float: right;
-    padding: 5px 0 0 0;
     vertical-align: top;
 }
 .coord__raw {
-    text-align: center;
-    padding: 15px 0 0 10px;
+    background: $help_3; // ----------------------HELP
+    text-align: right;
+    padding: 9px 0 0 0;
     width: 100%;
     @include clearfix;
 }
 .coord__coll {
+    background: $help_4; // ----------------------HELP
+    height: 40px;
     float: right;
-    padding: 0 0 0 5px;
     vertical-align: top;
 }
 .coord__title {
+    font-size: 16px;
     color: #555;
     display: inline-block;
-    line-height: 30px;
+    line-height: 40px;
+    padding: 0 7px;
 }
 .coord__field {
     border: 1px solid #9eb2c0;
     display: block;
-    line-height: 20px;
+    font: 16px;
+    height: 40px;
     text-align: center;
-    padding: 3px;
-    width: 30px;
+    width: 40px;
     @include  borderRadius( 3px );
+}
+.coord__coll_arrow {
+    
 }
 .coord__arrow {
     background: transparent;
     border: none;
     color: #9eb2c0;
     display: block;
-    font: normal 14px robotolight;
-    line-height: 12px;
-    width: 15px;
-    margin: 0;
-    padding: 0;
-    &:hover {
-        color: #333;
-    }
+    height: 20px;
+    width: 20px;
 }
 .coord__arrow_up {
-    
+    background: url("img/arrow.png") 0 0 no-repeat;
+    &:hover {
+        background-position: -19px 0px;
+    }
 }
 .coord__arrow_down {
-    margin: 4px 0 0 0;
+    background: url("img/arrow.png") 0 -26px no-repeat;
+    &:hover {
+        background-position: -19px -26px;
+    }
 }
 
 
-// transparent
+// ----------------- transparent
 .transparent {
-    padding: 0 10px 15px 10px;
+    background: $help_1; // ----------------------HELP
+    padding: 0 10px;
 }
+// =============================================== DRY
 .transparent__title {
-    font: normal 16px robotolight;
-    line-height: 45px;
+    
 }
 .transparent__body {
-    padding: 15px 0;
+//    background: $help_4;
+    height: 40px;
+    position: relative;
 }
 .transparent__item {
-    height: 3px;
+//    height: 15px;
     width: 100%;
+    position: absolute;
+    top: 18px;
 }
 
-// download result
+// ----------------- download result
 .form {
+    background: $help_1; // ----------------------HELP
     display: block;
-    min-height: 100px;
-    padding: 80px 0 0 0;
+    padding: 15px 0 5px 0;
     text-align: center;
     @include clearfix;
 }
 .form__coll {
+    background: $help_4; // ----------------------HELP
     float: left;
     text-align: left;
     width: 50%;
 }
 .form__coll_reset {
-//    background: #33f;
     padding: 0 20px 0 0;
 }
 .form__coll_submit {
-//    background: #f33;
     padding: 0 0 0 20px;
 }
 .form__button {
@@ -420,16 +444,12 @@
 
 
 // ================================= jquery UI slider
-
-
-
-
 .ui-slider {
 	position: relative;
 	text-align: left;
 }
 .ui-widget-content {
-//	background: #dbe1e8;
+    
 }
 .ui-slider-horizontal {
     border: none;
@@ -444,10 +464,9 @@
 	width: 24px;
 	height: 24px;
 	cursor: pointer;
-    margin: -11px 0 0 0;
+    margin: -11px -12px 0 -12px;
 	-ms-touch-action: none;
 	touch-action: none;
-//    top -25px;
     outline: none;
     @include borderRadius(50%);
     @include boxShady(0px 1px 2px #777);

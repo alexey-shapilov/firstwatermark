@@ -13,8 +13,9 @@ $strings = array(
   )
 );
 
-function t($string) {
-  global $strings, $lang;
+function t($string)
+{
+    global $strings, $lang;
 
-  return $strings[$lang][$string] ?: $string;
+    return $strings[$lang][$string] ?: $string;
 }
