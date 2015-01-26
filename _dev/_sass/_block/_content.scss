@@ -356,7 +356,7 @@
 .coord__field {
     border: 1px solid #9eb2c0;
     display: block;
-    font: 16px;
+    font-size: 16px;
     height: 40px;
     text-align: center;
     width: 40px;
@@ -474,7 +474,6 @@
     @include borderRadius(50%);
     @include boxShady(0px 1px 2px #777);
 }
-
 .ui-slider .ui-slider-range {
     background: #333;
 	position: absolute;
@@ -483,8 +482,6 @@
 	display: block;
 	border: 0;
 }
-
-
 .ui-slider-horizontal .ui-slider-range {
 	top: 0;
 	height: 100%;
