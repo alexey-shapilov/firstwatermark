@@ -73,14 +73,15 @@
 .adjust__title {
     font-family: robotothin;
     font-size: 16px;
-    line-height: 80px;
+    line-height: 40px;
+    padding: 20px 0 0 0;
     text-align: center;
 }
 .adjust__body {
     position: relative;
 }
 .adjust__raw {
-    background: $help_2; // ----------------------HELP
+    background: $help_2; // -------------------------------------------- HELP
     border-top: 1px solid #f00;
     padding: 20px 10px;
     position: relative;
@@ -117,7 +118,7 @@
     }
 }
 .upload__topic {
-    background: $help_5;       // ----------------------HELP
+    background: $help_5; // -------------------------------------------- HELP
     font: normal 14px robotolight;
     display: block;
     line-height: 1;
@@ -126,7 +127,7 @@
 
 // ----------------- upload files
 .upload {
-    background: $help_1; // ----------------------HELP
+    background: $help_1; // -------------------------------------------- HELP
     padding: 0 10px;
 }
 .upload__item {
@@ -154,6 +155,7 @@
 }
 .upload__field {
     color: #9eb2c0;
+    cursor: pointer;
     font: normal 12px robotolight;
     background: transparent;
     border: 1px solid #9eb2c0;
@@ -168,6 +170,7 @@
 .upload__button {
     background: #f97e76 url(img/download.png) 0 0 no-repeat;
     border: none;
+    cursor: pointer;
     display: block;
     float: left;
     height: 26px;
@@ -180,7 +183,7 @@
 // ----------------- place watermark
 
 .place {
-    background: $help_1; // ----------------------HELP
+    background: $help_1; // -------------------------------------------- HELP
     padding: 0 10px;
 }
 // =============================================== DRY
@@ -331,14 +334,14 @@
     vertical-align: top;
 }
 .coord__raw {
-    background: $help_3; // ----------------------HELP
+    background: $help_3; // -------------------------------------------- HELP
     text-align: right;
     padding: 9px 0 0 0;
     width: 100%;
     @include clearfix;
 }
 .coord__coll {
-    background: $help_4; // ----------------------HELP
+    background: $help_4; // -------------------------------------------- HELP
     height: 40px;
     float: right;
     vertical-align: top;
@@ -353,7 +356,7 @@
 .coord__field {
     border: 1px solid #9eb2c0;
     display: block;
-    font: 16px;
+    font-size: 16px;
     height: 40px;
     text-align: center;
     width: 40px;
@@ -386,7 +389,7 @@
 
 // ----------------- transparent
 .transparent {
-    background: $help_1; // ----------------------HELP
+    background: $help_1; // -------------------------------------------- HELP
     padding: 0 10px;
 }
 // =============================================== DRY
@@ -407,14 +410,14 @@
 
 // ----------------- download result
 .form {
-    background: $help_1; // ----------------------HELP
+    background: $help_1; // -------------------------------------------- HELP
     display: block;
-    padding: 15px 0 5px 0;
+    padding: 35px 0 5px 0;
     text-align: center;
     @include clearfix;
 }
 .form__coll {
-    background: $help_4; // ----------------------HELP
+    background: $help_4; // -------------------------------------------- HELP
     float: left;
     text-align: left;
     width: 50%;
@@ -471,7 +474,6 @@
     @include borderRadius(50%);
     @include boxShady(0px 1px 2px #777);
 }
-
 .ui-slider .ui-slider-range {
     background: #333;
 	position: absolute;
@@ -480,8 +482,6 @@
 	display: block;
 	border: 0;
 }
-
-
 .ui-slider-horizontal .ui-slider-range {
 	top: 0;
 	height: 100%;
