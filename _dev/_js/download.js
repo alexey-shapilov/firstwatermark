@@ -37,7 +37,7 @@ $(function () {
 
     console.log(opacity);
 
-    downloadUrl = '/index.php?q=download.ajax&i1=' + i1 + '&i2=' + i2 + 
+    downloadUrl = '/download.ajax?i1=' + i1 + '&i2=' + i2 +
       '&x=' + waterX + '&y=' + waterY + '&opacity=' + opacity + 
       '&scaleX=' + scale.x + '&scaleY=' + scale.y;
 
