@@ -1,5 +1,12 @@
 var uploader = (function ($) {
-    'use strict';
+
+    var self = this;
+
+    this.step = {
+        secondElem: $('.upload__item'),
+        thirdElem: $('.place'),
+        thirdElemTransparent: $('.transparent')
+    };
 
     var url = '/uploader.ajax',
         scale = {
@@ -13,18 +20,15 @@ var uploader = (function ($) {
         pictureWorkspaceClass = 'picture__workspace',
         position;
 
+    //step 1
     //add text src img
     $('#upload_picture').change(function () {
         var valueFile = $(this).val();
         $(this).next().text(valueFile);
-        console.log(valueFile);
+        self.step.secondElem.eq(1).removeClass('opacity__disabled');
+        $('#upload_watermark').removeAttr('disabled');
     });
-    //add text src watermark
-    $('#upload_watermark').change(function () {
-        var valueFile = $(this).val();
-        $(this).next().text(valueFile);
-        console.log(valueFile);
-    });
+
 
     $('#upload_picture').fileupload({
         url: url,
@@ -77,6 +81,27 @@ var uploader = (function ($) {
                 console.log('error uploading the original file');
             }
         }
+
+    });
+
+    //step 2
+    $('#upload_watermark').attr('disabled', 'disabled');
+    self.step.secondElem.eq(1).addClass('opacity__disabled');
+    self.step.thirdElem.addClass('opacity__disabled');
+    self.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
+    self.step.thirdElemTransparent.addClass('opacity__disabled');
+    $('.transparent__item').slider('disable');
+
+    //step 3
+    //add text src watermark
+    $('#upload_watermark').change(function () {
+        var valueFile = $(this).val();
+        console.log(valueFile);
+        $(this).next().text(valueFile);
+        self.step.thirdElem.removeClass('opacity__disabled');
+        self.step.thirdElemTransparent.removeClass('opacity__disabled');
+        $('.opacity__disabled__block').remove();
+        $('.transparent__item').slider('enable');
     });
 
 
@@ -86,7 +111,6 @@ var uploader = (function ($) {
         done: function (e, data) {
             if (data.result.src) {
                 var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
-                console.log(watermark.length);
                 watermark.attr('style', '');
                 watermark.hide();
                 watermark.attr('src', data.result.src);
@@ -154,8 +178,8 @@ var uploader = (function ($) {
                             position.init();
                         }
                     }
-                )
-                ;
+                );
+                self.step.second = true;
             }
             else {
                 console.log('error uploading the watermark file');
