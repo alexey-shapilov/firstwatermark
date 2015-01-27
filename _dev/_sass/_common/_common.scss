@@ -54,7 +54,7 @@ button {
 
 .container {
 //    background: #777;
-    background: url(img/common_bg.jpg) no-repeat;
+//    background: url(img/common_bg.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
     height: 100%;
@@ -73,6 +73,10 @@ footer {
     z-index: 5;
 }
 .content {
+    background: url(img/common_bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
     margin-top: -($headerHeight);
     margin-bottom: -($footerHeight);
     min-height: 100%;
@@ -87,7 +91,24 @@ footer {
     width: $wrapperWidth;
     @include clearfix;
 }
+
 .text {
     
 }
 
+.active {
+    display:block;
+}
+.opacity__disabled {
+    opacity:0.2;
+}
+
+.opacity__disabled__block {
+    opacity: 0;
+    width: 260px;
+    height: 360px;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

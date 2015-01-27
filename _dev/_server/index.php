@@ -32,7 +32,7 @@ if (!$query[0]) {
 }
 
 // будем считать что может быть только один уровень сайта
-
+//var_dump($query);
 // все ajax запросы выполняются на адрес <название скрипта>.ajax
 if (strpos($template, 'ajax') !== false) {
     if (strpos($template, '?') !== false) {
