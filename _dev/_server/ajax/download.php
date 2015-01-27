@@ -42,7 +42,7 @@ class ImageConverter {
     // 1.1.1 ...для исходного изображения
     preg_match('/\.([a-z]*)$/', $source, $ext);
 
-    if(!array_search($ext[1], $allowedExt)) {
+    if(array_search($ext[1], $allowedExt) === false) {
       throw new \RuntimeException('Invalid source extension.');
     }
 
@@ -52,7 +52,7 @@ class ImageConverter {
     // 1.1.2 ...для водяного знака
     preg_match('/\.([a-z]*)$/', $watermark, $ext);
 
-    if(!array_search($ext[1], $allowedExt)) {
+    if(array_search($ext[1], $allowedExt) === false) {
       throw new \RuntimeException('Invalid watermark extension.');
     }
 
@@ -62,19 +62,32 @@ class ImageConverter {
     // 2. формируем новое изображение - копируем исходные изображения
     // в нужные позиции
 
+    // $color = imagecolorallocatealpha($newImage, 0, 0, 0, 127);
+    // imagefill($newImage, 0, 0, $color);
+
     imagecopyresampled($newImage, $sourceImg, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
+
+    // imagepng($newImage, 'temp_source.png');
+    // $newImage = imagecreatefrompng('temp.png');
+
+    imagepng(imagecreatefromstring(file_get_contents($watermark)), "output.png");
+    $waterImg = imagecreatefrompng('output.png');
+
+    // imagecopymerge($newImage, $sourceImg, 0, 0, 0, 0, $w1, $h1, 10);
 
     // в зависимости от режима плитки копируем один вотермарк или создаем плитку
     if($tileMode == 'single') {
-      imagecopyresampled($newImage, $waterImg, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
+      imagecopymerge($newImage, $waterImg, 0, 0, $x, $y, $w2, $h2, 50);
+      // imagecopyresampled($newImage, $waterImg, $x, $y, 0, 0, $w2, $h2, $w2, $h2);
     } else {
       // кто-нибудь, объясните мне, как это, вот это внизу, могло произойти?
       for($i = $x; $i < $w1 + $x + $marginX * ($w1 / ($w2 + $marginX)); $i += $w2 + $marginX) {
         for($j = $y; $j < $h1 + $y; $j += $h2 + $marginY) {
-          imagecopyresampled($newImage, $waterImg, $i, $j, 0, 0, $w2, $h2, $w2, $h2);
+        imagecopyresampled($newImage, $waterNewImage, $i, $j, 0, 0, $w2, $h2, $w2, $h2);
         }
       }
     }
+    
 
     header("Content-Type: application/stream");
     header("Content-Disposition: attachment; filename=result.png");
