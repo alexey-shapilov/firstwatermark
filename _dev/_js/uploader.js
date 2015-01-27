@@ -1,6 +1,13 @@
 var uploader = (function ($) {
     'use strict';
-
+	var self = this;
+	
+	self.step = {
+		secondElem: $('.upload__item'),
+		thirdElem: $('.place'),
+		thirdElemTransparent: $('.transparent'),
+	};
+	
     var url = '/uploader.ajax',
         scale = {
             x: 1,
@@ -11,18 +18,15 @@ var uploader = (function ($) {
             height: 0
         };
 	
+	//step 1
 	//add text src img
 	$('#upload_picture').change(function(){
 		var valueFile = $(this).val();
 		$(this).next().text(valueFile);
-		console.log(valueFile);
+		self.step.secondElem.eq(1).removeClass('opacity__disabled');
+		$('#upload_watermark').removeAttr('disabled');
 	});
-	//add text src watermark
-	$('#upload_watermark').change(function(){
-		var valueFile = $(this).val();
-		$(this).next().text(valueFile);
-		console.log(valueFile);
-	});
+	
 	
     $('#upload_picture').fileupload({
         url: url,
@@ -74,85 +78,104 @@ var uploader = (function ($) {
                 console.log('error uploading the original file');
             }
         }
+	
     });
+	
+	//step 2
+	$('#upload_watermark').attr('disabled', 'disabled');
+	self.step.secondElem.eq(1).addClass('opacity__disabled');
+	self.step.thirdElem.addClass('opacity__disabled');
+	self.step.thirdElemTransparent.addClass('opacity__disabled');
+	
+	//step 3
+	//add text src watermark
+	$('#upload_watermark').change(function(){
+		var valueFile = $(this).val();
+		console.log(valueFile);
+		$(this).next().text(valueFile);
+		self.step.thirdElem.removeClass('opacity__disabled');
+		self.step.thirdElemTransparent.removeClass('opacity__disabled');
+	});
+	
+	
+	
+	$('#upload_watermark').fileupload({
+		url: url,
+		dataType: 'json',
+		done: function (e, data) {
+			if (data.result.src) {
+				var watermark = $('.picture__watermark');
+				watermark.attr('style', '');
+				watermark.hide();
+				watermark.attr('src', data.result.src);
+				watermark.load(function () {
+						var
+							$this = $(this);
 
+						console.log('водяной знак: ', $this.width(), ' ', $this.height());
+						watermarkSizeOriginal.width = $this.width();
+						watermarkSizeOriginal.height = $this.height();
+						console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
+						$this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
+						console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
 
-    $('#upload_watermark').fileupload({
-        url: url,
-        dataType: 'json',
-        done: function (e, data) {
-            if (data.result.src) {
-                var watermark = $('.picture__watermark');
-                watermark.attr('style', '');
-                watermark.hide();
-                watermark.attr('src', data.result.src);
-                watermark.load(function () {
-                        var
-                            $this = $(this);
+						$this.show();
+						$this.off('load');
 
-                        console.log('водяной знак: ', $this.width(), ' ', $this.height());
-                        watermarkSizeOriginal.width = $this.width();
-                        watermarkSizeOriginal.height = $this.height();
-                        console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
-                        $this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
-                        console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
+						var p = new Position({
 
-                        $this.show();
-                        $this.off('load');
+							//x and Y value, button
+							axisButtons: {
+								x: {
+									input: $('#x_coordinate'),
+									inputTitle: $('.coord__title_x'),
+									btnUp: $('#x_coordinate_up'),
+									btnDown: $('#x_coordinate_down')
+								},
+								y: {
+									input: $('#y_coordinate'),
+									inputTitle: $('.coord__title_y'),
+									btnUp: $('#y_coordinate_up'),
+									btnDown: $('#y_coordinate_down')
+								},
+								writeCoord: function (coord, input) {
+									input.val(Math.round(coord));
+								}
+							},
 
-                        var p = new Position({
+							//area elem
+							$workspace: $('.picture__workspace'),
+							$mainImg: $('.picture__upload'),
 
-                            //x and Y value, button
-                            axisButtons: {
-                                x: {
-                                    input: $('#x_coordinate'),
-                                    inputTitle: $('.coord__title_x'),
-                                    btnUp: $('#x_coordinate_up'),
-                                    btnDown: $('#x_coordinate_down')
-                                },
-                                y: {
-                                    input: $('#y_coordinate'),
-                                    inputTitle: $('.coord__title_y'),
-                                    btnUp: $('#y_coordinate_up'),
-                                    btnDown: $('#y_coordinate_down')
-                                },
-                                writeCoord: function (coord, input) {
-                                    input.val(Math.round(coord));
-                                }
-                            },
+							//elem
+							$watermark: $('.picture__watermark'),
 
-                            //area elem
-                            $workspace: $('.picture__workspace'),
-                            $mainImg: $('.picture__upload'),
+							// place grid events
+							$placeGrid: $('.grid'),
 
-                            //elem
-                            $watermark: $('.picture__watermark'),
+							//position grid buttons
+							gridButtons: 'grid__item',
 
-                            // place grid events
-                            $placeGrid: $('.grid'),
+							//mosh buttons
 
-                            //position grid buttons
-                            gridButtons: 'grid__item',
+							switchBtn: {
+								tileBtn: $('.toggle__item_grid'),
+								singleBtn: $('.toggle__item_single')
+							}
+						});
 
-                            //mosh buttons
-
-                            switchBtn: {
-                                tileBtn: $('.toggle__item_grid'),
-                                singleBtn: $('.toggle__item_single')
-                            }
-                        });
-
-                        p.init();
-                    }
-                )
-                ;
-            }
-            else {
-                console.log('error uploading the watermark file');
-            }
-        }
-    });
-
+						p.init();
+					}
+				)
+				;
+				self.step.second = true;
+			}
+			else {
+				console.log('error uploading the watermark file');
+			}
+		}
+	});
+	
     return {
 
         getScale: function () {
