@@ -1,8 +1,8 @@
 var uploader = (function ($) {
-    'use strict';
+  
 	var self = this;
 	
-	self.step = {
+	this.step = {
 		secondElem: $('.upload__item'),
 		thirdElem: $('.place'),
 		thirdElemTransparent: $('.transparent'),
@@ -85,7 +85,9 @@ var uploader = (function ($) {
 	$('#upload_watermark').attr('disabled', 'disabled');
 	self.step.secondElem.eq(1).addClass('opacity__disabled');
 	self.step.thirdElem.addClass('opacity__disabled');
+	self.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
 	self.step.thirdElemTransparent.addClass('opacity__disabled');
+	$('.transparent__item').slider('disable');
 	
 	//step 3
 	//add text src watermark
@@ -95,6 +97,8 @@ var uploader = (function ($) {
 		$(this).next().text(valueFile);
 		self.step.thirdElem.removeClass('opacity__disabled');
 		self.step.thirdElemTransparent.removeClass('opacity__disabled');
+		$('.opacity__disabled__block').remove();
+		$('.transparent__item').slider('enable');
 	});
 	
 	
