@@ -76,6 +76,7 @@ footer {
     background: url(img/common_bg.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    
     margin-top: -($headerHeight);
     margin-bottom: -($footerHeight);
     min-height: 100%;
@@ -94,3 +95,9 @@ footer {
     
 }
 
+.active {
+    display:block;
+}
+.opacity__disabled {
+    opacity:0.2;
+}
