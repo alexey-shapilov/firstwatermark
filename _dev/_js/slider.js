@@ -30,7 +30,14 @@ Slider.prototype.sliderActive = function () {
 
 Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
     this.$elemOpacity.css('opacity', val); //изменение прозрачности водяного знака
-    $('.mosh__item').css('opacity', val);//изменение прозрачности копий водяного знака
+	
+	if($('.tile-wrapper')){
+		$('.tile-wrapper').css({
+			"opacity":val,
+			"z-index":100
+		});//изменение прозрачности копий водяного знака
+	}
+    
 };
 
 var slider = new Slider({// указываем ему необходимые элементы для работы
