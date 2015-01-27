@@ -10,7 +10,20 @@ var uploader = (function ($) {
             width: 0,
             height: 0
         };
-
+	
+	//add text src img
+	$('#upload_picture').change(function(){
+		var valueFile = $(this).val();
+		$(this).next().text(valueFile);
+		console.log(valueFile);
+	});
+	//add text src watermark
+	$('#upload_watermark').change(function(){
+		var valueFile = $(this).val();
+		$(this).next().text(valueFile);
+		console.log(valueFile);
+	});
+	
     $('#upload_picture').fileupload({
         url: url,
         dataType: 'json',
