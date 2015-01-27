@@ -20,30 +20,30 @@ $query = explode('/', $_GET['q']);
 
 //если корневой уровень сайта, будем загружать скрипт main
 if (!$query[0]) {
-  $lang = $query[0] = 'ru';
-  $template = 'main';
-} else if($query[0] == 'ru' || $query[0] == 'eng') {
-  $lang = $query[0];
-  if($query[1]) {
-    $template = $query[1];
-  } else {
-    $template = $query[1] = 'main';
-  }
+    $lang = $query[0] = 'ru';
+    $template = 'main';
+} else if ($query[0] == 'ru' || $query[0] == 'eng') {
+    $lang = $query[0];
+    if ($query[1]) {
+        $template = $query[1];
+    } else {
+        $template = $query[1] = 'main';
+    }
 } else {
-  $template = $query[0];  
+    $template = $query[0];
 }
 
 // будем считать что может быть только один уровень сайта
 
 // все ajax запросы выполняются на адрес <название скрипта>.ajax
 if (strpos($template, 'ajax') !== false) {
-  if(strpos($template, '?') !== false) {
-    $template = substr($template, 0, strpos($template, '?'));  
-  }
-  require_once(PATH_SCRIPTS . '/' . str_replace('.ajax', '.php', $template));
+    if (strpos($template, '?') !== false) {
+        $template = substr($template, 0, strpos($template, '?'));
+    }
+    require_once(PATH_SCRIPTS . '/' . str_replace('.ajax', '.php', $template));
 } else {
-  require_once(PATH_CONTENT . '/' . 'translate.php');
-  require_once(PATH_CONTENT . '/' . $template . '.php');
-  require_once(PATH_CONTENT . '/' . 'template.php');
+    require_once(PATH_CONTENT . '/' . 'translate.php');
+    require_once(PATH_CONTENT . '/' . $template . '.php');
+    require_once(PATH_CONTENT . '/' . 'template.php');
 }
 

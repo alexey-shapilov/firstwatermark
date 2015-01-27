@@ -26,16 +26,16 @@ block content
                     .adjust__raw
                         .upload
                             .upload__item
-                                label.upload__title(for="upload_picture") Исходное изображежние
+                                label.upload__title.upload__topic(for="upload_picture") Исходное изображежние
                                 .upload__raw
                                     input.upload__field-file#upload_picture(type="file",name="upload")
-                                    span.upload__field
+                                    span.upload__field Загрузите изображение
                                     button.upload__button
                             .upload__item
-                                label.upload__title(for="upload_watermark") Водяной знак
+                                label.upload__title.upload__topic(for="upload_watermark") Водяной знак
                                 .upload__raw
                                     input.upload__field-file#upload_watermark(type="file",name="upload")
-                                    span.upload__field
+                                    span.upload__field Загрузите изображение
                                     button.upload__button
 
                     // place watermark
@@ -44,11 +44,13 @@ block content
                             .toggle__item.toggle__item_grid
                             .toggle__item.toggle__item_single
                         .place
-                            h3.place__title Положение
+                            h3.place__title.upload__topic Положение
                             .place__body
                                 // grid
                                 .grid
                                     .grid__closed
+                                        .grid__closed_x
+                                        .grid__closed_y
                                     .grid__container
                                         - for (var i = 0; i < 9; i++)
                                             - var j = i +1
@@ -56,17 +58,17 @@ block content
                                 // coordinate
                                 .coord
                                     .coord__raw
-                                        .coord__coll
-                                            input.coord__arrow.coord__arrow_up#x_coordinate_up(type="button" value="∧")
-                                            input.coord__arrow.coord__arrow_down#x_coordinate_down(type="button" value="∨")
+                                        .coord__coll.coord__coll_arrow
+                                            input.coord__arrow.coord__arrow_up#x_coordinate_up(type="button")
+                                            input.coord__arrow.coord__arrow_down#x_coordinate_down(type="button")
                                         .coord__coll
                                             input.coord__field#x_coordinate(type="text")
                                         .coord__coll
                                             label.coord__title.coord__title_x(for="x_coordinate") X
                                     .coord__raw
-                                        .coord__coll
-                                            input.coord__arrow.coord__arrow_up#y_coordinate_up(type="button" value="∧")
-                                            input.coord__arrow.coord__arrow_down#y_coordinate_down(type="button" value="∨")
+                                        .coord__coll.coord__coll_arrow
+                                            input.coord__arrow.coord__arrow_up#y_coordinate_up(type="button")
+                                            input.coord__arrow.coord__arrow_down#y_coordinate_down(type="button")
                                         .coord__coll
                                             input.coord__field#y_coordinate(type="text")
                                         .coord__coll
@@ -74,7 +76,7 @@ block content
                     // transparent
                     .adjust__raw
                         .transparent
-                            h3.transparent__title Прозрачность
+                            h3.transparent__title.upload__topic Прозрачность
                             .transparent__body
                                 .transparent__item
                     // download result
