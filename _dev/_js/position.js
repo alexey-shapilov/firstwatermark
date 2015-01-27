@@ -107,10 +107,10 @@ function Tile(options) {
         });
 
         marginButtons.x.input.off('change').on('change', function () {
-            tileMargin('x', this.value);
+            tileMargin('x', parseInt(this.value));
         });
         marginButtons.y.input.off('change').on('change', function () {
-            tileMargin('y', this.value);
+            tileMargin('y', parseInt(this.value));
         });
     }
 }
@@ -121,6 +121,8 @@ function Position(options) { //создаем функцию конструкт�
     this.options = options;
 
     this.created = false;
+    this.gridElem = '.grid__item_';
+    this.gridElements = '.grid__item';
 
     this.tile = new Tile(
         {
@@ -184,6 +186,8 @@ Position.prototype.init = function () {
             switchBtn.tileBtn.removeClass('toggle__item_single-active');
         }
     });
+	
+	
 
     switchBtn.singleBtn.on('click', function () {
         self.init();
@@ -214,6 +218,7 @@ Position.prototype.init = function () {
 
     //drag working
     this.watermark.elem.on('drag', function (event, ui) {
+		$(self.gridElements).removeClass('grid__item_active'); //clear gird active class elem
         self.watermark.position.left = ui.position.left;
         self.watermark.position.top = ui.position.top;
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
@@ -257,19 +262,19 @@ Position.prototype.init = function () {
             case '1':
                 posX = this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 1);
                 break;
 
             case '2':
                 posX = sectorCenterX - this.watermark.width / 2 + this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 2);
                 break;
 
             case '3':
                 posX = this.mainImg.width - this.watermark.width + this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 3);
                 break;
 
 
@@ -281,13 +286,13 @@ Position.prototype.init = function () {
                 posX = this.axis.left;
                 posY = sectorCenterY - this.watermark.height / 2 + this.axis.top;
 
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 4);
                 break;
             case '5':
                 posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
                 posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
 
-                self.movePositionElem(posX, posY);
+                self.movePositionElem(posX, posY, 5);
                 break;
             case '6':
                 posX = this.axis.left + this.mainImg.width - this.watermark.width;
@@ -295,7 +300,7 @@ Position.prototype.init = function () {
                 posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
                 console.log(posY);
 
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 6);
                 break;
 
         /***
@@ -305,17 +310,17 @@ Position.prototype.init = function () {
             case '7':
                 posX = this.axis.left;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                self.movePositionElem(posX, posY);
+                self.movePositionElem(posX, posY, 7);
                 break;
             case '8':
                 posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 8);
                 break;
             case '9':
                 posX = this.axis.left + this.mainImg.width - this.watermark.width;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 9);
                 break;
 
             default:
@@ -323,18 +328,38 @@ Position.prototype.init = function () {
         }
     };
 
-    this.movePositionElem = function (x, y) {
+    this.movePositionElem = function (x, y, i) {
+			
+		self.watermark.elem.animate(
+		{
+			top: y,
+			left: x
+		},
+		{
+			duration: 500, 
+			queue: false,
+		});
 
-        self.watermark.elem.css({
-            top: y,
-            left: x
-        });
         self.watermark.position.left = x;
         self.watermark.position.top = y;
         self.axisButtons.writeCoord(x, self.axisButtons.x.input);
         self.axisButtons.writeCoord(y, self.axisButtons.y.input);
+		
+		//add active grid elem
+		$(self.gridElements).removeClass('grid__item_active');
+		$(self.gridElem + i).addClass('grid__item_active');
     };
+	
+	//clear grid active class elem
+	$('.wrapper').click(function(event) {
+		classNameElem = event.target.className.split(' ');
 
+		if(classNameElem[0] !== 'grid__item'){
+			$(self.gridElements).removeClass('grid__item_active');
+		}
+
+	});
+	
     this.positionCssElem = function (posCssX, posCssY) {
 
         if ((posCssX >= -this.watermark.width && posCssX <= this.mainImg.width + this.watermark.width) && (posCssY >= -this.watermark.height && posCssY <= this.mainImg.height + this.watermark.height)) {
@@ -362,6 +387,7 @@ Position.prototype.initCoordsX = function () {
         self.watermark.position.left -= 1;
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
+		self
     });
 
     this.axisButtons.x.btnUp.off('click').on('click', function () {
@@ -372,7 +398,7 @@ Position.prototype.initCoordsX = function () {
     });
 
     this.axisButtons.x.input.off('change').on('change', function () {
-        self.watermark.position.left = this.value;
+        self.watermark.position.left = parseInt(this.value);
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
@@ -401,8 +427,8 @@ Position.prototype.initCoordsY = function () {
         self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.y.input);
     });
 
-    this.axisButtons.y.input.off('cjange').on('change', function () {
-        self.watermark.position.top = this.value;
+    this.axisButtons.y.input.off('change').on('change', function () {
+        self.watermark.position.top = parseInt(this.value);
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
