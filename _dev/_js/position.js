@@ -415,7 +415,6 @@ Position.prototype.initCoordsX = function () {
         self.watermark.position.left -= 1;
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
-		self
     });
 
     this.axisButtons.x.btnUp.off('click').on('click', function () {
