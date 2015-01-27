@@ -2,6 +2,8 @@ function Tile(options) {
     var
         tileItemClass = 'tile-item',
         tileWrapperClass = 'tile-wrapper',
+        tileGridX = '.grid__closed_x',
+        tileGridY = '.grid__closed_y',
         self = this,
         tile = options.tile,
         tileContainer = options.tileContainer,
@@ -13,7 +15,7 @@ function Tile(options) {
     tileWrapper.addClass(tileWrapperClass);
 
     this.created = false;
-
+	this.tileGridCross = 'grid__closed',
     this.margin = {
         x: {
             value: 0,
@@ -24,7 +26,10 @@ function Tile(options) {
             marginClass: 'row_'
         }
     };
-
+	this.grid = {
+		width: tileContainer.width(),
+		height: tileContainer.height()
+	}
     this.count = {
         x: tileContainer.width() / tileWidth,
         y: tileContainer.height() / tileHeight
@@ -63,26 +68,48 @@ function Tile(options) {
     };
 
     this.bindButtons = function () {
+		var heightCross = $('.'+self.tileGridCross).height(),
+			widthCross = $('.'+self.tileGridCross).width();
+			
+		this.gridCroos = {
+			height: heightCross / self.grid.height,
+			width: widthCross / self.grid.width
+		};
+		
+		$('.'+self.tileGridCross).addClass('active');
+		
         function tileMargin(axis, step) {
+			if($(tileGridY).height() <= heightCross && $(tileGridY).width() <= widthCross){
             self.margin[axis]['value'] = self.margin[axis]['value'] + step;
-            for (var i = 2; i <= self.count[axis] + 1; i++) {
-                tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
-                    var $this = $(this);
-                    switch (axis) {
-                        case 'x':
-                            $this.css({
-                                left: '+=' + step * (i - 1)
-                            });
-                            break;
-                        case 'y':
-                            $this.css({
-                                top: '+=' + step * (i - 1)
-                            });
-                            break;
-                    }
-                    marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
-                });
-            }
+			
+				for (var i = 2; i <= self.count[axis] + 1; i++) {
+					tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
+						var $this = $(this);
+						switch (axis) {
+							case 'x':
+								$this.css({
+									left: '+=' + step * (i - 1)
+								});
+								widthX = self.margin[axis]['value'] * self.gridCroos.width; //width X cross
+								$(tileGridY).css({
+									width: (widthX <= widthCross ? widthX : widthCross)+'px'
+								});
+								break;
+							case 'y':
+								$this.css({
+									top: '+=' + step * (i - 1)
+								});
+								heightX = self.margin[axis]['value'] * self.gridCroos.height; //height Y cross
+								$(tileGridX).css({
+									height: (heightX <= heightCross ? heightX : heightCross)+'px'
+								});
+								break;
+						}
+						marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
+					});
+				}
+			}
+
         }
 
         marginButtons.x.inputTitle.text("\u2194");
@@ -107,10 +134,10 @@ function Tile(options) {
         });
 
         marginButtons.x.input.off('change').on('change', function () {
-            tileMargin('x', this.value);
+            tileMargin('x', parseInt(this.value) - self.margin.x.value);
         });
         marginButtons.y.input.off('change').on('change', function () {
-            tileMargin('y', this.value);
+            tileMargin('y', parseInt(this.value) - self.margin.y.value);
         });
     }
 }
@@ -121,6 +148,8 @@ function Position(options) { //создаем функцию конструкт�
     this.options = options;
 
     this.created = false;
+    this.gridElem = '.grid__item_';
+    this.gridElements = '.grid__item';
 
     this.tile = new Tile(
         {
@@ -164,7 +193,7 @@ Position.prototype.init = function () {
     var
         switchBtn = this.options.switchBtn,
         self = this;
-
+	console.log(self.tile.tileGridCross);
     if (this.created) {
         this.reInit();
         return this
@@ -184,6 +213,8 @@ Position.prototype.init = function () {
             switchBtn.tileBtn.removeClass('toggle__item_single-active');
         }
     });
+	
+	
 
     switchBtn.singleBtn.on('click', function () {
         self.init();
@@ -195,6 +226,7 @@ Position.prototype.init = function () {
             switchBtn.singleBtn.removeClass('toggle__item_grid-active');
             switchBtn.singleBtn.addClass('toggle__item_single-active');
         }
+		$('.'+self.tile.tileGridCross).removeClass('active');
     });
     /**
      *
@@ -214,6 +246,7 @@ Position.prototype.init = function () {
 
     //drag working
     this.watermark.elem.on('drag', function (event, ui) {
+		$(self.gridElements).removeClass('grid__item_active'); //clear gird active class elem
         self.watermark.position.left = ui.position.left;
         self.watermark.position.top = ui.position.top;
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
@@ -257,19 +290,19 @@ Position.prototype.init = function () {
             case '1':
                 posX = this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 1);
                 break;
 
             case '2':
                 posX = sectorCenterX - this.watermark.width / 2 + this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 2);
                 break;
 
             case '3':
                 posX = this.mainImg.width - this.watermark.width + this.axis.left;
                 posY = this.axis.top;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 3);
                 break;
 
 
@@ -281,13 +314,13 @@ Position.prototype.init = function () {
                 posX = this.axis.left;
                 posY = sectorCenterY - this.watermark.height / 2 + this.axis.top;
 
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 4);
                 break;
             case '5':
                 posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
                 posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
 
-                self.movePositionElem(posX, posY);
+                self.movePositionElem(posX, posY, 5);
                 break;
             case '6':
                 posX = this.axis.left + this.mainImg.width - this.watermark.width;
@@ -295,7 +328,7 @@ Position.prototype.init = function () {
                 posY = this.axis.top + sectorCenterY - this.watermark.height / 2;
                 console.log(posY);
 
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 6);
                 break;
 
         /***
@@ -305,17 +338,17 @@ Position.prototype.init = function () {
             case '7':
                 posX = this.axis.left;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                self.movePositionElem(posX, posY);
+                self.movePositionElem(posX, posY, 7);
                 break;
             case '8':
                 posX = this.axis.left + sectorCenterX - this.watermark.width / 2;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 8);
                 break;
             case '9':
                 posX = this.axis.left + this.mainImg.width - this.watermark.width;
                 posY = this.axis.top + this.mainImg.height - this.watermark.height;
-                this.movePositionElem(posX, posY);
+                this.movePositionElem(posX, posY, 9);
                 break;
 
             default:
@@ -323,18 +356,38 @@ Position.prototype.init = function () {
         }
     };
 
-    this.movePositionElem = function (x, y) {
+    this.movePositionElem = function (x, y, i) {
+			
+		self.watermark.elem.animate(
+		{
+			top: y,
+			left: x
+		},
+		{
+			duration: 500, 
+			queue: false,
+		});
 
-        self.watermark.elem.css({
-            top: y,
-            left: x
-        });
         self.watermark.position.left = x;
         self.watermark.position.top = y;
         self.axisButtons.writeCoord(x, self.axisButtons.x.input);
         self.axisButtons.writeCoord(y, self.axisButtons.y.input);
+		
+		//add active grid elem
+		$(self.gridElements).removeClass('grid__item_active');
+		$(self.gridElem + i).addClass('grid__item_active');
     };
+	
+	//clear grid active class elem
+	$('.wrapper').click(function(event) {
+		classNameElem = event.target.className.split(' ');
 
+		if(classNameElem[0] !== 'grid__item'){
+			$(self.gridElements).removeClass('grid__item_active');
+		}
+
+	});
+	
     this.positionCssElem = function (posCssX, posCssY) {
 
         if ((posCssX >= -this.watermark.width && posCssX <= this.mainImg.width + this.watermark.width) && (posCssY >= -this.watermark.height && posCssY <= this.mainImg.height + this.watermark.height)) {
@@ -372,7 +425,7 @@ Position.prototype.initCoordsX = function () {
     });
 
     this.axisButtons.x.input.off('change').on('change', function () {
-        self.watermark.position.left = this.value;
+        self.watermark.position.left = parseInt(this.value);
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
@@ -401,8 +454,8 @@ Position.prototype.initCoordsY = function () {
         self.axisButtons.writeCoord(self.watermark.position.top, self.axisButtons.y.input);
     });
 
-    this.axisButtons.y.input.off('cjange').on('change', function () {
-        self.watermark.position.top = this.value;
+    this.axisButtons.y.input.off('change').on('change', function () {
+        self.watermark.position.top = parseInt(this.value);
         self.positionCssElem(self.watermark.position.left, self.watermark.position.top);
     });
     // END x coords and input value
