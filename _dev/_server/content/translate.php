@@ -9,7 +9,8 @@ $strings = array(
         'Положение' => 'Position',
         'Прозрачность' => 'Opacity',
         'Сброс' => 'Reset',
-        'Скачать' => 'Download'
+        'Скачать' => 'Download',
+        'Загрузите изображение' => 'Upload image'
     )
 );
 

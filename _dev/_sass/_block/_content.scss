@@ -245,13 +245,18 @@
     @include pictureWidth;
     z-index: 50;  
 }
+
+.grid__closed_active {
+    display: block;
+}
+
 .grid__closed_x {
     background: #f97e76;
     position:absolute;
     top: 0;
     bottom: 0;
     width: 100%;
-    height: 30px;
+    height: 0;
     margin: auto;
     left: 0;
     z-index: 99999;
@@ -262,7 +267,7 @@
     top: 0;
     right: 0;
     left: 0;
-    width: 30px;
+    width: 0;
     height: 100%;
     margin: 0 auto;
     z-index: 99999;

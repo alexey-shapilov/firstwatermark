@@ -9,28 +9,30 @@ var uploader = (function ($) {
         watermarkSizeOriginal = {
             width: 0,
             height: 0
-        };
-	
-	//add text src img
-	$('#upload_picture').change(function(){
-		var valueFile = $(this).val();
-		$(this).next().text(valueFile);
-		console.log(valueFile);
-	});
-	//add text src watermark
-	$('#upload_watermark').change(function(){
-		var valueFile = $(this).val();
-		$(this).next().text(valueFile);
-		console.log(valueFile);
-	});
-	
+        },
+        pictureWorkspaceClass = 'picture__workspace',
+        position;
+
+    //add text src img
+    $('#upload_picture').change(function () {
+        var valueFile = $(this).val();
+        $(this).next().text(valueFile);
+        console.log(valueFile);
+    });
+    //add text src watermark
+    $('#upload_watermark').change(function () {
+        var valueFile = $(this).val();
+        $(this).next().text(valueFile);
+        console.log(valueFile);
+    });
+
     $('#upload_picture').fileupload({
         url: url,
         dataType: 'json',
         done: function (e, data) {
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
-                picture__workspace = $('.picture__workspace'),
+                picture__workspace = $('.' + pictureWorkspaceClass),
                 picSizeOriginal = {
                     width: 0,
                     height: 0
@@ -43,7 +45,7 @@ var uploader = (function ($) {
                 pic.on('load', (function () {
                         console.log('сработало событие pic.load');
                         var $this = $(this),
-                            watermark = $('.picture__watermark');
+                            watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
 
                         console.log('картинка: ', $this.width(), ' ', $this.height());
                         picSizeOriginal.width = $this.width();
@@ -66,6 +68,7 @@ var uploader = (function ($) {
                             watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
+                            position.init();
                         }
                         $this.off('load');
                     })
@@ -82,7 +85,8 @@ var uploader = (function ($) {
         dataType: 'json',
         done: function (e, data) {
             if (data.result.src) {
-                var watermark = $('.picture__watermark');
+                var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
+                console.log(watermark.length);
                 watermark.attr('style', '');
                 watermark.hide();
                 watermark.attr('src', data.result.src);
@@ -100,49 +104,55 @@ var uploader = (function ($) {
                         $this.show();
                         $this.off('load');
 
-                        var p = new Position({
+                        if (position === undefined) {
+                            position = new Position({
 
-                            //x and Y value, button
-                            axisButtons: {
-                                x: {
-                                    input: $('#x_coordinate'),
-                                    inputTitle: $('.coord__title_x'),
-                                    btnUp: $('#x_coordinate_up'),
-                                    btnDown: $('#x_coordinate_down')
+                                //x and Y value, button
+                                axisButtons: {
+                                    x: {
+                                        input: $('#x_coordinate'),
+                                        inputTitle: $('.coord__title_x'),
+                                        btnUp: $('#x_coordinate_up'),
+                                        btnDown: $('#x_coordinate_down')
+                                    },
+                                    y: {
+                                        input: $('#y_coordinate'),
+                                        inputTitle: $('.coord__title_y'),
+                                        btnUp: $('#y_coordinate_up'),
+                                        btnDown: $('#y_coordinate_down')
+                                    },
+                                    writeCoord: function (coord, input) {
+                                        input.val(Math.round(coord));
+                                    }
                                 },
-                                y: {
-                                    input: $('#y_coordinate'),
-                                    inputTitle: $('.coord__title_y'),
-                                    btnUp: $('#y_coordinate_up'),
-                                    btnDown: $('#y_coordinate_down')
+
+                                //area elem
+                                $workspace: $('.picture__workspace'),
+                                $mainImg: $('.picture__upload'),
+
+                                //elem
+                                $watermark: $('.picture__watermark'),
+
+                                // place grid events
+                                $placeGrid: $('.grid'),
+
+                                //position grid buttons
+                                gridButtons: 'grid__item',
+
+                                //mosh buttons
+
+                                switchBtn: {
+                                    tileBtn: $('.toggle__item_grid'),
+                                    singleBtn: $('.toggle__item_single')
                                 },
-                                writeCoord: function (coord, input) {
-                                    input.val(Math.round(coord));
-                                }
-                            },
 
-                            //area elem
-                            $workspace: $('.picture__workspace'),
-                            $mainImg: $('.picture__upload'),
+                                tileGridCross: $('.grid__closed')
+                            });
 
-                            //elem
-                            $watermark: $('.picture__watermark'),
-
-                            // place grid events
-                            $placeGrid: $('.grid'),
-
-                            //position grid buttons
-                            gridButtons: 'grid__item',
-
-                            //mosh buttons
-
-                            switchBtn: {
-                                tileBtn: $('.toggle__item_grid'),
-                                singleBtn: $('.toggle__item_single')
-                            }
-                        });
-
-                        p.init();
+                            position.init();
+                        } else {
+                            position.init();
+                        }
                     }
                 )
                 ;
