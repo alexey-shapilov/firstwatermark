@@ -166,7 +166,6 @@
     padding: 0 0 0 5px;
     width: 180px;
     position: relative;
-    z-index: 100;
     @include  borderRadius( 3px 0 0 3px );
 }
 .upload__button {
@@ -179,7 +178,6 @@
     position: relative;
     left: -1px;
     width: 40px;
-    z-index: 200;
     @include  borderRadius( 0 3px 3px 0 );
 }
 
