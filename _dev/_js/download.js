@@ -11,7 +11,7 @@ $(function () {
     var i1 = '';
     var i2 = '';
 
-    var tileMode = $tileEl.children().length > 0 ? 'grid' : 'single';
+    var tileMode = $('.toggle__item_grid').hasClass('toggle__item_grid-active') ? 'grid' : 'single';
     var waterX = (tileMode === 'grid') ? $tileEl[0].offsetLeft : $waterEl[0].offsetLeft;
     var waterY = (tileMode === 'grid') ? $tileEl[0].offsetTop : $waterEl[0].offsetTop;
     var opacity = Math.abs($waterEl.css('opacity') * 100);

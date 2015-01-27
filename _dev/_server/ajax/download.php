@@ -46,7 +46,7 @@ class ImageConverter {
     } else {
       // кто-нибудь, объясните мне, как это, вот это внизу, могло произойти?
       for($i = $x; $i < $w1 + $x + $marginX * ($w1 / ($w2 + $marginX)); $i += $w2 + $marginX) {
-        for($j = $y; $j < $h1 + $y; $j += $h2 + $marginY) {
+        for($j = $y; $j < $h1 + $y + $marginY * ($h1 / ($h2 + $marginY)); $j += $h2 + $marginY) {
           imagecopymerge($newImage, $waterImg, $i, $j, 0, 0, $w2, $h2, $opacity);
         }
       }
