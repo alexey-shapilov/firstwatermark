@@ -2,6 +2,8 @@ function Tile(options) {
     var
         tileItemClass = 'tile-item',
         tileWrapperClass = 'tile-wrapper',
+        tileGridX = '.grid__closed_x',
+        tileGridY = '.grid__closed_y',
         self = this,
         tile = options.tile,
         tileContainer = options.tileContainer,
@@ -13,7 +15,7 @@ function Tile(options) {
     tileWrapper.addClass(tileWrapperClass);
 
     this.created = false;
-
+	this.tileGridCross = 'grid__closed',
     this.margin = {
         x: {
             value: 0,
@@ -24,7 +26,10 @@ function Tile(options) {
             marginClass: 'row_'
         }
     };
-
+	this.grid = {
+		width: tileContainer.width(),
+		height: tileContainer.height()
+	}
     this.count = {
         x: tileContainer.width() / tileWidth,
         y: tileContainer.height() / tileHeight
@@ -63,26 +68,48 @@ function Tile(options) {
     };
 
     this.bindButtons = function () {
+		var heightCross = $('.'+self.tileGridCross).height(),
+			widthCross = $('.'+self.tileGridCross).width();
+			
+		this.gridCroos = {
+			height: heightCross / self.grid.height,
+			width: widthCross / self.grid.width
+		};
+		
+		$('.'+self.tileGridCross).addClass('active');
+		
         function tileMargin(axis, step) {
+			if($(tileGridY).height() <= heightCross && $(tileGridY).width() <= widthCross){
             self.margin[axis]['value'] = self.margin[axis]['value'] + step;
-            for (var i = 2; i <= self.count[axis] + 1; i++) {
-                tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
-                    var $this = $(this);
-                    switch (axis) {
-                        case 'x':
-                            $this.css({
-                                left: '+=' + step * (i - 1)
-                            });
-                            break;
-                        case 'y':
-                            $this.css({
-                                top: '+=' + step * (i - 1)
-                            });
-                            break;
-                    }
-                    marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
-                });
-            }
+			
+				for (var i = 2; i <= self.count[axis] + 1; i++) {
+					tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
+						var $this = $(this);
+						switch (axis) {
+							case 'x':
+								$this.css({
+									left: '+=' + step * (i - 1)
+								});
+								widthX = self.margin[axis]['value'] * self.gridCroos.width; //width X cross
+								$(tileGridY).css({
+									width: (widthX <= widthCross ? widthX : widthCross)+'px'
+								});
+								break;
+							case 'y':
+								$this.css({
+									top: '+=' + step * (i - 1)
+								});
+								heightX = self.margin[axis]['value'] * self.gridCroos.height; //height Y cross
+								$(tileGridX).css({
+									height: (heightX <= heightCross ? heightX : heightCross)+'px'
+								});
+								break;
+						}
+						marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
+					});
+				}
+			}
+
         }
 
         marginButtons.x.inputTitle.text("\u2194");
@@ -107,10 +134,10 @@ function Tile(options) {
         });
 
         marginButtons.x.input.off('change').on('change', function () {
-            tileMargin('x', parseInt(this.value));
+            tileMargin('x', parseInt(this.value) - self.margin.x.value);
         });
         marginButtons.y.input.off('change').on('change', function () {
-            tileMargin('y', parseInt(this.value));
+            tileMargin('y', parseInt(this.value) - self.margin.y.value);
         });
     }
 }
@@ -166,7 +193,7 @@ Position.prototype.init = function () {
     var
         switchBtn = this.options.switchBtn,
         self = this;
-
+	console.log(self.tile.tileGridCross);
     if (this.created) {
         this.reInit();
         return this
@@ -199,6 +226,7 @@ Position.prototype.init = function () {
             switchBtn.singleBtn.removeClass('toggle__item_grid-active');
             switchBtn.singleBtn.addClass('toggle__item_single-active');
         }
+		$('.'+self.tile.tileGridCross).removeClass('active');
     });
     /**
      *
