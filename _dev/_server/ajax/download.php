@@ -3,7 +3,7 @@
 namespace Firstwatermark;
 
 class ImageConverter {
-  public function convert($source, $watermark, $x, $y, $opacity, $tileMode, $marginX, $marginY) {
+  public static function convert($source, $watermark, $x, $y, $opacity, $tileMode, $marginX, $marginY) {
 
     // 0. Убедимся, что файлы существуют и получим их размеры
     $source = PATH_BASE . '/uploads/' . $source;
@@ -99,8 +99,8 @@ try {
   $x = (int)$_GET['x'] * $scaleX;
   $y = (int)$_GET['y'] * $scaleY;
   $tileMode = ($_GET['tileMode'] == 'grid') ? 'grid' : 'single';
-  $marginX = (int)$_GET['marginX'];
-  $marginY = (int)$_GET['marginY'];
+  $marginX = (int)$_GET['marginX'] * $scaleX;
+  $marginY = (int)$_GET['marginY'] * $scaleY;
 
   ImageConverter::convert($source, $watermark, $x, $y, $opacity, $tileMode, $marginX, $marginY);
 
