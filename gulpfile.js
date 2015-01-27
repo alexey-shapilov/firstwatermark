@@ -23,7 +23,7 @@ $.gulp.task('build-with-php', ['sass'], function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
-        if (er) throw er
+        if (er) throw er;
     });
     $.gulp.src('./_dev/_server/**/*.php')
         .pipe($.wiredep.stream({

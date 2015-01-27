@@ -2,8 +2,6 @@
 
 session_start();
 
-error_reporting(0);
-
 $_SESSION['INIT'] = true;
 
 define('INIT', true);
@@ -46,4 +44,3 @@ if (strpos($template, 'ajax') !== false) {
     require_once(PATH_CONTENT . '/' . $template . '.php');
     require_once(PATH_CONTENT . '/' . 'template.php');
 }
-
