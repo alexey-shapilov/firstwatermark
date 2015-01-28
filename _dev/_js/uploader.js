@@ -79,6 +79,8 @@ var uploader = (function ($) {
                             watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
+							opacity = slider.$rangeOpacity.slider( "value" );
+							slider.sliderOpacity(opacity);
                             position.init();
                         }
                         $this.off('load');
@@ -140,6 +142,8 @@ var uploader = (function ($) {
                         console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
 
                         $this.show();
+						opacity = slider.$rangeOpacity.slider( "value" );
+						slider.sliderOpacity(opacity);
                         $this.off('load');
 
                         if (position === undefined) {

@@ -26,6 +26,10 @@ Slider.prototype.sliderActive = function () {
             self.sliderOpacity(self.value); // передача значение бегунка методу конструктора
         }
     });
+	
+	opacity = self.$rangeOpacity.slider( "value" );
+	console.log(opacity);
+	self.sliderOpacity(opacity);
 };
 
 Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
