@@ -76,7 +76,7 @@ var uploader = (function ($) {
                             watermark.attr('style', '');
                             console.log('водяной знак: ', watermarkSizeOriginal.width, ' ', watermarkSizeOriginal.height);
                             console.log('водяной знак должен стать: ', watermarkSizeOriginal.width / scale.x, ' ', watermarkSizeOriginal.height / scale.y);
-                            watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
+                            watermark.attr('style', 'opacity:0.5; width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
                             position.init();
