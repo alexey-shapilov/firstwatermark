@@ -62,7 +62,7 @@ var uploader = (function ($) {
                         picSizeOriginal.width = $this.width();
                         picSizeOriginal.height = $this.height();
                         console.log('рабочая область: ', workspace.width(), ' ', workspace.height());
-                        $this.attr('style', 'max-width:' + workspace.width() + 'px;' + 'max-height:' + workspace.height() + 'px;');
+                        $this.attr('style', 'opacity:0.5; max-width:' + workspace.width() + 'px;' + 'max-height:' + workspace.height() + 'px;');
                         console.log('картинка после масштабирования: ', $this.width(), ' ', $this.height());
                         picture__workspace.attr('style', 'width:' + $this.width() + 'px;' + 'height:' + $this.height() + 'px;');
                         scale.x = picSizeOriginal.width / $this.width();
@@ -76,7 +76,7 @@ var uploader = (function ($) {
                             watermark.attr('style', '');
                             console.log('водяной знак: ', watermarkSizeOriginal.width, ' ', watermarkSizeOriginal.height);
                             console.log('водяной знак должен стать: ', watermarkSizeOriginal.width / scale.x, ' ', watermarkSizeOriginal.height / scale.y);
-                            watermark.attr('style', 'opacity:0.5; width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
+                            watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
                             position.init();
