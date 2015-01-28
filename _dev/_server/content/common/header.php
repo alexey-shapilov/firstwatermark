@@ -11,7 +11,8 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/favicon.png"/>
+    <link rel="icon" type="image/ico" href="/favicon.ico"/>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/favicon.ico">
 
     <!-- build:css css/vendor.css-->
     <!-- bower:css-->

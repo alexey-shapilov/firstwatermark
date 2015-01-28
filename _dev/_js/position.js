@@ -2,20 +2,20 @@ function Tile(options) {
     var
         tileItemClass = 'tile-item',
         tileWrapperClass = 'tile-wrapper',
-        tileGridX = '.grid__closed_x',
-        tileGridY = '.grid__closed_y',
         self = this,
         tile = options.tile,
         tileContainer = options.tileContainer,
         tileWidth = tile.width(),
         tileHeight = tile.height(),
         tileWrapper = this.tileWrapper,
-        marginButtons = options.marginButtons;
+        marginButtons = options.marginButtons,
+        tileGridCross = options.tileGridCross;
 
     tileWrapper.addClass(tileWrapperClass);
 
+
+    this.reInitOptions = options;
     this.created = false;
-	this.tileGridCross = 'grid__closed',
     this.margin = {
         x: {
             value: 0,
@@ -26,10 +26,21 @@ function Tile(options) {
             marginClass: 'row_'
         }
     };
-	this.grid = {
-		width: tileContainer.width(),
-		height: tileContainer.height()
-	}
+
+    this.gridCroos = {
+        width: 0,
+        height: 0,
+        tileGridX: $('.grid__closed_x'),
+        tileGridY: $('.grid__closed_y'),
+        scale: {
+            x: 1,
+            y: 1
+        },
+        hide: function () {
+            tileGridCross.removeClass('grid__closed_active');
+        }
+    };
+
     this.count = {
         x: tileContainer.width() / tileWidth,
         y: tileContainer.height() / tileHeight
@@ -68,47 +79,46 @@ function Tile(options) {
     };
 
     this.bindButtons = function () {
-		var heightCross = $('.'+self.tileGridCross).height(),
-			widthCross = $('.'+self.tileGridCross).width();
-			
-		this.gridCroos = {
-			height: heightCross / self.grid.height,
-			width: widthCross / self.grid.width
-		};
-		
-		$('.'+self.tileGridCross).addClass('active');
-		
+
+        tileGridCross.addClass('grid__closed_active');
+        self.gridCroos.width = tileGridCross.width();
+        self.gridCroos.height = tileGridCross.height();
+        self.gridCroos.scale.x = self.gridCroos.width / tileContainer.width();
+        self.gridCroos.scale.y = self.gridCroos.height / tileContainer.height();
+
         function tileMargin(axis, step) {
-			if($(tileGridY).height() <= heightCross && $(tileGridY).width() <= widthCross){
-            self.margin[axis]['value'] = self.margin[axis]['value'] + step;
-			
-				for (var i = 2; i <= self.count[axis] + 1; i++) {
-					tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
-						var $this = $(this);
-						switch (axis) {
-							case 'x':
-								$this.css({
-									left: '+=' + step * (i - 1)
-								});
-								widthX = self.margin[axis]['value'] * self.gridCroos.width; //width X cross
-								$(tileGridY).css({
-									width: (widthX <= widthCross ? widthX : widthCross)+'px'
-								});
-								break;
-							case 'y':
-								$this.css({
-									top: '+=' + step * (i - 1)
-								});
-								heightX = self.margin[axis]['value'] * self.gridCroos.height; //height Y cross
-								$(tileGridX).css({
-									height: (heightX <= heightCross ? heightX : heightCross)+'px'
-								});
-								break;
-						}
-						marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
-					});
-				}
-			}
+            var
+                temp = 0;
+            if (self.gridCroos.tileGridY.height() <= self.gridCroos.height && self.gridCroos.tileGridX.width() <= self.gridCroos.width) {
+                self.margin[axis]['value'] = self.margin[axis]['value'] + step;
+
+                for (var i = 2; i <= self.count[axis] + 1; i++) {
+                    tileWrapper.find('.' + self.margin[axis]['marginClass'] + i).each(function () {
+                        var $this = $(this);
+                        switch (axis) {
+                            case 'x':
+                                $this.css({
+                                    left: '+=' + step * (i - 1)
+                                });
+                                temp = self.margin[axis]['value'] * self.gridCroos.scale.x; //width X cross
+                                $(self.gridCroos.tileGridY).css({
+                                    width: (temp <= self.gridCroos.width ? temp : self.gridCroos.width) + 'px'
+                                });
+                                break;
+                            case 'y':
+                                $this.css({
+                                    top: '+=' + step * (i - 1)
+                                });
+                                temp = self.margin[axis]['value'] * self.gridCroos.scale.y; //height Y cross
+                                $(self.gridCroos.tileGridX).css({
+                                    height: (temp <= self.gridCroos.height ? temp : self.gridCroos.height) + 'px'
+                                });
+                                break;
+                        }
+                        marginButtons.writeCoord(self.margin[axis]['value'], marginButtons[axis]['input']);
+                    });
+                }
+            }
 
         }
 
@@ -155,7 +165,8 @@ function Position(options) { //создаем функцию конструкт�
         {
             tile: options.$watermark,
             tileContainer: options.$mainImg,
-            marginButtons: options.axisButtons
+            marginButtons: options.axisButtons,
+            tileGridCross: options.tileGridCross
         }
     );
 
@@ -182,6 +193,22 @@ function Position(options) { //создаем функцию конструкт�
 }
 
 Position.prototype.reInit = function () {
+
+    var
+        tileInitOptions = this.tile.reInitOptions;
+
+    this.initWatermark();
+    this.initMainImg();
+
+    this.initAxis();
+
+    this.tile.tileWrapper.remove();
+    this.tile.gridCroos.hide();
+
+    delete this.tile;
+
+    this.tile = new Tile(tileInitOptions);
+
     // all work width X coords
     this.initCoordsX();
 
@@ -189,17 +216,32 @@ Position.prototype.reInit = function () {
     this.initCoordsY();
 };
 
+Position.prototype.initAxis = function () {
+    this.axis = {
+        top: (parseFloat(this.mainImg.elem.css('margin-top')) == 0) ? parseFloat(this.mainImg.elem.position().top) : parseFloat(this.mainImg.elem.css('margin-top')),
+        left: (parseFloat(this.mainImg.elem.css('margin-left')) == 0) ? parseFloat(this.mainImg.elem.position().left) : parseFloat(this.mainImg.elem.css('margin-left'))
+    };
+};
+
+Position.prototype.initMainImg = function () {
+    this.mainImg.width = this.mainImg.elem.width();
+    this.mainImg.height = this.mainImg.elem.height();
+};
+
 Position.prototype.init = function () {
     var
         switchBtn = this.options.switchBtn,
         self = this;
-	console.log(self.tile.tileGridCross);
+
     if (this.created) {
+        switchBtn.tileBtn.removeClass('toggle__item_grid-active');
+        switchBtn.singleBtn.addClass('toggle__item_single-active');
         this.reInit();
         return this
     }
 
     switchBtn.tileBtn.on('click', function () {
+        self.watermark.elem.hide();
         if (!self.tile.created) {
             var
                 tile = self.tile.make();
@@ -210,33 +252,34 @@ Position.prototype.init = function () {
         }
         if (!switchBtn.tileBtn.hasClass('toggle__item_grid-active')) {
             switchBtn.tileBtn.addClass('toggle__item_grid-active');
-            switchBtn.tileBtn.removeClass('toggle__item_single-active');
+            switchBtn.singleBtn.removeClass('toggle__item_single-active');
         }
     });
-	
-	
+
 
     switchBtn.singleBtn.on('click', function () {
-        self.init();
-        self.watermark.elem.show();
         if (self.tile) {
             self.tile.tileWrapper.hide();
+            self.tile.gridCroos.hide();
         }
         if (!switchBtn.singleBtn.hasClass('toggle__item_single-active')) {
-            switchBtn.singleBtn.removeClass('toggle__item_grid-active');
+            self.watermark.elem.show();
+            self.initCoordsX();
+            self.initCoordsY();
+            switchBtn.tileBtn.removeClass('toggle__item_grid-active');
             switchBtn.singleBtn.addClass('toggle__item_single-active');
         }
-		$('.'+self.tile.tileGridCross).removeClass('active');
     });
+
+    switchBtn.tileBtn.removeClass('toggle__item_grid-active');
+    switchBtn.singleBtn.addClass('toggle__item_single-active');
+
     /**
      *
      * * drag and work with value X and Y
      *
      **/
-    this.axis = {
-        top: (parseFloat(this.mainImg.elem.css('margin-top')) == 0) ? parseFloat(this.mainImg.elem.position().top) : parseFloat(this.mainImg.elem.css('margin-top')),
-        left: (parseFloat(this.mainImg.elem.css('margin-left')) == 0) ? parseFloat(this.mainImg.elem.position().left) : parseFloat(this.mainImg.elem.css('margin-left'))
-    };
+    this.initAxis();
 
     // all work width X coords
     this.initCoordsX();
@@ -246,7 +289,7 @@ Position.prototype.init = function () {
 
     //drag working
     this.watermark.elem.on('drag', function (event, ui) {
-		$(self.gridElements).removeClass('grid__item_active'); //clear gird active class elem
+        $(self.gridElements).removeClass('grid__item_active'); //clear gird active class elem
         self.watermark.position.left = ui.position.left;
         self.watermark.position.top = ui.position.top;
         self.axisButtons.writeCoord(self.watermark.position.left, self.axisButtons.x.input);
@@ -357,37 +400,37 @@ Position.prototype.init = function () {
     };
 
     this.movePositionElem = function (x, y, i) {
-			
-		self.watermark.elem.animate(
-		{
-			top: y,
-			left: x
-		},
-		{
-			duration: 500, 
-			queue: false,
-		});
+
+        self.watermark.elem.animate(
+            {
+                top: y,
+                left: x
+            },
+            {
+                duration: 500,
+                queue: false,
+            });
 
         self.watermark.position.left = x;
         self.watermark.position.top = y;
         self.axisButtons.writeCoord(x, self.axisButtons.x.input);
         self.axisButtons.writeCoord(y, self.axisButtons.y.input);
-		
-		//add active grid elem
-		$(self.gridElements).removeClass('grid__item_active');
-		$(self.gridElem + i).addClass('grid__item_active');
+
+        //add active grid elem
+        $(self.gridElements).removeClass('grid__item_active');
+        $(self.gridElem + i).addClass('grid__item_active');
     };
-	
-	//clear grid active class elem
-	$('.wrapper').click(function(event) {
-		classNameElem = event.target.className.split(' ');
 
-		if(classNameElem[0] !== 'grid__item'){
-			$(self.gridElements).removeClass('grid__item_active');
-		}
+    //clear grid active class elem
+    $('.wrapper').click(function (event) {
+        classNameElem = event.target.className.split(' ');
 
-	});
-	
+        if (classNameElem[0] !== 'grid__item') {
+            $(self.gridElements).removeClass('grid__item_active');
+        }
+
+    });
+
     this.positionCssElem = function (posCssX, posCssY) {
 
         if ((posCssX >= -this.watermark.width && posCssX <= this.mainImg.width + this.watermark.width) && (posCssY >= -this.watermark.height && posCssY <= this.mainImg.height + this.watermark.height)) {
@@ -401,6 +444,13 @@ Position.prototype.init = function () {
     this.created = true;
 
     return this;
+};
+
+Position.prototype.initWatermark = function () {
+    this.watermark.position.left = 0;
+    this.watermark.position.top = 0;
+    this.watermark.width = this.watermark.elem.width();
+    this.watermark.height = this.watermark.elem.height();
 };
 
 Position.prototype.initCoordsX = function () {

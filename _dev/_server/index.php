@@ -2,8 +2,6 @@
 
 session_start();
 
-error_reporting(0);
-
 $_SESSION['INIT'] = true;
 
 define('INIT', true);
@@ -34,7 +32,7 @@ if (!$query[0]) {
 }
 
 // будем считать что может быть только один уровень сайта
-
+//var_dump($query);
 // все ajax запросы выполняются на адрес <название скрипта>.ajax
 if (strpos($template, 'ajax') !== false) {
     if (strpos($template, '?') !== false) {
@@ -46,4 +44,3 @@ if (strpos($template, 'ajax') !== false) {
     require_once(PATH_CONTENT . '/' . $template . '.php');
     require_once(PATH_CONTENT . '/' . 'template.php');
 }
-

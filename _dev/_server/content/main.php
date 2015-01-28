@@ -34,14 +34,14 @@ ob_start();
                                 <div class="upload__item">
                                     <label for="upload_picture" class="upload__title"><?=t('Исходное изображение')?></label>
                                     <div class="upload__raw">
-                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <input id="upload_picture" type="file" name="upload" class="upload__field-file"><span class="upload__field upload__field-source"><?=t('Загрузите изображение')?></span>
                                         <button class="upload__button"></button>
                                     </div>
                                 </div>
                                 <div class="upload__item">
                                     <label for="upload_watermark" class="upload__title"><?=t('Водяной знак')?></label>
                                     <div class="upload__raw">
-                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field"></span>
+                                        <input id="upload_watermark" type="file" name="upload" class="upload__field-file"><span class="upload__field upload__field-watermark"><?=t('Загрузите изображение')?></span>
                                         <button class="upload__button"></button>
                                     </div>
                                 </div>
@@ -58,7 +58,10 @@ ob_start();
                                 <div class="place__body">
                                     <!-- grid-->
                                     <div class="grid">
-                                        <div class="grid__closed"></div>
+                                        <div class="grid__closed">
+                                            <div class="grid__closed_x"></div>
+                                            <div class="grid__closed_y"></div>
+                                        </div>
                                         <div class="grid__container">
                                             <div class="grid__item grid__item_1"></div>
                                             <div class="grid__item grid__item_2"></div>
@@ -75,8 +78,8 @@ ob_start();
                                     <div class="coord">
                                         <div class="coord__raw">
                                             <div class="coord__coll">
-                                                <input id="x_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input id="x_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="x_coordinate_up" type="button" value="" class="coord__arrow coord__arrow_up">
+                                                <input id="x_coordinate_down" type="button" value="" class="coord__arrow coord__arrow_down">
                                             </div>
                                             <div class="coord__coll">
                                                 <input id="x_coordinate" type="text" class="coord__field">
@@ -87,8 +90,8 @@ ob_start();
                                         </div>
                                         <div class="coord__raw">
                                             <div class="coord__coll">
-                                                <input id="y_coordinate_up" type="button" value="∧" class="coord__arrow coord__arrow_up">
-                                                <input id="y_coordinate_down" type="button" value="∨" class="coord__arrow coord__arrow_down">
+                                                <input id="y_coordinate_up" type="button" value="" class="coord__arrow coord__arrow_up">
+                                                <input id="y_coordinate_down" type="button" value="" class="coord__arrow coord__arrow_down">
                                             </div>
                                             <div class="coord__coll">
                                                 <input id="y_coordinate" type="text" class="coord__field">

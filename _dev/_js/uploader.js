@@ -1,13 +1,13 @@
 var uploader = (function ($) {
-  
-	var self = this;
-	
-	this.step = {
-		secondElem: $('.upload__item'),
-		thirdElem: $('.place'),
-		thirdElemTransparent: $('.transparent'),
-	};
-	
+
+    var self = this;
+
+    this.step = {
+        secondElem: $('.upload__item'),
+        thirdElem: $('.place'),
+        thirdElemTransparent: $('.transparent')
+    };
+
     var url = '/uploader.ajax',
         scale = {
             x: 1,
@@ -16,25 +16,34 @@ var uploader = (function ($) {
         watermarkSizeOriginal = {
             width: 0,
             height: 0
-        };
-	
-	//step 1
-	//add text src img
-	$('#upload_picture').change(function(){
-		var valueFile = $(this).val();
-		$(this).next().text(valueFile);
-		self.step.secondElem.eq(1).removeClass('opacity__disabled');
-		$('#upload_watermark').removeAttr('disabled');
-	});
-	
-	
+        },
+        pictureWorkspaceClass = 'picture__workspace',
+        position;
+
+    //step 1
+    //add text src img
+    $('#upload_picture').change(function () {
+        var valueFile = $(this).val();
+        $(this).next().text(valueFile);
+        self.step.secondElem.eq(1).removeClass('opacity__disabled');
+        $('#upload_watermark').removeAttr('disabled');
+    });
+
+
     $('#upload_picture').fileupload({
         url: url,
         dataType: 'json',
+
+        change: function (e, data) {
+            $.each(data.files, function (index, file) {
+                $('.upload__field-source').html(file.name);
+            });
+        },
+
         done: function (e, data) {
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
-                picture__workspace = $('.picture__workspace'),
+                picture__workspace = $('.' + pictureWorkspaceClass),
                 picSizeOriginal = {
                     width: 0,
                     height: 0
@@ -47,7 +56,7 @@ var uploader = (function ($) {
                 pic.on('load', (function () {
                         console.log('сработало событие pic.load');
                         var $this = $(this),
-                            watermark = $('.picture__watermark');
+                            watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
 
                         console.log('картинка: ', $this.width(), ' ', $this.height());
                         picSizeOriginal.width = $this.width();
@@ -70,6 +79,7 @@ var uploader = (function ($) {
                             watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
+                            position.init();
                         }
                         $this.off('load');
                     })
@@ -78,108 +88,121 @@ var uploader = (function ($) {
                 console.log('error uploading the original file');
             }
         }
-	
+
     });
-	
-	//step 2
-	$('#upload_watermark').attr('disabled', 'disabled');
-	self.step.secondElem.eq(1).addClass('opacity__disabled');
-	self.step.thirdElem.addClass('opacity__disabled');
-	self.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
-	self.step.thirdElemTransparent.addClass('opacity__disabled');
-	$('.transparent__item').slider('disable');
-	
-	//step 3
-	//add text src watermark
-	$('#upload_watermark').change(function(){
-		var valueFile = $(this).val();
-		console.log(valueFile);
-		$(this).next().text(valueFile);
-		self.step.thirdElem.removeClass('opacity__disabled');
-		self.step.thirdElemTransparent.removeClass('opacity__disabled');
-		$('.opacity__disabled__block').remove();
-		$('.transparent__item').slider('enable');
-	});
-	
-	
-	
-	$('#upload_watermark').fileupload({
-		url: url,
-		dataType: 'json',
-		done: function (e, data) {
-			if (data.result.src) {
-				var watermark = $('.picture__watermark');
-				watermark.attr('style', '');
-				watermark.hide();
-				watermark.attr('src', data.result.src);
-				watermark.load(function () {
-						var
-							$this = $(this);
 
-						console.log('водяной знак: ', $this.width(), ' ', $this.height());
-						watermarkSizeOriginal.width = $this.width();
-						watermarkSizeOriginal.height = $this.height();
-						console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
-						$this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
-						console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
+    //step 2
+    $('#upload_watermark').attr('disabled', 'disabled');
+    self.step.secondElem.eq(1).addClass('opacity__disabled');
+    self.step.thirdElem.addClass('opacity__disabled');
+    self.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
+    self.step.thirdElemTransparent.addClass('opacity__disabled');
+    $('.transparent__item').slider('disable');
 
-						$this.show();
-						$this.off('load');
+    //step 3
+    //add text src watermark
+    $('#upload_watermark').change(function () {
+        var valueFile = $(this).val();
+        console.log(valueFile);
+        $(this).next().text(valueFile);
+        self.step.thirdElem.removeClass('opacity__disabled');
+        self.step.thirdElemTransparent.removeClass('opacity__disabled');
+        $('.opacity__disabled__block').remove();
+        $('.transparent__item').slider('enable');
+    });
 
-						var p = new Position({
 
-							//x and Y value, button
-							axisButtons: {
-								x: {
-									input: $('#x_coordinate'),
-									inputTitle: $('.coord__title_x'),
-									btnUp: $('#x_coordinate_up'),
-									btnDown: $('#x_coordinate_down')
-								},
-								y: {
-									input: $('#y_coordinate'),
-									inputTitle: $('.coord__title_y'),
-									btnUp: $('#y_coordinate_up'),
-									btnDown: $('#y_coordinate_down')
-								},
-								writeCoord: function (coord, input) {
-									input.val(Math.round(coord));
-								}
-							},
+    $('#upload_watermark').fileupload({
+        url: url,
+        dataType: 'json',
 
-							//area elem
-							$workspace: $('.picture__workspace'),
-							$mainImg: $('.picture__upload'),
+        change: function (e, data) {
+            $.each(data.files, function (index, file) {
+                $('.upload__field-watermark').html(file.name);
+            });
+        },
 
-							//elem
-							$watermark: $('.picture__watermark'),
+        done: function (e, data) {
+            if (data.result.src) {
+                var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
+                watermark.attr('style', '');
+                watermark.hide();
+                watermark.attr('src', data.result.src);
+                watermark.load(function () {
+                        var
+                            $this = $(this);
 
-							// place grid events
-							$placeGrid: $('.grid'),
+                        console.log('водяной знак: ', $this.width(), ' ', $this.height());
+                        watermarkSizeOriginal.width = $this.width();
+                        watermarkSizeOriginal.height = $this.height();
+                        console.log('водяной знак должен стать: ', $this.width() / scale.x, ' ', $this.height() / scale.y);
+                        $this.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
+                        console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
 
-							//position grid buttons
-							gridButtons: 'grid__item',
+                        $this.show();
+                        $this.off('load');
 
-							//mosh buttons
+                        if (position === undefined) {
+                            position = new Position({
 
-							switchBtn: {
-								tileBtn: $('.toggle__item_grid'),
-								singleBtn: $('.toggle__item_single')
-							}
-						});
+                                //x and Y value, button
+                                axisButtons: {
+                                    x: {
+                                        input: $('#x_coordinate'),
+                                        inputTitle: $('.coord__title_x'),
+                                        btnUp: $('#x_coordinate_up'),
+                                        btnDown: $('#x_coordinate_down')
+                                    },
+                                    y: {
+                                        input: $('#y_coordinate'),
+                                        inputTitle: $('.coord__title_y'),
+                                        btnUp: $('#y_coordinate_up'),
+                                        btnDown: $('#y_coordinate_down')
+                                    },
+                                    writeCoord: function (coord, input) {
+                                        input.val(Math.round(coord));
+                                    }
+                                },
 
-						p.init();
-					}
-				)
-				;
-				self.step.second = true;
-			}
-			else {
-				console.log('error uploading the watermark file');
-			}
-		}
-	});
-	
+                                //area elem
+                                $workspace: $('.picture__workspace'),
+                                $mainImg: $('.picture__upload'),
+
+                                //elem
+                                $watermark: $('.picture__watermark'),
+
+                                // place grid events
+                                $placeGrid: $('.grid'),
+
+                                //position grid buttons
+                                gridButtons: 'grid__item',
+
+                                //mosh buttons
+
+                                switchBtn: {
+                                    tileBtn: $('.toggle__item_grid'),
+                                    singleBtn: $('.toggle__item_single')
+                                },
+
+                                tileGridCross: $('.grid__closed')
+                            });
+
+                            position.init();
+                        } else {
+                            position.init();
+                        }
+                    }
+                );
+                self.step.second = true;
+            }
+            else {
+                console.log('error uploading the watermark file');
+            }
+        }
+    });
+
+
+    // используется в download.js для получения текущего масштаба
     return {
 
         getScale: function () {
