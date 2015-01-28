@@ -47,7 +47,6 @@ var uploader = (function ($) {
             $('.picture__uploading').css('display', 'block');
         },
         done: function (e, data) {
-            $('.picture__uploading').css('display', 'none');
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
                 picture__workspace = $('.' + pictureWorkspaceClass),
@@ -64,7 +63,7 @@ var uploader = (function ($) {
                         console.log('сработало событие pic.load');
                         var $this = $(this),
                             watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
-
+                        $('.picture__uploading').css('display', 'none');
                         console.log('картинка: ', $this.width(), ' ', $this.height());
                         picSizeOriginal.width = $this.width();
                         picSizeOriginal.height = $this.height();
@@ -134,7 +133,6 @@ var uploader = (function ($) {
             $('.picture__uploading').css('display', 'block');
         },
         done: function (e, data) {
-            $('.picture__uploading').css('display', 'none');
             if (data.result.src) {
                 var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
                 watermark.attr('style', '');
@@ -143,7 +141,7 @@ var uploader = (function ($) {
                 watermark.load(function () {
                         var
                             $this = $(this);
-
+                        $('.picture__uploading').css('display', 'none');
                         console.log('водяной знак: ', $this.width(), ' ', $this.height());
                         watermarkSizeOriginal.width = $this.width();
                         watermarkSizeOriginal.height = $this.height();
