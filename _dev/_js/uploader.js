@@ -1,6 +1,9 @@
 var uploader = (function ($) {
 
-    var self = this;
+    var
+        self = this,
+        $uploadWatermark = $('#upload_watermark'),
+        $uploadPicture = $('#upload_picture');
 
     this.step = {
         secondElem: $('.upload__item'),
@@ -22,7 +25,7 @@ var uploader = (function ($) {
 
     //step 1
     //add text src img
-    $('#upload_picture').change(function () {
+    $uploadPicture.change(function () {
         var valueFile = $(this).val();
         $(this).next().text(valueFile);
         self.step.secondElem.eq(1).removeClass('opacity__disabled');
@@ -30,7 +33,7 @@ var uploader = (function ($) {
     });
 
 
-    $('#upload_picture').fileupload({
+    $uploadPicture.fileupload({
         url: url,
         dataType: 'json',
 
@@ -41,10 +44,10 @@ var uploader = (function ($) {
         },
         send: function () {
             console.log('send');
-            $('.picture__uploading').css('display','block');
+            $('.picture__uploading').css('display', 'block');
         },
         done: function (e, data) {
-            $('.picture__uploading').css('display','none');
+            $('.picture__uploading').css('display', 'none');
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
                 picture__workspace = $('.' + pictureWorkspaceClass),
@@ -83,8 +86,7 @@ var uploader = (function ($) {
                             watermark.attr('style', 'width:' + watermarkSizeOriginal.width / scale.x + 'px;' + 'height:' + watermarkSizeOriginal.height / scale.y + 'px;');
                             console.log('водяной знак после масштабирования: ', watermark.width(), ' ', watermark.height());
                             watermark.show();
-							opacity = slider.$rangeOpacity.slider( "value" );
-							slider.sliderOpacity(opacity);
+                            slider.sliderOpacity(slider.$rangeOpacity.slider("value"));
                             position.init();
                         }
                         $this.off('load');
@@ -98,16 +100,16 @@ var uploader = (function ($) {
     });
 
     //step 2
-    $('#upload_watermark').attr('disabled', 'disabled');
-    self.step.secondElem.eq(1).addClass('opacity__disabled');
-    self.step.thirdElem.addClass('opacity__disabled');
-    self.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
-    self.step.thirdElemTransparent.addClass('opacity__disabled');
+    $uploadWatermark.attr('disabled', 'disabled');
+    this.step.secondElem.eq(1).addClass('opacity__disabled');
+    this.step.thirdElem.addClass('opacity__disabled');
+    this.step.thirdElem.append('<div class="opacity__disabled__block"></div>')
+    this.step.thirdElemTransparent.addClass('opacity__disabled');
     $('.transparent__item').slider('disable');
 
     //step 3
     //add text src watermark
-    $('#upload_watermark').change(function () {
+    $uploadWatermark.change(function () {
         var valueFile = $(this).val();
         console.log(valueFile);
         $(this).next().text(valueFile);
@@ -118,7 +120,7 @@ var uploader = (function ($) {
     });
 
 
-    $('#upload_watermark').fileupload({
+    $uploadWatermark.fileupload({
         url: url,
         dataType: 'json',
 
@@ -129,10 +131,10 @@ var uploader = (function ($) {
         },
         send: function () {
             console.log('send');
-            $('.picture__uploading').css('display','block');
+            $('.picture__uploading').css('display', 'block');
         },
         done: function (e, data) {
-            $('.picture__uploading').css('display','none');
+            $('.picture__uploading').css('display', 'none');
             if (data.result.src) {
                 var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
                 watermark.attr('style', '');
@@ -150,8 +152,7 @@ var uploader = (function ($) {
                         console.log('водяной знак после масштабирования: ', $this.width(), ' ', $this.height());
 
                         $this.show();
-						opacity = slider.$rangeOpacity.slider( "value" );
-						slider.sliderOpacity(opacity);
+                        slider.sliderOpacity(slider.$rangeOpacity.slider('value'));
                         $this.off('load');
 
                         if (position === undefined) {
@@ -196,7 +197,9 @@ var uploader = (function ($) {
                                     singleBtn: $('.toggle__item_single')
                                 },
 
-                                tileGridCross: $('.grid__closed')
+                                tileGridCross: $('.grid__closed'),
+
+                                slider: slider
                             });
 
                             position.init();
@@ -219,6 +222,9 @@ var uploader = (function ($) {
 
         getScale: function () {
             return scale;
+        },
+        getPosition: function () {
+            return position;
         }
 
     };
