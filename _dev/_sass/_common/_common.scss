@@ -1,0 +1,114 @@
+@import "../_mixin/_mixin";
+@import "../_mixin/_variables";
+
+/* =====================================================
+    setings from HTML5boilerplate classic mode
+===================================================== */
+//html,
+//button,
+//input,
+//select,
+//textarea {
+//    color: #222;
+//}
+//html {
+//    font-size: 1em;
+//    line-height: 1.4;
+//}
+
+// ---------------------------------------
+html * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body, html {
+  height: 100%;
+}
+body {
+    padding: 0;
+    margin: 0;
+    font-family: robotolight, Arial, sans-serif;
+}
+p {
+    padding: 0;
+    margin: 0;
+}
+ul,li {
+    margin: 0;
+    padding: 0;
+}
+h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+input,
+button {
+	outline: none;
+}
+// ---------------------------------------
+
+
+.container {
+//    background: #777;
+//    background: url(img/common_bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+header,
+aside,
+footer,
+.content {
+    position: relative;
+}
+header,
+aside,
+footer {
+    z-index: 5;
+}
+.content {
+    background: url(img/common_bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+    margin-top: -($headerHeight);
+    margin-bottom: -($footerHeight);
+    min-height: 100%;
+    padding-top: $headerHeight;
+    padding-bottom: $footerHeight;
+}
+.wrapper {
+    background: rgba(46, 54, 65, 0.6);
+    margin: 0 auto;
+    position: relative;
+    margin-top: 10px;
+    width: $wrapperWidth;
+    @include clearfix;
+}
+
+.text {
+    
+}
+
+.active {
+    display:block;
+}
+.opacity__disabled {
+    opacity:0.2;
+}
+
+.opacity__disabled__block {
+    opacity: 0;
+    width: 260px;
+    height: 360px;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
