@@ -17,6 +17,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
 <script src="../../../_js/_vendor/jquery.fileupload.js"></script>
 <!-- endbuild-->
 <!--build:js(_dev/_server/content/common) /js/script.js-->
+<script src="../../../_js/share.social.js"></script>
 <script src="../../../_js/draggable.js"></script>
 <script src="../../../_js/position.js"></script>
 <script src="../../../_js/slider.js"></script>

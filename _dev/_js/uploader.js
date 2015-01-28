@@ -39,8 +39,12 @@ var uploader = (function ($) {
                 $('.upload__field-source').html(file.name);
             });
         },
-
+        send: function () {
+            console.log('send');
+            $('.picture__uploading').css('display','block');
+        },
         done: function (e, data) {
+            $('.picture__uploading').css('display','none');
             var pic = $('.picture__upload'),
                 workspace = $('.picture__images'),
                 picture__workspace = $('.' + pictureWorkspaceClass),
@@ -123,8 +127,12 @@ var uploader = (function ($) {
                 $('.upload__field-watermark').html(file.name);
             });
         },
-
+        send: function () {
+            console.log('send');
+            $('.picture__uploading').css('display','block');
+        },
         done: function (e, data) {
+            $('.picture__uploading').css('display','none');
             if (data.result.src) {
                 var watermark = $('.' + pictureWorkspaceClass + ' > .picture__watermark');
                 watermark.attr('style', '');
