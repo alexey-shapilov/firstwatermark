@@ -1,19 +1,24 @@
 @import "../_mixin/_mixin";
 @import "../_mixin/_variables";
 
-
 footer.footer {
-//    background: rgba(0, 0, 0, 0.32);
-    height: $footerHeight;
-    margin-top: -($footerHeight);
-    text-align: center;
-    width: 100%;
+  //    background: rgba(0, 0, 0, 0.32);
+  height: $footerHeight;
+  margin-top: -($footerHeight);
+  text-align: center;
+  width: 100%;
 }
+
 p.text {
-    
+
 }
+
 .text_footer {
-    color: #fff;
-    font: normal 12px sans-serif;
-    line-height: 50px;
+  color: #fff;
+  font: normal 12px sans-serif;
+  line-height: 50px;
+}
+
+iframe {
+  display: none;
 }
