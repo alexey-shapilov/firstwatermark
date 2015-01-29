@@ -1,512 +1,587 @@
 @import "../_mixin/_mixin";
 @import "../_mixin/_variables";
 
-
-
-
 .workspace {
-    
-}
-.workspace_left {
-    float: left;
-}
-.workspace_right {
-    float: right;
+
 }
 
+.workspace_left {
+  float: left;
+}
+
+.workspace_right {
+  float: right;
+}
 
 // --------------------------------------- Picture
 .picture {
-    float: left;
-    font-family: robotothin;
-    height: $contentHeight;
-    width: $pictureBlockWidth;
+  float: left;
+  font-family: robotothin;
+  height: $contentHeight;
+  width: $pictureBlockWidth;
 }
+
 .picture__title {
-    color: #eee;
-    line-height: 70px;
-    padding: 0 0 0 25px;
+  color: #eee;
+  line-height: 70px;
+  padding: 0 0 0 25px;
 }
+
 .picture__body {
-    height: 600px;
-    padding: 40px 25px 25px 25px;
-    position: relative;
+  height: 600px;
+  padding: 40px 25px 25px 25px;
+  position: relative;
 }
+
 .picture__images {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    @include pictureWidth;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  @include pictureWidth;
 }
+
+.picture__uploading {
+  display: none;
+  background: url(img/uploading.gif) no-repeat center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+}
+
 .picture__wrapper {
-    position: absolute;
-    @include pictureWidth;
-    top: 0;
-    left: 0;
+  position: absolute;
+  @include pictureWidth;
+  top: 0;
+  left: 0;
 }
+
 .picture__workspace {
-    overflow: hidden;
-    @include center();
-    @include pictureWidth;
+  overflow: hidden;
+  @include center();
+  @include pictureWidth;
 }
+
 .picture__watermark {
-    position: absolute;
-    z-index: 100;
+  position: absolute;
+  z-index: 100;
 }
+
 .picture__upload {
-    @include center();
-    z-index: 50;
+  @include center();
+  z-index: 50;
 }
+
+.tile-wrapper {
+  z-index: 100;
+}
+
 .picture__bg {
-    background: url("img/grid.png");
-    position: relative;
-    z-index: 10;
-    @include pictureWidth;
+  background: url("img/grid.png");
+  position: relative;
+  z-index: 10;
+  @include pictureWidth;
 }
 
 // --------------------------------------- adjustment
 .adjust {
-    background: #f1f1f5;
-    min-height: $contentHeight;
-    width: $ajustmentBlockWidth;
+  background: #f1f1f5;
+  min-height: $contentHeight;
+  width: $ajustmentBlockWidth;
 }
+
 .adjust__title {
-    font-family: robotothin;
-    font-size: 16px;
-    line-height: 40px;
-    padding: 20px 0 0 0;
-    text-align: center;
+  font-family: robotothin;
+  font-size: 16px;
+  line-height: 40px;
+  padding: 20px 0 0 0;
+  text-align: center;
 }
+
 .adjust__body {
-    position: relative;
+  position: relative;
 }
+
 .adjust__raw {
-    background: $help_2; // -------------------------------------------- HELP
-    border-top: 1px solid #f00;
-    padding: 20px 10px;
-    position: relative;
-    &:first-child {
-        border-top: none;
-        &:after {
-            display: none;
-        }
-        &:before {
-            display: none;
-        }
+  background: $help_2; // -------------------------------------------- HELP
+  border-top: 1px solid #f00;
+  padding: 20px 10px;
+  position: relative;
+  &:first-child {
+    border-top: none;
+    &:after {
+      display: none;
     }
     &:before {
-        border-top: solid 10px #f97e76;
-        border-bottom: solid 10px transparent;
-        border-right: solid 10px transparent;
-        border-left: solid 10px transparent;
-        content: "";
-        display: block;
-        left: 120px;
-        position: absolute;
-        top: 0px;
+      display: none;
     }
-    &:after {
-        border-top: solid 10px #f1f1f5;
-        border-bottom: solid 10px transparent;
-        border-right: solid 10px transparent;
-        border-left: solid 10px transparent;
-        content: "";
-        display: block;
-        left: 120px;
-        position: absolute;
-        top: -1px;
-    }
-}
-.upload__topic {
-    background: $help_5; // -------------------------------------------- HELP
-    font: normal 14px robotolight;
+  }
+  &:before {
+    border-top: solid 10px #f97e76;
+    border-bottom: solid 10px transparent;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+    content: "";
     display: block;
-    line-height: 1;
-    padding: 0 0 6px 0;
+    left: 120px;
+    position: absolute;
+    top: 0px;
+  }
+  &:after {
+    border-top: solid 10px #f1f1f5;
+    border-bottom: solid 10px transparent;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+    content: "";
+    display: block;
+    left: 120px;
+    position: absolute;
+    top: -1px;
+  }
+}
+
+.upload__topic {
+  background: $help_5; // -------------------------------------------- HELP
+  font: normal 14px robotolight;
+  display: block;
+  line-height: 1;
+  padding: 0 0 6px 0;
 }
 
 // ----------------- upload files
 .upload {
-    background: $help_1; // -------------------------------------------- HELP
-    padding: 0 10px;
+  background: $help_1; // -------------------------------------------- HELP
+  padding: 0 10px;
 }
+
 .upload__item {
-    padding: 10px 0;
+  padding: 10px 0;
 }
+
 // =============================================== DRY
 .upload__title {
-    
+
 }
+
 .upload__raw {
-    display: block;
-    width: 100%;
-    position: relative;
-    @include clearfix;
+  display: block;
+  width: 100%;
+  position: relative;
+  @include clearfix;
 }
+
 .upload__field-file {
-    cursor: pointer;
-    height: 30px;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 220px;
-    z-index: 1;
+  cursor: pointer;
+  height: 30px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  z-index: 1;
 }
+
 .upload__field {
-    color: #9eb2c0;
-    cursor: pointer;
-    font: normal 12px robotolight;
-    background: transparent;
-    border: 1px solid #9eb2c0;
-    display: block;
-    float: left;
-    line-height: 23px;
-    height: 26px;
-    padding: 0 0 0 5px;
-    width: 180px;
-    position: relative;
-    @include  borderRadius( 3px 0 0 3px );
+  color: #9eb2c0;
+  cursor: pointer;
+  font: normal 12px robotolight;
+  background: transparent;
+  border: 1px solid #9eb2c0;
+  display: block;
+  float: left;
+  line-height: 23px;
+  height: 26px;
+  padding: 0 0 0 5px;
+  width: 180px;
+  position: relative;
+  @include borderRadius(3px 0 0 3px);
 }
+
 .upload__button {
-    background: #f97e76 url(img/download.png) 0 0 no-repeat;
-    border: none;
-    cursor: pointer;
-    display: block;
-    float: left;
-    height: 26px;
-    position: relative;
-    left: -1px;
-    width: 40px;
-    @include  borderRadius( 0 3px 3px 0 );
+  background: #f97e76 url(img/download.png) 0 0 no-repeat;
+  border: none;
+  cursor: pointer;
+  display: block;
+  float: left;
+  height: 26px;
+  position: relative;
+  left: -1px;
+  width: 40px;
+  @include borderRadius(0 3px 3px 0);
 }
 
 // ----------------- place watermark
 
 .place {
-    background: $help_1; // -------------------------------------------- HELP
-    padding: 0 10px;
+  background: $help_1; // -------------------------------------------- HELP
+  padding: 0 10px;
 }
+
 // =============================================== DRY
-.place__title  {
-    
+.place__title {
+
 }
+
 .toggle {
-    height: 30px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 60px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60px;
 }
+
 .toggle__item {
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    position: absolute;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  position: absolute;
 }
+
 .toggle__item_grid {
-    left: 0;
-    bottom: 0;
-    background: url('img/button.png') -3px -28px no-repeat;
-    &:hover {
-        background-position: -3px -4px;
-    }
-}
-.toggle__item_single {
-    left: 30px;
-    bottom: 0;
-    background: url('img/button.png') -31px -28px no-repeat;
-    &:hover {
-        background-position: -32px -4px;
-    }
-}
-.toggle__item_grid-active {
+  left: 0;
+  bottom: 0;
+  background: url('img/button.png') -3px -28px no-repeat;
+  &:hover {
     background-position: -3px -4px;
+  }
 }
-.toggle__item_single-active {
+
+.toggle__item_single {
+  left: 30px;
+  bottom: 0;
+  background: url('img/button.png') -31px -28px no-repeat;
+  &:hover {
     background-position: -32px -4px;
+  }
+}
+
+.toggle__item_grid-active {
+  background-position: -3px -4px;
+}
+
+.toggle__item_single-active {
+  background-position: -32px -4px;
 }
 
 .place__body {
-    padding: 30px 0 20px 0;
-    @include clearfix;
+  padding: 30px 0 20px 0;
+  @include clearfix;
 }
+
 // ----------------- grid
 .grid {
-    float: left;
-    vertical-align: top;
-    width: ($grid)*3;
-    position: relative;
-    @include clearfix;
-    z-index: 1;
+  float: left;
+  vertical-align: top;
+  width: ($grid)*3;
+  position: relative;
+  @include clearfix;
+  z-index: 1;
 }
+
 .grid__closed {
-    display: none;
-    position: absolute;
-    @include pictureWidth;
-    z-index: 50;  
+  display: none;
+  position: absolute;
+  @include pictureWidth;
+  z-index: 50;
 }
 
 .grid__closed_active {
-    display: block;
+  display: block;
 }
 
 .grid__closed_x {
-    background: #f97e76;
-    position:absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    height: 0;
-    margin: auto;
-    left: 0;
-    z-index: 99999;
+  background: #f97e76;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  margin: auto;
+  left: 0;
+  z-index: 99999;
 }
+
 .grid__closed_y {
-    background: #f97e76;
-    position:absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    margin: 0 auto;
-    z-index: 99999;
+  background: #f97e76;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  margin: 0 auto;
+  z-index: 99999;
 }
+
 .grid__container {
-    position: relative;
-    @include pictureWidth;
-    z-index: 10;
+  position: relative;
+  @include pictureWidth;
+  z-index: 10;
 }
+
 .grid__item {
-    border-style: solid;
+  border-style: solid;
+  border-color: #9eb2c0;
+  background: #dbe1e8;
+  cursor: pointer;
+  display: block;
+  float: left;
+  position: relative;
+  height: $grid;
+  width: $grid;
+  z-index: 1;
+  &:hover {
+    background: #9eb2c0;
     border-color: #9eb2c0;
-    background: #dbe1e8;
-    cursor: pointer;
-    display: block;
-    float: left;
-    position: relative;
-    height: $grid;
-    width: $grid;
-    z-index: 1;
-    &:hover {
-        background: #9eb2c0;
-        border-color: #9eb2c0;}
-    &:active {
-        background: #f97e76;
-        border-color: #f97e76;}
-    @include clearfix;
+  }
+  &:active {
+    background: #f97e76;
+    border-color: #f97e76;
+  }
+  @include clearfix;
 }
 
 .grid__item_1 {
-    border-width: 1px 0px 0px 1px;
-    @include  borderRadius( 3px 0 0 0 );
+  border-width: 1px 0px 0px 1px;
+  @include borderRadius(3px 0 0 0);
 }
+
 .grid__item_2 {
-    border-width: 1px 1px 0px 1px;
+  border-width: 1px 1px 0px 1px;
 }
+
 .grid__item_3 {
-    border-width: 1px 1px 0px 0px;
-    @include  borderRadius( 0 3px 0 0 );
+  border-width: 1px 1px 0px 0px;
+  @include borderRadius(0 3px 0 0);
 }
+
 .grid__item_4 {
-    border-width: 1px 0px 1px 1px;
+  border-width: 1px 0px 1px 1px;
 }
+
 .grid__item_5 {
-    border-width: 1px 1px 1px 1px;
+  border-width: 1px 1px 1px 1px;
 }
+
 .grid__item_6 {
-    border-width: 1px 1px 1px 0px;
+  border-width: 1px 1px 1px 0px;
 }
+
 .grid__item_7 {
-    border-width: 0px 0px 1px 1px;
-    @include  borderRadius( 0 0 0 3px );
+  border-width: 0px 0px 1px 1px;
+  @include borderRadius(0 0 0 3px);
 }
+
 .grid__item_8 {
-    border-width: 0px 1px 1px 1px;
+  border-width: 0px 1px 1px 1px;
 }
+
 .grid__item_9 {
-    border-width: 0px 1px 1px 0px;
-    @include  borderRadius( 0 0 3px 0 );
+  border-width: 0px 1px 1px 0px;
+  @include borderRadius(0 0 3px 0);
 }
-.grid__item_active{
-    background: #f97e76;
-    border-color: #f97e76;
+
+.grid__item_active {
+  background: #f97e76;
+  border-color: #f97e76;
 }
 
 // ----------------- coordinate
 .coord {
-    float: right;
-    vertical-align: top;
-}
-.coord__raw {
-    background: $help_3; // -------------------------------------------- HELP
-    text-align: right;
-    padding: 9px 0 0 0;
-    width: 100%;
-    @include clearfix;
-}
-.coord__coll {
-    background: $help_4; // -------------------------------------------- HELP
-    height: 40px;
-    float: right;
-    vertical-align: top;
-}
-.coord__title {
-    font-size: 16px;
-    color: #555;
-    display: inline-block;
-    line-height: 40px;
-    padding: 0 7px;
-}
-.coord__field {
-    border: 1px solid #9eb2c0;
-    display: block;
-    font-size: 16px;
-    height: 40px;
-    text-align: center;
-    width: 40px;
-    @include  borderRadius( 3px );
-}
-.coord__coll_arrow {
-    
-}
-.coord__arrow {
-    background: transparent;
-    border: none;
-    color: #9eb2c0;
-    display: block;
-    height: 20px;
-    width: 20px;
-}
-.coord__arrow_up {
-    background: url("img/arrow.png") 0 0 no-repeat;
-    &:hover {
-        background-position: -19px 0px;
-    }
-}
-.coord__arrow_down {
-    background: url("img/arrow.png") 0 -26px no-repeat;
-    &:hover {
-        background-position: -19px -26px;
-    }
+  float: right;
+  vertical-align: top;
 }
 
+.coord__raw {
+  background: $help_3; // -------------------------------------------- HELP
+  text-align: right;
+  padding: 9px 0 0 0;
+  width: 100%;
+  @include clearfix;
+}
+
+.coord__coll {
+  background: $help_4; // -------------------------------------------- HELP
+  height: 40px;
+  float: right;
+  vertical-align: top;
+}
+
+.coord__title {
+  font-size: 16px;
+  color: #555;
+  display: inline-block;
+  line-height: 40px;
+  padding: 0 7px;
+}
+
+.coord__field {
+  border: 1px solid #9eb2c0;
+  display: block;
+  font-size: 16px;
+  height: 40px;
+  text-align: center;
+  width: 40px;
+  @include borderRadius(3px);
+}
+
+.coord__coll_arrow {
+
+}
+
+.coord__arrow {
+  background: transparent;
+  border: none;
+  color: #9eb2c0;
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+
+.coord__arrow_up {
+  background: url("img/arrow.png") 0 0 no-repeat;
+  &:hover {
+    background-position: -19px 0px;
+  }
+}
+
+.coord__arrow_down {
+  background: url("img/arrow.png") 0 -26px no-repeat;
+  &:hover {
+    background-position: -19px -26px;
+  }
+}
 
 // ----------------- transparent
 .transparent {
-    background: $help_1; // -------------------------------------------- HELP
-    padding: 0 10px;
+  background: $help_1; // -------------------------------------------- HELP
+  padding: 0 10px;
 }
+
 // =============================================== DRY
 .transparent__title {
-    
+
 }
+
 .transparent__body {
-//    background: $help_4;
-    height: 40px;
-    position: relative;
+  //    background: $help_4;
+  height: 40px;
+  position: relative;
 }
+
 .transparent__item {
-//    height: 15px;
-    width: 100%;
-    position: absolute;
-    top: 18px;
+  //    height: 15px;
+  width: 100%;
+  position: absolute;
+  top: 18px;
 }
 
 // ----------------- download result
 .form {
-    background: $help_1; // -------------------------------------------- HELP
-    display: block;
-    padding: 35px 0 5px 0;
-    text-align: center;
-    @include clearfix;
-}
-.form__coll {
-    background: $help_4; // -------------------------------------------- HELP
-    float: left;
-    text-align: left;
-    width: 50%;
-}
-.form__coll_reset {
-    padding: 0 20px 0 0;
-}
-.form__coll_submit {
-    padding: 0 0 0 20px;
-}
-.form__button {
-    border: none;
-    color: #fff;
-    font-family: robotolight;
-    display: inline-block;
-    height: 42px;
-    width: 100%;
-    @include  borderRadius( 3px );
-}
-.form__button_reset {
-    background: #c1cfd9;
-}
-.form__button_submit {
-    background: #f97e76;
-    
+  background: $help_1; // -------------------------------------------- HELP
+  display: block;
+  padding: 35px 0 5px 0;
+  text-align: center;
+  @include clearfix;
 }
 
+.form__coll {
+  background: $help_4; // -------------------------------------------- HELP
+  float: left;
+  text-align: left;
+  width: 50%;
+}
+
+.form__coll_reset {
+  padding: 0 20px 0 0;
+}
+
+.form__coll_submit {
+  padding: 0 0 0 20px;
+}
+
+.form__button {
+  border: none;
+  color: #fff;
+  font-family: robotolight;
+  display: inline-block;
+  height: 42px;
+  width: 100%;
+  cursor: pointer;
+  @include borderRadius(3px);
+}
+
+.form__button_reset {
+  background: #c1cfd9;
+}
+
+.form__button_submit {
+  background: #f97e76;
+
+}
 
 // ================================= jquery UI slider
-.ui-slider {
-	position: relative;
-	text-align: left;
-}
 .ui-widget-content {
-    
+
 }
-.ui-slider-horizontal {
-    border: none;
-    background: #dbe1e8;
-    height: 3px;
-}
-.ui-slider .ui-slider-handle {
+
+.ui-slider {
+  position: relative;
+  text-align: left;
+  .ui-slider-handle {
     background: #9eb2c0;
     border: 8px solid #dbe1e8;
-	position: absolute;
-	z-index: 5;
-	width: 24px;
-	height: 24px;
-	cursor: pointer;
+    position: absolute;
+    z-index: 5;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
     margin: -11px -12px 0 -12px;
-	-ms-touch-action: none;
-	touch-action: none;
+    -ms-touch-action: none;
+    touch-action: none;
     outline: none;
     @include borderRadius(50%);
     @include boxShady(0px 1px 2px #777);
-}
-.ui-slider .ui-slider-range {
+  }
+  .ui-slider-range {
     background: #333;
-	position: absolute;
-	z-index: 100;
-	font-size: 3px;
-	display: block;
-	border: 0;
+    position: absolute;
+    z-index: 100;
+    font-size: 3px;
+    display: block;
+    border: 0;
+  }
 }
-.ui-slider-horizontal .ui-slider-range {
-	top: 0;
-	height: 100%;
+
+.ui-slider-horizontal {
+  border: none;
+  background: #dbe1e8;
+  height: 3px;
+  .ui-slider-range {
+    top: 0;
+    height: 100%;
     background: #33f;
-}
-.ui-slider-horizontal .ui-slider-range-min {
-	left: 0;
+  }
+  .ui-slider-range-min {
+    left: 0;
     background: #33f;
-}
-.ui-slider-horizontal .ui-slider-range-max {
-	right: 0;
+  }
+  .ui-slider-range-max {
+    right: 0;
     background: #f00;
+  }
 }
-.ui-slider-range      {
-    background: #0ff;
+
+.ui-slider-range {
+  background: #0ff;
 }
-.ui-slider-range-min  {
-    background: #f00;
+
+.ui-slider-range-min {
+  background: #f00;
 }
-.ui-slider-range-max  {
-    background: #ff0;
+
+.ui-slider-range-max {
+  background: #ff0;
 }

@@ -29,9 +29,6 @@ class ImageConverter {
       throw new \RuntimeException('Image creation failed.');
     }
 
-    imagealphablending($newImage, true); // что-то как-то связанное с альфа каналами
-    imagesavealpha($newImage, true);     // в такой комбинации работает
-
     // 2. формируем новое изображение - копируем исходные изображения
     // в нужные позиции
     $sourceImg = imagecreatefromstring(file_get_contents($source));
@@ -42,12 +39,12 @@ class ImageConverter {
     // в зависимости от режима плитки копируем один вотермарк или создаем плитку
 
     if($tileMode == 'single') {
-      imagecopymerge($newImage, $waterImg, $x, $y, 0, 0, $w2, $h2, $opacity);
+      imagecopymerge_alpha($newImage, $waterImg, $x, $y, 0, 0, $w2, $h2, $opacity);
     } else {
       // кто-нибудь, объясните мне, как это, вот это внизу, могло произойти?
       for($i = $x; $i < $w1 + $x + $marginX * ($w1 / ($w2 + $marginX)); $i += $w2 + $marginX) {
         for($j = $y; $j < $h1 + $y + $marginY * ($h1 / ($h2 + $marginY)); $j += $h2 + $marginY) {
-          imagecopymerge($newImage, $waterImg, $i, $j, 0, 0, $w2, $h2, $opacity);
+          imagecopymerge_alpha($newImage, $waterImg, $i, $j, 0, 0, $w2, $h2, $opacity);
         }
       }
     }
@@ -109,3 +106,25 @@ try {
   echo $e->getMessage();
 
 }
+
+/** 
+* PNG ALPHA CHANNEL SUPPORT for imagecopymerge(); 
+* by Sina Salek 
+* 
+* 08-JAN-2011 
+* http://php.net/manual/ru/function.imagecopymerge.php
+**/ 
+function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){ 
+    // creating a cut resource 
+    $cut = imagecreatetruecolor($src_w, $src_h); 
+
+    // copying relevant section from background to the cut resource 
+    imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h); 
+    
+    // copying relevant section from watermark to the cut resource 
+    imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h); 
+    
+    // insert cut resource to destination image 
+    imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct); 
+} 
+

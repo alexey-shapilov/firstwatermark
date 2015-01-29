@@ -2,6 +2,7 @@ function Slider(options) {
     this.value = null; //текущее значение слайдера
     this.$rangeOpacity = options.$rangeOpacity; //запоминаем выбранные элементы в переменные
     this.$elemOpacity = options.$elemOpacity;
+    this.$tileWrapper = options.$tileWraper;
     //this.self = this; //ссылка на себя
 } //создаем функцию конструктор
 
@@ -26,22 +27,16 @@ Slider.prototype.sliderActive = function () {
             self.sliderOpacity(self.value); // передача значение бегунка методу конструктора
         }
     });
-	
-	opacity = self.$rangeOpacity.slider( "value" );
-	console.log(opacity);
-	self.sliderOpacity(opacity);
+
+    self.sliderOpacity(self.$rangeOpacity.slider('value'));
 };
 
 Slider.prototype.sliderOpacity = function (val) { // функция изменяющая прозрачность элемента
     this.$elemOpacity.css('opacity', val); //изменение прозрачности водяного знака
-	
-	if($('.tile-wrapper')){
-		$('.tile-wrapper').css({
-			"opacity":val,
-			"z-index":100
-		});//изменение прозрачности копий водяного знака
-	}
-    
+};
+
+Slider.prototype.setElement = function (elem) {
+    this.$elemOpacity = $(elem);
 };
 
 var slider = new Slider({// указываем ему необходимые элементы для работы
@@ -50,4 +45,3 @@ var slider = new Slider({// указываем ему необходимые э�
 }); //создаем наш бегунок
 
 slider.init();
-console.log(slider);

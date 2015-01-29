@@ -9,10 +9,10 @@ function Tile(options) {
         tileHeight = tile.height(),
         tileWrapper = this.tileWrapper,
         marginButtons = options.marginButtons,
-        tileGridCross = options.tileGridCross;
+        tileGridCross = options.tileGridCross,
+        slider = options.slider;
 
     tileWrapper.addClass(tileWrapperClass);
-
 
     this.reInitOptions = options;
     this.created = false;
@@ -67,6 +67,7 @@ function Tile(options) {
         tileWrapper.html(imgs);
 
         tileWrapper.attr('style', 'position:absolute; left:0; top:0;');
+        self.setSlider();
 
         self.bindButtons();
 
@@ -149,6 +150,11 @@ function Tile(options) {
         marginButtons.y.input.off('change').on('change', function () {
             tileMargin('y', parseInt(this.value) - self.margin.y.value);
         });
+    };
+
+    this.setSlider = function () {
+        slider.setElement(tileWrapper);
+        slider.sliderOpacity(slider.$rangeOpacity.slider('value'));
     }
 }
 
@@ -166,7 +172,8 @@ function Position(options) { //создаем функцию конструкт�
             tile: options.$watermark,
             tileContainer: options.$mainImg,
             marginButtons: options.axisButtons,
-            tileGridCross: options.tileGridCross
+            tileGridCross: options.tileGridCross,
+            slider: options.slider
         }
     );
 
@@ -209,6 +216,8 @@ Position.prototype.reInit = function () {
 
     this.tile = new Tile(tileInitOptions);
 
+    this.setSlider();
+
     // all work width X coords
     this.initCoordsX();
 
@@ -226,6 +235,15 @@ Position.prototype.initAxis = function () {
 Position.prototype.initMainImg = function () {
     this.mainImg.width = this.mainImg.elem.width();
     this.mainImg.height = this.mainImg.elem.height();
+};
+
+Position.prototype.initWatermark = function () {
+    this.watermark.position.left = 0;
+    this.watermark.position.top = 0;
+    this.positionCssElem(this.watermark.position.left, this.watermark.position.top);
+    this.watermark.width = this.watermark.elem.width();
+    this.watermark.height = this.watermark.elem.height();
+    this.watermark.elem.css('display', 'block');
 };
 
 Position.prototype.init = function () {
@@ -249,6 +267,7 @@ Position.prototype.init = function () {
         } else {
             self.tile.bindButtons();
             self.tile.tileWrapper.show();
+            self.tile.setSlider();
         }
         if (!switchBtn.tileBtn.hasClass('toggle__item_grid-active')) {
             switchBtn.tileBtn.addClass('toggle__item_grid-active');
@@ -264,6 +283,7 @@ Position.prototype.init = function () {
         }
         if (!switchBtn.singleBtn.hasClass('toggle__item_single-active')) {
             self.watermark.elem.show();
+            self.setSlider();
             self.initCoordsX();
             self.initCoordsY();
             switchBtn.tileBtn.removeClass('toggle__item_grid-active');
@@ -305,7 +325,10 @@ Position.prototype.init = function () {
         }
     });
 
-
+    this.setSlider = function () {
+        slider.setElement(this.watermark.elem);
+        slider.sliderOpacity(slider.$rangeOpacity.slider('value'));
+    };
     /****
      *
      * * grid work
@@ -444,13 +467,6 @@ Position.prototype.init = function () {
     this.created = true;
 
     return this;
-};
-
-Position.prototype.initWatermark = function () {
-    this.watermark.position.left = 0;
-    this.watermark.position.top = 0;
-    this.watermark.width = this.watermark.elem.width();
-    this.watermark.height = this.watermark.elem.height();
 };
 
 Position.prototype.initCoordsX = function () {

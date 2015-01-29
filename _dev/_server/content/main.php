@@ -17,6 +17,7 @@ ob_start();
                                 </div>
                                 <div class="picture__bg"></div>
                             </div>
+                            <div class="picture__uploading"></div>
                         </div>
                     </div>
                 </div>

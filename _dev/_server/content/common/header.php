@@ -14,6 +14,11 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <link rel="icon" type="image/ico" href="/favicon.ico"/>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/favicon.ico">
 
+    <meta property="og:url" content="http://watermark.zz.mu" />
+    <meta property="og:title" content="Сервис водяных знаков" />
+    <meta property="og:description" content="Сервис позволяющий установить водяной знак на изображение" />
+    <meta property="og:image" content="http://watermark.zz.mu/css/img/common_bg.jpg" />
+
     <!-- build:css css/vendor.css-->
     <!-- bower:css-->
     <!-- endbower-->
