@@ -29,17 +29,10 @@ class ImageConverter {
       throw new \RuntimeException('Image creation failed.');
     }
 
-    imagealphablending($newImage, true); // что-то как-то связанное с альфа каналами
-    imagesavealpha($newImage, true);     // в такой комбинации работает
-
     // 2. формируем новое изображение - копируем исходные изображения
     // в нужные позиции
     $sourceImg = imagecreatefromstring(file_get_contents($source));
     $waterImg = imagecreatefromstring(file_get_contents($watermark));
-    imagealphablending($sourceImg, true); // что-то как-то связанное с альфа каналами
-    imagesavealpha($sourceImg, true);     // в такой комбинации работает
-    imagealphablending($waterImg, true); // что-то как-то связанное с альфа каналами
-    imagesavealpha($waterImg, true);     // в такой комбинации работает
 
     imagecopyresampled($newImage, $sourceImg, 0, 0, 0, 0, $w1, $h1, $w1, $h1);
 
