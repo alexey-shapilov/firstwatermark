@@ -43,8 +43,11 @@ $.gulp.task('build-with-php', ['sass'], function () {
             }
         })).on('error', log)
         .pipe(assets).on('error', log)
-        //.pipe($.if('*.js', $.uglify())).on('error', log)
-        //.pipe($.if('*.css', $.minifyCss())).on('error', log)
+        .pipe($.if('*.js', $.uglify())).on('error', log)
+        .pipe($.if('*.css', $.minifyCss())).on('error', log)
+        //.pipe($.if('*.css', $.rename(function (path) {
+        //    path.basename += ".min";
+        //})))
         .pipe(assets.restore()).on('error', log)
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(function (file) {
@@ -102,15 +105,18 @@ $.gulp.task('build-without-php', ['jade', 'sass'], function () {
     $.rimraf.sync(productionPath, function (er) {
         if (er) throw er;
     });
+
     $.gulp.src('./_dev/_jade/_pages/*.html')
         // Плагин wiredep обрабатывает зависимости bower
         .pipe($.wiredep.stream({
             directory: './_dev/_bower'
         }))
         .pipe(assets).on('error', log) // находит блоки build в html и выделяет из них необходимые ресурсы
-        //.pipe($.if('*.js', $.uglify())).on('error', log)
-        //.pipe($.if('*.css', $.minifyCss({cache:false})))  // Минификация Css не работает в таком контексте, не справляется с путями к css
-
+        .pipe($.if('*.js', $.uglify())).on('error', log)
+        .pipe($.if('*.css', $.minifyCss()))  // Минификация Css не работает в таком контексте, не справляется с путями к css
+        //.pipe($.if('*.css', $.rename(function (path) {
+        //    path.basename += ".min";
+        //})))
         // Следующие две строчки были в примере плагина gulp-useref, пока не разбирался зачем они
         .pipe(assets.restore()).on('error', log)
         .pipe($.useref()).on('error', log)
