@@ -19,7 +19,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <meta property="og:description" content="Сервис позволяющий установить водяной знак на изображение" />
     <meta property="og:image" content="http://watermark.zz.mu/css/img/common_bg.jpg" />
 
-    <!-- build:css(_dev/_server/content/common) css/vendor.css-->
+    <!-- build:css(_dev/_server/content/common) /css/vendor.css-->
     <!-- bower:css-->
     <!-- endbower-->
     <!-- endbuild-->
