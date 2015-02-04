@@ -47,7 +47,7 @@
 Подготовка к сборке:
   * Клонировать репозиторий
 ```
-git clone
+git clone https://github.com/alexey-shapilov/firstwatermark.git
 ```
   * в папке с проектом запустить
   
