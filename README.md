@@ -16,6 +16,8 @@
   * Мухин Борис Леонидович
   * Шилка Юрий Сергеевич
 
+## Сборка сервиса
+
 Используемые технологии и инструменты
   * [HTML5](http://www.w3.org/TR/html5/)
   * [Jade](http://jade-lang.com/)
@@ -33,8 +35,6 @@
       * [gulp-uglify](https://github.com/terinjokes/gulp-uglify.git)
       * [rimraf](https://github.com/isaacs/rimraf.git)
       * [wiredep](https://github.com/taptapship/wiredep.git)
-
-## Сборка сервиса
 
 Необходимые инструменты для компиляции проекта:
   * [Node.js](http://nodejs.org/)
